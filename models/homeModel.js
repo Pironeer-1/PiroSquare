@@ -7,5 +7,4 @@ module.exports = {
 
         return posts[0];
     },
-
 }

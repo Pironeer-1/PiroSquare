@@ -17,9 +17,10 @@ module.exports = {
 
     createNewPost: async (req, res) =>{
         const newPostData = req.body;
-        console.log(newPostData)
+        console.log()
         const insertId = await postModel.createNewPost(newPostData);
         res.redirect(`/post/detail/${insertId}`);
     },
 }
+
 

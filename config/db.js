@@ -1,5 +1,4 @@
 require('dotenv').config();
-
 var mysql = require('mysql2/promise');
 // create the connection to database
 var db = mysql.createPool({
