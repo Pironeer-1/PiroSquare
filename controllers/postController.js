@@ -16,11 +16,10 @@ module.exports = {
     },
 
     createNewPost: async (req, res) =>{
-        const newTitle = req.body.title;
-        const newContent = req.body.title;
-        const newPost = await postModel.createNewPost(newTitle, newContent);
-        res.render('post.ejs', {newPost: newPost});
+        const newPostData = req.body;
+        console.log(newPostData)
+        const insertId = await postModel.createNewPost(newPostData);
+        res.redirect(`/post/detail/${insertId}`);
     },
-
 }
 
