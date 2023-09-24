@@ -11,9 +11,7 @@ app.set('port', process.env.SERVER_PORT || 8000);
 // app.use(cors());
 
 const bodyParser = require('body-parser');
-// parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
-// parse application/json
 app.use(bodyParser.json())
 
 // Views
@@ -27,14 +25,19 @@ app.set('layout', 'index.ejs');
 app.set('layout extractStyles', true);
 app.use(express.static('public'));
 
-const homeController = require('./controllers/homeController.js');
-app.get('/', homeController.home);
 
-// Routes 설정(현재 없음)
-// 아래 코드는 예시
-// const postRouter = require('./routers/postRouter.js');
-// app.use('/post', postRouter);
+
+//Controllers
+const homeController = require('./controllers/homeController.js');
+const postController = require('./controllers/postController.js');
+
+app.get('/', homeController.getPosts);
+app.get('/post/detail/:post_id', postController.detailPost);
+app.get('/post/create', postController.createPost);
+app.post('/post/create', postController.createNewPost);
+
 
 app.listen(app.get('port'), ()=>{
     console.log(app.get('port'), '번 포트에서 대기 중')
 });
+
