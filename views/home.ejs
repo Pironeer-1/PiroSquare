@@ -1,28 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <a href="/">홈화면 가기</a>
-    <oi>
+<link rel="stylesheet" href="/css/style.css">
+
+<h1>Welcome!</h1>
+
+<oi>
     <% for(let post of posts) { %>
         <li><a href="/post/detail/<%= post.post_id %>">
             제목: <%=post.title %></a>
         </li>
     <% } %>
-    </oi>
-    <p><a href="/post/create">Create</a></p>
-</body>
-</html>
-<link rel="stylesheet" href="/css/style.css">
-
-<h1>Welcome!</h1>
-
-<li>봉준호, 손흥민, 제이팍, </li>
-<% for(let user of users) { %>
-    <li><a href="/"><%= user.name %></a></li>
-<% } %>
-<li>Let's Go!</li>
+</oi>
