@@ -17,3 +17,12 @@
     <p><a href="/post/create">Create</a></p>
 </body>
 </html>
+<link rel="stylesheet" href="/css/style.css">
+
+<h1>Welcome!</h1>
+
+<li>봉준호, 손흥민, 제이팍, </li>
+<% for(let user of users) { %>
+    <li><a href="/"><%= user.name %></a></li>
+<% } %>
+<li>Let's Go!</li>
