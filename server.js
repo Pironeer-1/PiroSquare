@@ -36,6 +36,8 @@ app.get('/post/detail/:post_id', postController.detailPost);
 app.get('/post/create', postController.createPost);
 app.post('/post/create', postController.createNewPost);
 
+const questionRouter = require('./routers/questionRouter.js');
+app.use('/question', questionRouter);
 
 app.listen(app.get('port'), ()=>{
     console.log(app.get('port'), '번 포트에서 대기 중')
