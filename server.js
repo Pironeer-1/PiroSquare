@@ -25,6 +25,15 @@ app.set('layout', 'index.ejs');
 app.set('layout extractStyles', true);
 app.use(express.static('public'));
 
+//login_process 미들웨어
+const session = require('express-session');
+const FileStore = require('session-file-store')(session);
+app.use(session({
+    secret: 'asadlfkj!@#!@#dfgasdg',
+    resave: false,
+    saveUninitialized: true,
+    store:new FileStore()
+}));
 
 
 //Controllers
@@ -36,6 +45,8 @@ app.get('/', homeController.getPosts);
 app.get('/post/detail/:post_id', postController.detailPost);
 app.get('/post/create', postController.createPost);
 app.get('/login', loginController.getLogin);
+app.post('/login/process', loginController.loginProcess);
+app.get('/logout', loginController.logoutProcess);
 app.post('/post/create', postController.createNewPost);
 
 const questionRouter = require('./routers/questionRouter.js');
