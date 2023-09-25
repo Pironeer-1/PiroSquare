@@ -30,13 +30,16 @@ app.use(express.static('public'));
 //Controllers
 const homeController = require('./controllers/homeController.js');
 const postController = require('./controllers/postController.js');
+const loginController = require('./controllers/loginController.js');
 
 app.get('/', homeController.getPosts);
 app.get('/post/detail/:post_id', postController.detailPost);
 app.get('/post/create', postController.createPost);
+app.get('/login', loginController.getLogin);
 app.post('/post/create', postController.createNewPost);
 
 const questionRouter = require('./routers/questionRouter.js');
+
 app.use('/question', questionRouter);
 
 app.listen(app.get('port'), ()=>{
