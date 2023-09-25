@@ -1,7 +1,13 @@
 <link rel="stylesheet" href="/css/style.css">
 
 <h1>Welcome!</h1>
-<a href="/login">로그인</a>
+<% if (session.is_logined) { %>
+    <p><%= session.nickname %> 반갑습니다!</p>
+    <a href="/logout">로그아웃</a>
+<% } else { %>
+    <a href="/login">로그인</a>
+<% } %>
+
 <oi>
     <% for(let post of posts) { %>
         <% if (post.board_type_id!=3) { %> 

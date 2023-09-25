@@ -15,4 +15,9 @@ module.exports = {
 
         return posts[0];
     },
+    getSession: async (req) => {
+        const loggedInUser = req.session; 
+
+        return loggedInUser;
+    },
 }
