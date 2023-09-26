@@ -3,6 +3,11 @@ const router = express.Router();
 
 const loginController = require('../controllers/loginController.js');
 
-router.get('/login/process', loginController.detailPost);
+module.exports = (passport) => {
 
-module.exports = router;
+    router.get('/', loginController.getLogin);
+
+    router.post('/process', loginController.loginProcess);
+
+    return router;
+}

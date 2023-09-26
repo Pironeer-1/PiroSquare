@@ -1,28 +1,39 @@
 //loginController.js
-const loginModel = require("../models/loginModel");
-const homeModel = require("../models/homeModel");
+const passport = require('passport');
 
 module.exports = {
     
-    getLogin: (req,res) =>{
-        res.render('login.ejs');
-    },
-    loginProcess: async (req, res) => {
-        const user = req.body;
-        const authData = await loginModel.loginProcess(user);
-        const posts = await homeModel.home();
-        if(authData != null){
-            req.session.is_logined = true;
-            req.session.nickname = authData.nickname;
-            await req.session.save(() => {
-                res.redirect('/');
-            });
-        } else{
-            res.redirect('/login');
-        }   
+    getLogin: async (req,res) =>{
+        console.log('hi')
+        const fmsq= await req.flash();
+        console.log('login',fmsq);
+        res.render('login.ejs', {feedback: fmsq.message});
     },
     logoutProcess: async (req, res) => {
-        await req.session.destroy();
-        res.redirect('/')
-    }
+        await req.logout(function(err) {
+            if (err) { return next(err); }
+            res.redirect('/');
+        });
+    },
+    loginProcess: async (req, res, next) => {
+        passport.authenticate('local', async (err, user, info) => {
+            if (err) {
+                return next(err);
+            }
+            if (!user) {
+                await req.flash('message', info.message);
+                return await req.session.save(() => {
+                    res.redirect('/login');
+                });
+            }
+            req.logIn(user, async (err) => {
+                if (err) {
+                    return next(err);
+                }
+                return await req.session.save(() => {
+                    res.redirect('/');
+                });
+            });
+        })(req, res, next);
+    },
 }
