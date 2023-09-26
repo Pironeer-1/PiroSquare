@@ -2,6 +2,11 @@ const db = require('../config/db.js');
 
 module.exports = {
 
+    getAll: async()=>{
+        const query = "SELECT * FROM Post where board_type_id='1';"
+        const posts = await db.query(query);
+        return posts[0];
+    },
     detail: async (postId) => {
         const query = 'SELECT * FROM Post where post_id= ?;'
         const post = await db.query(query, [postId]);
@@ -11,7 +16,7 @@ module.exports = {
     createNewPost: async(newPostData) => {
         const query = 'INSERT INTO Post (title, content, board_type_id, user_id) VALUES (?, ?, ?, ?);';
         const NewPost = await db.query(query, [newPostData.title, 
-            newPostData.content, 1, 1]); //임시
+            newPostData.content, 1, 1]); //user_id 임시
         return NewPost[0].insertId;
     },
 

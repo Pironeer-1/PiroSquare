@@ -42,24 +42,21 @@ const passport = require('./controllers/passportController')(app);
 
 //Controllers
 const homeController = require('./controllers/homeController.js');
-const postController = require('./controllers/postController.js');
 const loginController = require('./controllers/loginController.js');
 
 //Router
 const postRouter = require('./routers/postRouter.js');
 const questionRouter = require('./routers/questionRouter.js');
+const informRouter = require('./routers/informRouter.js');
 const loginRouter = require('./routers/loginRouter.js')(passport);
 
 app.use('/post', postRouter);
 app.use('/question', questionRouter);
 app.use('/login', loginRouter);
-
+app.use('/inform', informRouter);
 
 app.get('/', homeController.getPosts);
-app.get('/post/detail/:post_id', postController.detailPost);
-app.get('/post/create', postController.createPost);
 app.get('/logout', loginController.logoutProcess);
-app.post('/post/create', postController.createNewPost);
 
 
 app.listen(app.get('port'), ()=>{

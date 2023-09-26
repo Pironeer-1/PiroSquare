@@ -1,0 +1,6 @@
+<li>------ 공지 게시판 ------</li>
+<% for (let inform of informs) { %>
+    <li><a href="/inform/detail/<%= inform.post_id %>">
+        제목: <%= inform.title %></a>
+    </li>
+<% } %>
