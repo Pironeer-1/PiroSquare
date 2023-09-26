@@ -48,4 +48,16 @@ module.exports = {
             return null;
         return questions[0];
     },
+    // 새로운 질문게시글 생성
+    createNewPost: async (newPostData) => {
+        const query = 'INSERT INTO Post (title, content, board_type_id, user_id) VALUES (?, ?, ?, ?);';
+        const NewPost = await db.query(query, [newPostData.title, newPostData.content, 3, 1]); //임시
+
+        return NewPost[0].insertId;
+    },
+    // 질문게시글 삭제
+    deletePost: async(postId) => {
+        const query = 'DELETE FROM Post WHERE post_id= ? and board_type_id="3";';
+        await db.query(query, [postId]);
+    },
 }
