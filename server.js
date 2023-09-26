@@ -37,16 +37,16 @@ app.use(session({
 
 //Controllers
 const homeController = require('./controllers/homeController.js');
-const postController = require('./controllers/postController.js');
 const loginController = require('./controllers/loginController.js');
 
 //Router
 const postRouter = require('./routers/postRouter.js');
 const questionRouter = require('./routers/questionRouter.js');
+const informRouter = require('./routers/informRouter.js');
 
 app.use('/post', postRouter);
 app.use('/question', questionRouter);
-
+app.use('/inform', informRouter);
 
 app.get('/', homeController.getPosts);
 app.get('/login', loginController.getLogin);
