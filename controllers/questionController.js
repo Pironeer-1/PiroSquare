@@ -1,5 +1,6 @@
 const homeModel = require('../models/homeModel.js');
 const questionModel = require('../models/questionModel.js');
+const commentModel = require('../models/commentModel.js');
 
 module.exports = {
     // 질문게시판 메인
@@ -11,7 +12,10 @@ module.exports = {
     detailPost: async (req, res) =>{
         const questionId=req.params.post_id
         const question = await questionModel.detail(questionId);
-        res.render('question_detail.ejs', {question: question});
+
+        const comments = await commentModel.getComments(questionId);
+
+        res.render('question_detail.ejs', {question: question, comments: comments});
     },
     // 필터링
     filteringPost: async (req, res) =>{

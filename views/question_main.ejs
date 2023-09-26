@@ -8,7 +8,10 @@
 <a href="/question/create">질문하기</a>
 
 <% for(let post of question_posts) { %>
-    <li><a href="/question/read/<%= post.post_id %>">
-        제목: <%=post.title %></a>
+    <li style="border: 1px solid black">
+        <a href="/question/read/<%= post.post_id %>">
+            제목: <%=post.title %>
+        </a>
+        <p>좋아요 수 : <%=post.likes_count %></p>
     </li>
 <% } %>
