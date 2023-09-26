@@ -6,7 +6,7 @@ module.exports = {
     // 질문게시판 메인
     getAll: async(req,res)=>{
         const question_posts = await questionModel.getAll();
-        res.render('question_main.ejs', {question_posts: question_posts});
+        res.render('question/question_main.ejs', {question_posts: question_posts});
     },
     // 질문게시글
     detailPost: async (req, res) =>{
@@ -15,7 +15,7 @@ module.exports = {
 
         const comments = await commentModel.getComments(questionId);
 
-        res.render('question_detail.ejs', {question: question, comments: comments});
+        res.render('question/question_detail.ejs', {question: question, comments: comments});
     },
     // 필터링
     filteringPost: async (req, res) =>{
@@ -24,12 +24,12 @@ module.exports = {
 
         const filteredposts = await questionModel.search(search,filter);
 
-        res.render('question_main.ejs', {question_posts: filteredposts});
+        res.render('question/question_main.ejs', {question_posts: filteredposts});
     },
     // 질문게시글 작성
     createForm: async (req,res) => {
 
-        res.render('question_create.ejs');
+        res.render('question/question_create.ejs');
     },
     // 작성된 질문게시글 생성
     createPost: async (req,res) => {

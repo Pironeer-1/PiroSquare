@@ -6,14 +6,14 @@ module.exports = {
     getAll: async(req, res) =>{
         const informs = await informModel.getAll();
         const allPosts = await homeModel.home();
-        res.render('inform.ejs', {informs: informs});
+        res.render('inform/inform.ejs', {informs: informs});
     },
 
     detail: async(req, res) =>{
         const postId = req.params.post_id
         const inform = await informModel.detail(postId);
         const informs = await homeModel.home();
-        res.render('informDetail.ejs', {informs: informs, inform: inform});
+        res.render('inform/informDetail.ejs', {informs: informs, inform: inform});
     },
 
     
