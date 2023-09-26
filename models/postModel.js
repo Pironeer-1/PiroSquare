@@ -14,4 +14,15 @@ module.exports = {
             newPostData.content, 1, 1]); //임시
         return NewPost[0].insertId;
     },
+
+    deletePost: async(postId) => {
+        const query = 'DELETE FROM Post WHERE post_id= ?;'
+        await db.query(query, [postId]);
+    },
+
+    updatePost: async(postId, newPostData) => {
+        const query = 'UPDATE Post SET title=?, content=? WHERE post_id=?;';
+        await db.query(query, [newPostData.title, newPostData.content, postId]);
+    },
+    
 }

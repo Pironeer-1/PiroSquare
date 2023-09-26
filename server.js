@@ -35,23 +35,23 @@ app.use(session({
     store:new FileStore()
 }));
 
-
 //Controllers
 const homeController = require('./controllers/homeController.js');
 const postController = require('./controllers/postController.js');
 const loginController = require('./controllers/loginController.js');
 
-app.get('/', homeController.getPosts);
-app.get('/post/detail/:post_id', postController.detailPost);
-app.get('/post/create', postController.createPost);
-app.get('/login', loginController.getLogin);
-app.post('/login/process', loginController.loginProcess);
-app.get('/logout', loginController.logoutProcess);
-app.post('/post/create', postController.createNewPost);
-
+//Router
+const postRouter = require('./routers/postRouter.js');
 const questionRouter = require('./routers/questionRouter.js');
 
+app.use('/post', postRouter);
 app.use('/question', questionRouter);
+
+
+app.get('/', homeController.getPosts);
+app.get('/login', loginController.getLogin);
+app.get('/logout', loginController.logoutProcess);
+
 
 app.listen(app.get('port'), ()=>{
     console.log(app.get('port'), '번 포트에서 대기 중')
