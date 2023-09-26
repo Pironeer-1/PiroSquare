@@ -15,4 +15,14 @@ module.exports = {
         const allposts = await homeModel.home();
         res.render('question_detail.ejs', {allposts: allposts, question: question});
     },
+    // 필터링
+    filteringPost: async (req, res) =>{
+        const search=req.body.search;
+        const filter=req.body.filter;
+
+        const filteredposts = await questionModel.search(search,filter);
+
+        const allposts = await homeModel.home();
+        res.render('question_main.ejs', {allposts: allposts, question_posts: filteredposts});
+    },
 }

@@ -1,3 +1,10 @@
+<form action="/question" method="post">
+    <input type="text" name="search" placeholder="검색할 제목 입력">
+    <button type="submit" name="filter" value="all">전체글 검색</button>
+    <button type="submit" name="filter" value="solved">해결된 질문글 검색</button>
+    <button type="submit" name="filter" value="unsolved">해결안된 질문글 검색</button>
+</form>
+
 <% for(let post of question_posts) { %>
     <li><a href="/question/read/<%= post.post_id %>">
         제목: <%=post.title %></a>
