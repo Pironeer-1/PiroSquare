@@ -54,8 +54,7 @@ module.exports = {
         let query='';
         let NewPost='';
         if(newPostData.useCodeBlock=='yes' && newPostData.hidden_ta!=null){
-            const defendXSS = xss(newPostData.hidden_ta);
-            
+            // const defendXSS = xss(newPostData.hidden_ta);
             query = 'INSERT INTO Post (title, content, board_type_id, user_id, code_language, code) VALUES (?, ?, ?, ?, ?, ?);';
             NewPost = await db.query(query, [newPostData.title, newPostData.content, 3, 1, newPostData.codeLanguage, newPostData.hidden_ta]); //임시
         }else{
@@ -69,5 +68,17 @@ module.exports = {
     deletePost: async(postId) => {
         const query = 'DELETE FROM Post WHERE post_id= ? and board_type_id="3";';
         await db.query(query, [postId]);
+    },
+    // 질문게시글 업데이트
+    updatePost: async (postId, newPostData) => {
+        let query='';
+        let NewPost='';
+        if(newPostData.useCodeBlock=='yes' && newPostData.hidden_ta!=null){
+            query = 'UPDATE Post SET title=?, content=?, code_language=?, code=? WHERE post_id=?;';
+            NewPost = await db.query(query, [newPostData.title, newPostData.content, newPostData.codeLanguage, newPostData.hidden_ta, postId]);
+        }else{
+            query = 'UPDATE Post SET title=?, content=? WHERE post_id=?;';
+            NewPost = await db.query(query, [newPostData.title, newPostData.content, postId]);
+        }
     },
 }

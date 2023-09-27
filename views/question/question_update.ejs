@@ -1,0 +1,70 @@
+<form action="/question/update/<%= question.post_id %>" method="post">
+    <input type="text" name="title" placeholder="title" style="display: block;" value="<%= question.title %>">
+    <textarea name="content" id="" cols="20" placeholder="content" style="display: block;"><%= question.content %></textarea>
+    <label>
+        <input type="radio" name="useCodeBlock" id="cb_use" value="yes" <% if (question.code_language!=null) { %> checked <% } %>>
+        코드 블록 사용
+    </label>
+    <label>
+        <input type="radio" name="useCodeBlock" id="cb_not_use" value="no" <% if (question.code_language==null) { %> checked <% } %>>
+        코드 블록 사용안함
+    </label>
+    <br>
+    <div id="code_area" <% if (question.code_language==null) { %> style="display:none;" <% } %>>
+        <label for="codeLanguage">
+            <select name="codeLanguage" id="codeLanguage" value="<%= question.code_language %>">
+                <option value="python">Python</option>
+                <option value="django">Django</option>
+                <option value="html">HTML</option>
+                <option value="css">css</option>
+                <option value="javascript">Javascript</option>
+                <option value="sql">SQL</option>
+                <option value="java">JAVA</option>
+                <option value="xml">XML</option>
+                <option value="bash">BASH</option>
+                <option value="cpp">C++</option>
+                <option value="csharp">C#</option>
+                <option value="markdown">MarkDown</option>
+                <option value="http">HTTP</option>
+                <option value="json">JSON</option>
+                <option value="makefile">Makefile</option>
+                <option value="nginx">Nginx</option>
+                <option value="scss">SCSS</option>
+                <option value="shell">Shell</option>
+                <option value="typescript">Typescript</option>
+            </select>
+        </label>
+        <br>
+        <textarea name="hidden_ta" id="hidden_ta" cols="30" rows="10" placeholder="코드 작성 공간"><%= question.code %></textarea>
+        <pre><code id="target_text"><%= question.code %></code></pre>
+    </div>
+    
+    <button type="submit" style="display: block;">글 수정 완료</button>
+</form>
+<script>
+    const ta = document.getElementById('hidden_ta');
+    const target_highlight=document.getElementById('target_text');
+    const language=document.getElementById('codeLanguage');
+
+    function setHighlight(){
+        const textareaValue = ta.value;
+        target_highlight.textContent = textareaValue;
+        target_highlight.className=language.value;
+        hljs.highlightBlock(target_highlight);
+    };
+    ta.addEventListener('input', setHighlight);
+    language.addEventListener('change', setHighlight);
+
+    const radioButtons = document.querySelectorAll('input[name="useCodeBlock"]');
+    const code_area = document.getElementById('code_area');
+    radioButtons.forEach(function (radioButton) {
+    radioButton.addEventListener('change', function () {
+        if (radioButton.value === 'yes') {
+            code_area.style.display = 'block';
+        } else {
+            code_area.style.display = 'none';
+        }
+    });
+});
+
+</script>
