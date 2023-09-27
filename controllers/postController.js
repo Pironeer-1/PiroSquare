@@ -1,6 +1,6 @@
 const homeModel = require('../models/homeModel.js');
 const postModel = require('../models/postModel.js');
-
+const commentModel = require('../models/commentModel.js');
 module.exports = {
     // 자유 게시판 모든 글 불러오기
     getAll: async(req, res) =>{
@@ -9,10 +9,12 @@ module.exports = {
     },
 
     detailPost: async (req, res) =>{
+
         const postId=req.params.post_id
-        const post = await postModel.detail(postId);
         const posts = await postModel.getAll();
-        res.render('post/postDetail.ejs', {posts: posts ,post: post});
+        const post = await postModel.detail(postId);
+        const comments = await commentModel.getComments(postId);
+        res.render('post/postDetail.ejs', { posts: posts, post: post, comments: comments });
     },
     
     createPost: async (req, res) =>{

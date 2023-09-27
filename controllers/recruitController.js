@@ -12,7 +12,8 @@ module.exports = {
         const postId=req.params.post_id
         const post = await recruitModel.detail(postId);
         const posts = await recruitModel.getAll();
-        res.render('recruit/recruitDetail.ejs', {posts: posts ,post: post});
+        const comments = await commentModel.getComments(postId);
+        res.render('recruit/recruitDetail.ejs', {posts: posts ,post: post, comments: comments});
     },
 
     createRecruit: async (req, res) =>{

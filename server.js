@@ -37,22 +37,23 @@ app.use(session({
 
 
 //Controllers
-
 const passportController = require('./controllers/passportController.js')(app);
-const loginController = require('./controllers/loginController.js');
 const homeController = require('./controllers/homeController.js');
-const postController = require('./controllers/postController.js');
+const loginController = require('./controllers/loginController.js');
+//const postController = require('./controllers/postController.js');
 
 //Router
 const postRouter = require('./routers/postRouter.js');
 const questionRouter = require('./routers/questionRouter.js');
 const informRouter = require('./routers/informRouter.js');
 const recruitRouter = require('./routers/recruitRouter.js');
+const commentRouter = require('./routers/commentRouter.js');
 
 app.use('/post', postRouter);
 app.use('/question', questionRouter);
 app.use('/inform', informRouter);
 app.use('/recruit', recruitRouter);
+app.use('/comment', commentRouter);
 
 app.get('/', homeController.getPosts);
 app.get('/logout', loginController.logoutProcess);

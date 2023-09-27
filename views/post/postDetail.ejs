@@ -7,5 +7,21 @@
     <a href="/post/update/<%= post.post_id %>">Update</a>
 </form>
 
+<form action="/comment/create/<%= post.post_id %>" method="post">
+    <textarea name="content" placeholder="content is.."></textarea>
+    <button>submit</button>
+</form>
+
+<div class="comments">
+    <% for (let comment of comments) { %>
+        <p><%= comment.content %></p>
+        <form action="/comment/delete/<%= comment.comment_id %>" method="post">
+            <button>삭제하기</button>
+        </form>
+    <% } %>
+</div>
+
+
 <p><a href="/post">목록으로</a></p>
+
 
