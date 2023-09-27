@@ -21,6 +21,7 @@
     "highlight.js": "^11.8.0",
     "mysql2": "^3.6.1",
     "nodemon": "^3.0.1",
+    "package.json": "^2.0.1",
     "passport": "^0.6.0",
     "passport-local": "^1.0.0",
     "passport-naver-v2": "^2.0.8",
