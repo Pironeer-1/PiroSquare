@@ -12,6 +12,16 @@ module.exports = {
         const post = await db.query(query, [postId]);
         return post[0][0];
     },
+   // 특정 게시글 검색
+   search: async (search) => {
+    // 인자 search 는 검색할 게시글 제목
+    let query='';
+    let posts;
+    search='%'+search+'%';
+    query = "SELECT * FROM Post where board_type_id='1' and title LIKE ?;";
+    posts = await db.query(query, [search]);
+    return posts[0];
+    },
 
     createNewPost: async(newPostData) => {
         const query = 'INSERT INTO Post (title, content, board_type_id, user_id) VALUES (?, ?, ?, ?);';
