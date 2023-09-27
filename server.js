@@ -48,12 +48,14 @@ const loginController = require('./controllers/loginController.js');
 const postRouter = require('./routers/postRouter.js');
 const questionRouter = require('./routers/questionRouter.js');
 const informRouter = require('./routers/informRouter.js');
+const recruitRouter = require('./routers/recruitRouter.js');
 const loginRouter = require('./routers/loginRouter.js')(passport);
 
 app.use('/post', postRouter);
 app.use('/question', questionRouter);
 app.use('/login', loginRouter);
 app.use('/inform', informRouter);
+app.use('/recruit', recruitRouter);
 
 app.get('/', homeController.getPosts);
 app.get('/logout', loginController.logoutProcess);

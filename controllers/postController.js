@@ -29,7 +29,7 @@ module.exports = {
     deletePost: async (req, res) =>{
         const postId = req.params.post_id;
         await postModel.deletePost(postId);
-        res.redirect('/');
+        res.redirect('/post');
     },
 
     updatePost: async (req, res) =>{

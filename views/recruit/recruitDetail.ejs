@@ -1,0 +1,11 @@
+<p>제목: <%=post.title %></p>
+<p>내용: <%=post.content %></p>
+<p>생성일자: <%=post.created_at%></p> 
+
+<form action="/recruit/delete/<%= post.post_id %>" method="post">
+    <button>삭제하기</button>
+    <a href="/recruit/update/<%= post.post_id %>">Update</a>
+</form>
+
+<p><a href="/recruit">목록으로</a></p>
+
