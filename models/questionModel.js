@@ -43,7 +43,6 @@ module.exports = {
                 questions = await db.query(query, [search]);
             }
         }
-
         // 필터링 방법이 잘못되면 null을 반환
         if(questions==null)
             return null;

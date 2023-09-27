@@ -1,8 +1,19 @@
 <a href="/recruit/create">글 작성하기</a>
 
+<form action="/recruit" method="post">
+    <button type="submit" name="filter" value="all">전체글</button>
+    <button type="submit" name="filter" value="study">스터디 모집</button>
+    <button type="submit" name="filter" value="study_closed">스터디 마감</button>
+    <button type="submit" name="filter" value="project">프로젝트 모집</button>
+    <button type="submit" name="filter" value="project_closed">프로젝트 마감</button>
+    <button type="submit" name="filter" value="recruit">채용 모집</button>
+    <button type="submit" name="filter" value="recruit_closed">채용 마감</button>
+</form>
+
+
 <li>------ 모집/공고 게시판 ------</li>
 <% for (let post of posts) { %>
-    <li><a href="/post/detail/<%= post.post_id %>">
+    <li><a href="/recruit/detail/<%= post.post_id %>">
         제목: <%= post.title %></a>
     </li>
 <% } %>

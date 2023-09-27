@@ -7,6 +7,8 @@
     <a href="/post/update/<%= post.post_id %>">Update</a>
 </form>
 
+
+<p>------댓글창입니다------</p>
 <form action="/comment/create/<%= post.post_id %>" method="post">
     <textarea name="content" placeholder="content is.."></textarea>
     <button>submit</button>
