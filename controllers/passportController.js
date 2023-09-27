@@ -1,58 +1,57 @@
+// passportConfig.js
+const passport = require('passport');
+const { Strategy: NaverStrategy } = require('passport-naver-v2');
+const loginModel = require('../models/loginModel');
+
+
 module.exports = function (app) {
-    const passport = require('passport');
-    const LocalStrategy = require('passport-local').Strategy;
-    const loginModel = require("../models/loginModel");
-    
-    
     app.use(passport.initialize());
     app.use(passport.session());
-    
-    passport.serializeUser(function(user, done) {
-        console.log('ser', user);
+
+    passport.serializeUser(function (user, done) {
         done(null, user.ID);
     });
-    passport.deserializeUser(function(id, done) {
-        console.log('des', id);
+
+    passport.deserializeUser(function (id, done) {
         const authData = loginModel.getUser(id);
         done(null, authData);
     });
-    
-    passport.use(new LocalStrategy(
+
+    passport.use(new NaverStrategy(
         {
-            usernameField: 'id',
-            passwordField: 'pwd'
+            clientID: process.env.NAVER_ID,
+            clientSecret: process.env.NAVER_SECRET,
+            callbackURL: 'login/naver/callback',
         },
-        async function(username, password, done) {
-            console.log('LocalStartegy', username, password);
-            const authData = await loginModel.loginProcess(username, password);
-            if (authData === null) {
-                console.log(4);
-                return done(null, false, {
-                    message: 'Incorrect username or password.'
-                });
-            }
-            if(username === authData.ID) {
-                console.log(1);
-                if(password === authData.password) {
-                    console.log(2);
-                    return done(null, authData, {
-                        message: 'Welcome.'
-                    });
+        async function (accessToken, refreshToken, profile, done) {
+            console.log('Naver Strategy profile:', profile);
+            try {
+                const exUser = await loginModel.getUser(profile.id);
+                if (exUser) {
+                    return done(null, exUser);
                 } else {
-                    console.log(3);
-                    return done(null, false, {
-                        message: 'Incorrect password.'
+                    const newUser = await loginModel.createUser({
+                        name: profile.name,
+                        ID: profile.id,
+                        nickname: profile.nickname,
                     });
+                    return done(null, newUser);
                 }
-            } else {
-                console.log(4);
-                return done(null, false, {
-                    message: 'Incorrect username.'
-                });
+            } catch (error) {
+                console.error(error);
+                return done(error);
             }
         }
     ));
 
-    return passport;
-}
 
+    app.get('/naver', passport.authenticate('naver', { authType: 'reprompt' }));
+    app.get('/login/naver/callback',
+        passport.authenticate('naver', { failureRedirect: '/' }),
+        (req, res) => {
+            res.redirect('/');
+        },
+    );
+
+    return passport;
+};

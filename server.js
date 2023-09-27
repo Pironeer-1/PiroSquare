@@ -28,7 +28,6 @@ app.use(express.static('public'));
 //login_process 미들웨어
 const session = require('express-session');
 const FileStore = require('session-file-store')(session);
-const flash = require('connect-flash');
 app.use(session({
     secret: 'asadlfkj!@#!@#dfgasdg',
     resave: false,
@@ -36,24 +35,22 @@ app.use(session({
     store:new FileStore()
 }));
 
-app.use(flash());
-
-const passport = require('./controllers/passportController')(app);
 
 //Controllers
-const homeController = require('./controllers/homeController.js');
+
+const passportController = require('./controllers/passportController.js')(app);
 const loginController = require('./controllers/loginController.js');
+const homeController = require('./controllers/homeController.js');
+const postController = require('./controllers/postController.js');
 
 //Router
 const postRouter = require('./routers/postRouter.js');
 const questionRouter = require('./routers/questionRouter.js');
 const informRouter = require('./routers/informRouter.js');
 const recruitRouter = require('./routers/recruitRouter.js');
-const loginRouter = require('./routers/loginRouter.js')(passport);
 
 app.use('/post', postRouter);
 app.use('/question', questionRouter);
-app.use('/login', loginRouter);
 app.use('/inform', informRouter);
 app.use('/recruit', recruitRouter);
 
