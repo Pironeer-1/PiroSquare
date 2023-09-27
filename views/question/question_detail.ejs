@@ -7,7 +7,7 @@
     <p>생성일자: <%= question.created_at %></p>
     <form action="/question/delete/<%= question.post_id %>" method="post">
         <button>Delete</button>
-        <!-- <a href="/question/update/<%= question.post_id %>">Update</a> -->
+        <a href="/question/update/<%= question.post_id %>">Update</a>
     </form>
     <div>
         <p>좋아요 수 : <%= question.likes_count %></p>

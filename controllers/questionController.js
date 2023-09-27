@@ -45,4 +45,20 @@ module.exports = {
         await questionModel.deletePost(postId);
         res.redirect('/question');
     },
+    // 게시글 업데이트 폼
+    updateForm: async (req, res) =>{
+        const postId=req.params.post_id
+        const question = await questionModel.detail(postId);
+        res.render('question/question_update.ejs', {question: question});
+    },
+    // 게시글 업데이트
+    updatePost: async (req, res) =>{
+        const postId=req.params.post_id;
+        const newPost = req.body;
+        await questionModel.updatePost(postId, newPost);
+        
+        const question = await questionModel.detail(postId);
+        const comments = await commentModel.getComments(postId);
+        res.render('question/question_detail.ejs', {question: question, comments: comments});
+    },
 }
