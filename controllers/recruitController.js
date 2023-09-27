@@ -1,8 +1,9 @@
 const homeModel = require('../models/homeModel.js');
 const recruitModel = require('../models/recruitModel.js');
+const commentModel = require('../models/commentModel.js');
 
 module.exports = {
-
+    
     getAll: async(req, res) =>{
         const posts = await recruitModel.getAll();
         res.render('recruit/recruit.ejs', {posts: posts});
@@ -15,7 +16,12 @@ module.exports = {
         const comments = await commentModel.getComments(postId);
         res.render('recruit/recruitDetail.ejs', {posts: posts ,post: post, comments: comments});
     },
-
+    //필터링 
+    filteringPost: async (req, res) =>{
+        const filter=req.body.filter;
+        const filteredPosts = await recruitModel.search(filter);
+        res.render('recruit/recruit.ejs', {posts: filteredPosts});
+    },
     createRecruit: async (req, res) =>{
         const posts = await recruitModel.getAll();
         res.render('recruit/recruitCreate.ejs', {posts: posts});
@@ -35,7 +41,7 @@ module.exports = {
 
     updateRecruit: async (req, res) =>{
         const postId=req.params.post_id
-        const post = await postModel.detail(postId);
+        const post = await recruitModel.detail(postId);
         const posts = await homeModel.home();
         res.render('recruit/recruitUpdate.ejs', {posts: posts ,post: post});
     },
