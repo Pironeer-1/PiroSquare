@@ -1,4 +1,5 @@
 const db = require('../config/db.js');
+const xss = require("xss");
 
 module.exports = {
     // 모든 질문게시글 불러오기
@@ -50,8 +51,17 @@ module.exports = {
     },
     // 새로운 질문게시글 생성
     createNewPost: async (newPostData) => {
-        const query = 'INSERT INTO Post (title, content, board_type_id, user_id) VALUES (?, ?, ?, ?);';
-        const NewPost = await db.query(query, [newPostData.title, newPostData.content, 3, 1]); //임시
+        let query='';
+        let NewPost='';
+        if(newPostData.useCodeBlock=='yes' && newPostData.hidden_ta!=null){
+            const defendXSS = xss(newPostData.hidden_ta);
+            
+            query = 'INSERT INTO Post (title, content, board_type_id, user_id, code_language, code) VALUES (?, ?, ?, ?, ?, ?);';
+            NewPost = await db.query(query, [newPostData.title, newPostData.content, 3, 1, newPostData.codeLanguage, newPostData.hidden_ta]); //임시
+        }else{
+            query = 'INSERT INTO Post (title, content, board_type_id, user_id) VALUES (?, ?, ?, ?);';
+            NewPost = await db.query(query, [newPostData.title, newPostData.content, 3, 1]); //임시
+        }
 
         return NewPost[0].insertId;
     },
