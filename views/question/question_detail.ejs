@@ -9,11 +9,13 @@
         <button>Delete</button>
         <!-- <a href="/question/update/<%= question.post_id %>">Update</a> -->
     </form>
-    <p>내용: <%=question.content %></p>
     <div>
         <p>좋아요 수 : <%= question.likes_count %></p>
         <p>작성자 id : <%=question.user_id %></p>
         <p style="width: 70%; height: 200px; border: 1px solid gray;">내용 : <%=question.content %></p>
+        <% if (question.code_language != null) { %>
+            <pre><code class="<%= question.code_language %>"><%= question.code %></code></pre>
+        <% } %>
     </div>
     <div>
         <form action="/comment/create/<%= question.post_id %>" method="post">
