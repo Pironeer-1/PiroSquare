@@ -46,19 +46,18 @@ const postController = require('./controllers/postController.js');
 //Router
 const postRouter = require('./routers/postRouter.js');
 const questionRouter = require('./routers/questionRouter.js');
+const informRouter = require('./routers/informRouter.js');
+const recruitRouter = require('./routers/recruitRouter.js');
 
 app.use('/post', postRouter);
 app.use('/question', questionRouter);
-
+app.use('/inform', informRouter);
+app.use('/recruit', recruitRouter);
 
 app.get('/', homeController.getPosts);
-app.get('/post/detail/:post_id', postController.detailPost);
-app.get('/post/create', postController.createPost);
 app.get('/logout', loginController.logoutProcess);
-app.post('/post/create', postController.createNewPost);
 
 
 app.listen(app.get('port'), ()=>{
-    console.log(app.get('port'), '번 포트에서 대기 중')
+    console.log(app.get('port'), '번 포트에서 대기 중');
 });
-

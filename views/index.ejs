@@ -5,11 +5,12 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Document</title>
         <%- style %>
+        <link rel="stylesheet" href="/highlight/styles/github-dark.min.css">
+        <script src="/highlight/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script>
     </head>
     <body>
-        <a href="/"><h1>WEB</h1></a>
-        <a href="/post/create">Create</a>
-        <a href="/question">질문 게시판 이동</a>
+        <a href="/"><h1>홈화면</h1></a>
         <%- body %>
     </body>
     </html>

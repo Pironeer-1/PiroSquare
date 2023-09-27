@@ -8,18 +8,35 @@
     <a href="/naver">네이버로그인</a>
 <% } %>
 
-
-
-<oi>
-    <% for(let post of posts) { %>
-        <% if (post.board_type_id!=3) { %> 
+<br />
+<a href="/post">자유 게시판</a>
+<br />
+<a href="/question">질문 게시판</a>
+<br />
+<a href="/inform">공지 게시판</a>
+<br />
+<a href="/recruit">모집/공고 게시판</a>
+<br />
+<!-- <oi>
+    <li>------ 자유 게시판 ------</li>
+    <% for (let post of posts) { %>
+        <% if (post.board_type_id == 1) { %>
             <li><a href="/post/detail/<%= post.post_id %>">
-                제목: <%=post.title %></a>
+                제목: <%= post.title %></a>
             </li>
         <% } %>
     <% } %>
 
-    <li>------아래의 게시판들은 질문 게시판------</li>
+    <li>------ 공지 게시판 ------</li>
+    <% for (let post of posts) { %>
+        <% if (post.board_type_id == 2) { %>
+            <li><a href="/post/detail/<%= post.post_id %>">
+                제목: <%= post.title %></a>
+            </li>
+        <% } %>
+    <% } %>
+    
+    <li>------ 질문 게시판 ------</li>
     <% for(let post of posts) { %>
         <% if (post.board_type_id==3) { %> 
             <li><a href="/question/read/<%= post.post_id %>">
@@ -28,4 +45,12 @@
         <% } %>
     <% } %>
     
-</oi>
+    <li>------ 모집/공고 게시판 ------</li>
+    <% for(let post of posts) { %>
+        <% if (post.board_type_id==4) { %> 
+            <li><a href="/question/read/<%= post.post_id %>">
+                제목: <%=post.title %></a>
+            </li>
+        <% } %>
+    <% } %>
+</oi> -->
