@@ -48,15 +48,16 @@ const postRouter = require('./routers/postRouter.js');
 const questionRouter = require('./routers/questionRouter.js');
 const informRouter = require('./routers/informRouter.js');
 const recruitRouter = require('./routers/recruitRouter.js');
+const mypageRouter = require('./routers/mypageRouter.js');
 
 app.use('/post', postRouter);
 app.use('/question', questionRouter);
 app.use('/inform', informRouter);
 app.use('/recruit', recruitRouter);
+app.use('/mypage', mypageRouter);
 
 app.get('/', homeController.getPosts);
 app.get('/logout', loginController.logoutProcess);
-
 
 app.listen(app.get('port'), ()=>{
     console.log(app.get('port'), '번 포트에서 대기 중');
