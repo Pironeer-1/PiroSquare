@@ -7,6 +7,10 @@ module.exports = {
         const users = await homeModel.getTest();
         const user = await req.user
         console.log(req.user);
-        res.render('home.ejs', {posts: posts, user: user});
+        let error = req.query.error;
+        if(error===undefined)
+            error=null;
+        console.log(error);
+        res.render('home.ejs', {posts: posts, user: user, error: error});
     },
 }
