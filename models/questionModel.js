@@ -49,16 +49,16 @@ module.exports = {
         return questions[0];
     },
     // 새로운 질문게시글 생성
-    createNewPost: async (newPostData) => {
+    createNewPost: async (newPostData, userId) => {
         let query='';
         let NewPost='';
         if(newPostData.useCodeBlock=='yes' && newPostData.hidden_ta!=null){
             // const defendXSS = xss(newPostData.hidden_ta);
             query = 'INSERT INTO Post (title, content, board_type_id, user_id, code_language, code) VALUES (?, ?, ?, ?, ?, ?);';
-            NewPost = await db.query(query, [newPostData.title, newPostData.content, 3, 1, newPostData.codeLanguage, newPostData.hidden_ta]); //임시
+            NewPost = await db.query(query, [newPostData.title, newPostData.content, 3, userId, newPostData.codeLanguage, newPostData.hidden_ta]);
         }else{
             query = 'INSERT INTO Post (title, content, board_type_id, user_id) VALUES (?, ?, ?, ?);';
-            NewPost = await db.query(query, [newPostData.title, newPostData.content, 3, 1]); //임시
+            NewPost = await db.query(query, [newPostData.title, newPostData.content, 3, userId]); //임시
         }
 
         return NewPost[0].insertId;
