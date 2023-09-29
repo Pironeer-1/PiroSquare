@@ -11,7 +11,6 @@ module.exports = {
     searchPost: async (req, res) =>{
         const search=req.body.search;
         const searchPosts = await postModel.search(search);
-
         res.render('post/post.ejs', {posts: searchPosts});
     },
 
