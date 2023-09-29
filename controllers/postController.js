@@ -11,7 +11,6 @@ module.exports = {
     searchPost: async (req, res) =>{
         const search=req.body.search;
         const searchPosts = await postModel.search(search);
-
         res.render('post/post.ejs', {posts: searchPosts});
     },
 
@@ -21,7 +20,7 @@ module.exports = {
         const posts = await postModel.getAll();
         const post = await postModel.detail(postId);
         const comments = await commentModel.getComments(postId);
-        res.render('post/postDetail.ejs', { posts: posts, post: post, comments: comments });
+        res.render('post/postDetail.ejs', { posts: posts, post: post, comments: comments});
     },
     // 글 작성 폼
     createPost: async (req, res) =>{
