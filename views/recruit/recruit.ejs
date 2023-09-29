@@ -1,14 +1,19 @@
 <a href="/recruit/create">글 작성하기</a>
 
 <form action="/recruit" method="post">
-    <button type="submit" name="filter" value="all">전체글</button>
-    <button type="submit" name="filter" value="study">스터디 모집</button>
-    <button type="submit" name="filter" value="study_closed">스터디 마감</button>
-    <button type="submit" name="filter" value="project">프로젝트 모집</button>
-    <button type="submit" name="filter" value="project_closed">프로젝트 마감</button>
-    <button type="submit" name="filter" value="recruit">채용 모집</button>
-    <button type="submit" name="filter" value="recruit_closed">채용 마감</button>
+    <!-- 카테고리 필터-->
+    <label>카테고리:</label>
+    <input type="radio" name="filterCategory" value="study">스터디 모집</input>
+    <input type="radio" name="filterCategory" value="project">프로젝트 모집</input>
+    <input type="radio" name="filterCategory" value="recruit">채용 모집</input>
+    <br />
+    <!-- 상태 필터-->
+    <label>상태:</label>
+    <input type="radio" name="filterStatus" value="solved">마감
+    <input type="radio" name="filterStatus" value="unsolved">모집중
+    <button type="submit">필터 적용</button>
 </form>
+
 
 
 <li>------ 모집/공고 게시판 ------</li>

@@ -18,8 +18,9 @@ module.exports = {
     },
     //필터링 
     filteringPost: async (req, res) =>{
-        const filter=req.body.filter;
-        const filteredPosts = await recruitModel.search(filter);
+        const filter1=req.body.filterCategory;
+        const filter2=req.body.filterStatus;
+        const filteredPosts = await recruitModel.search(filter1, filter2);
         res.render('recruit/recruit.ejs', {posts: filteredPosts});
     },
     createRecruit: async (req, res) =>{

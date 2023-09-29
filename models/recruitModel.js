@@ -13,32 +13,27 @@ module.exports = {
         return post[0][0];
     },
     // 필터
-    search: async (filter) => {
+    search: async (filterCategory, filterStatus) => {
         let query = "SELECT * FROM Post WHERE board_type_id='4'";
-    
-        if (filter === 'solved') {
+        
+        if (filterStatus === 'solved') {
             query += " AND activate=0";
-        } else if (filter === 'unsolved') {
+        } else if (filterStatus === 'unsolved') {
             query += " AND activate=1";
-        } else if (filter === 'study') {
-            query += " AND (category='1' AND activate=1)"; 
-        } else if (filter === 'study_closed') {
-            query += " AND (category='1' AND activate=0)"; 
-        } else if (filter === 'project') {
-            query += " AND (category='2' AND activate=1)";
-        } else if (filter === 'project_closed') {
-            query += " AND (category='2' AND activate=0)";
-        } else if (filter === 'recruit') {
-            query += " AND (category='3' AND activate=1)";
-        } else if (filter === 'recruit_closed') {
-            query += " AND (category='3' AND activate=0)";
         }
-
+    
+        if (filterCategory === 'study') {
+            query += " AND category='1'";
+        } else if (filterCategory === 'project') {
+            query += " AND category='2'";
+        } else if (filterCategory === 'recruit') {
+            query += " AND category='3'";
+        }
+    
         const posts = await db.query(query);
         return posts[0];
     },
-    
-     
+
     createNewRecruit: async(newPostData) => {
         let query='';
         let NewPost;
