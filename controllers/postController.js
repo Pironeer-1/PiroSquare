@@ -20,7 +20,7 @@ module.exports = {
         const posts = await postModel.getAll();
         const post = await postModel.detail(postId);
         const comments = await commentModel.getComments(postId);
-        res.render('post/postDetail.ejs', { posts: posts, post: post, comments: comments });
+        res.render('post/postDetail.ejs', { posts: posts, post: post, comments: comments});
     },
     // 글 작성 폼
     createPost: async (req, res) =>{
