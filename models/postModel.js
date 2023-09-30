@@ -40,4 +40,14 @@ module.exports = {
         await db.query(query, [newPostData.title, newPostData.content, postId]);
     },
     
+    // 좋아요 개수 업데이트
+    likeCount: async(postId, action) => {
+        let query;
+        if(action==='like'){
+            query = 'UPDATE Post SET likes_count=likes_count+1 WHERE post_id=?;';
+        }else if(action==='unlike'){
+            query = 'UPDATE Post SET likes_count=likes_count-1 WHERE post_id=?;';
+        }
+        await db.query(query, [postId]);
+    },
 }

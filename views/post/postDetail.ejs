@@ -6,6 +6,9 @@
     <button>삭제하기</button>
     <a href="/post/update/<%= post.post_id %>">Update</a>
 </form>
+<form action="/like/post/<%= post.post_id %>" method="post">
+    <button>좋아요</button>
+</form>
 
 <p>------댓글창입니다------</p>
 <form action="/comment/create/<%= post.post_id %>" method="post">
