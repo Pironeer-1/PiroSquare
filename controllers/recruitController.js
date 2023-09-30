@@ -5,7 +5,6 @@ const postModel = require('../models/postModel.js');
 const userModel = require('../models/userModel.js');
 
 module.exports = {
-    
     getAll: async(req, res) =>{
         const user = await req.user;
         if(user === undefined){
@@ -17,7 +16,6 @@ module.exports = {
         const posts = await postModel.getAll(4);
         res.render('recruit/recruit.ejs', {posts: posts});
     },
-
     detail: async (req, res) =>{
         const user = await req.user;
         if(user === undefined){
@@ -57,7 +55,6 @@ module.exports = {
         const posts = await postModel.getAll(4);
         res.render('recruit/recruitCreate.ejs', {posts: posts});
     },
-
     createNewRecruit: async (req, res) =>{
         const user = await req.user;
         if(user === undefined){
@@ -72,7 +69,6 @@ module.exports = {
         const insertId = await recruitModel.createNewRecruit(newPostData, userId);
         res.redirect(`/recruit/detail/${insertId}`);
     },
-
     deleteRecruit: async (req, res) =>{
         const user = await req.user;
         if(user === undefined){
@@ -95,7 +91,6 @@ module.exports = {
             res.redirect('/recruit');
         }
     },
-
     updateRecruit: async (req, res) =>{
         const user = await req.user;
         if(user === undefined){

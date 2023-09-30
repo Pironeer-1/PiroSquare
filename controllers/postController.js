@@ -16,7 +16,7 @@ module.exports = {
         const posts = await postModel.getAll(1);
         res.render('post/post.ejs', {posts: posts});
     },
-    // 검색 하기
+    // 자유게시판 검색 하기
     searchPost: async (req, res) =>{
         const user = await req.user;
         if(user === undefined){
@@ -68,7 +68,10 @@ module.exports = {
         const userId=await userModel.getUserId(user.ID);
 
         const newPostData = req.body;
-        const insertId = await postModel.createNewPost(newPostData, userId, 1);
+
+        console.log(user);
+   
+        const insertId = await postModel.createNewPost(newPostData, userId);
         res.redirect(`/post/detail/${insertId}`);
     },
     // 글 삭제
@@ -133,4 +136,7 @@ module.exports = {
         await postModel.updatePost(postId, newPostData);
         res.redirect(`/post/detail/${postId}`);
     },
+    
 }
+
+
