@@ -1,8 +1,25 @@
 <a href="/recruit/create">글 작성하기</a>
 
+<form action="/recruit" method="post">
+    <!-- 카테고리 필터-->
+    <label>카테고리:</label>
+    <input type="radio" name="filterCategory" value="study">스터디 모집</input>
+    <input type="radio" name="filterCategory" value="project">프로젝트 모집</input>
+    <input type="radio" name="filterCategory" value="recruit">채용 모집</input>
+    <br />
+    <!-- 상태 필터-->
+    <label>상태:</label>
+    <input type="radio" name="filterStatus" value="solved">마감
+    <input type="radio" name="filterStatus" value="unsolved">모집중
+    <button type="submit">필터 적용</button>
+</form>
+
+
+
 <li>------ 모집/공고 게시판 ------</li>
 <% for (let post of posts) { %>
-    <li><a href="/post/detail/<%= post.post_id %>">
+    <li><a href="/recruit/detail/<%= post.post_id %>">
         제목: <%= post.title %></a>
+        글쓴이: <%= post.user_name %>
     </li>
 <% } %>

@@ -4,6 +4,7 @@ const router = express.Router();
 const recruitController = require('../controllers/recruitController.js');
 
 router.get('/', recruitController.getAll);
+router.post('/', recruitController.filteringPost);
 router.get('/detail/:post_id', recruitController.detail);
 router.get('/create', recruitController.createRecruit);
 router.post('/create', recruitController.createNewRecruit);

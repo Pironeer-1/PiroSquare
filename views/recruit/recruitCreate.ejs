@@ -1,4 +1,12 @@
 <form action="/recruit/create" method="post">
+    
+    <label for="category">Category:</label>
+    <select name="category" id="category">
+        <option value="study">study</option>
+        <option value="project">project</option>
+        <option value="recruit">recruit</option>
+    </select>
+
     <input type="text" name="title" placeholder="title">
     <textarea name="content" id="" cols="20" placeholder="content"></textarea>
     <button type="submit">글 작성 완료</button>

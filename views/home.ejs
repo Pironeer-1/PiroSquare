@@ -1,5 +1,11 @@
 <link rel="stylesheet" href="/css/style.css">
 
+
+<% if (error!==null) { %>
+    <h2 style="color: red;">
+        <%= error %>
+    </h2>
+<% } %>
 <h1>Welcome!</h1>
 <% if (user) { %>
     <p><%= user.nickname %> 반갑습니다!</p>

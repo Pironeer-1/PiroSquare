@@ -37,11 +37,10 @@ app.use(session({
 
 
 //Controllers
-
 const passportController = require('./controllers/passportController.js')(app);
-const loginController = require('./controllers/loginController.js');
 const homeController = require('./controllers/homeController.js');
-const postController = require('./controllers/postController.js');
+const loginController = require('./controllers/loginController.js');
+//const postController = require('./controllers/postController.js');
 
 //Router
 const postRouter = require('./routers/postRouter.js');
@@ -50,6 +49,8 @@ const informRouter = require('./routers/informRouter.js');
 const recruitRouter = require('./routers/recruitRouter.js');
 const mypageRouter = require('./routers/mypageRouter.js');
 const loginRouter = require('./routers/loginRouter.js');
+const commentRouter = require('./routers/commentRouter.js');
+const likeRouter = require('./routers/likeRouter.js');
 
 app.use('/post', postRouter);
 app.use('/question', questionRouter);
@@ -57,9 +58,12 @@ app.use('/inform', informRouter);
 app.use('/recruit', recruitRouter);
 app.use('/mypage', mypageRouter);
 app.use('/auth', loginRouter);
+app.use('/comment', commentRouter);
+app.use('/like', likeRouter);
 
 app.get('/', homeController.getPosts);
 
 app.listen(app.get('port'), ()=>{
     console.log(app.get('port'), '번 포트에서 대기 중');
 });
+

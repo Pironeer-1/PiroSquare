@@ -1,8 +1,16 @@
 <a href="/post/create">글 작성하기</a>
 
 <li>------ 자유 게시판 ------</li>
+
+<form action="/post" method="post">
+    <input type="text" name="search" placeholder="제목으로 검색하세요">
+    <button type="submit" name="filter" value="all">전체글 검색</button>
+</form>
+
 <% for (let post of posts) { %>
     <li><a href="/post/detail/<%= post.post_id %>">
         제목: <%= post.title %></a>
+        글쓴이: <%= post.user_name %>
+        <span>좋아요 : <%= post.likes_count %></span>
     </li>
 <% } %>
