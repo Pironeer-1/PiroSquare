@@ -24,7 +24,7 @@ app.use(expressLayouts);
 app.set('layout', 'index.ejs');
 app.set('layout extractStyles', true);
 app.use(express.static('public'));
-
+app.use('/user', express.static('uploads/profile'));
 //login_process 미들웨어
 const session = require('express-session');
 const FileStore = require('session-file-store')(session);
@@ -47,6 +47,8 @@ const postRouter = require('./routers/postRouter.js');
 const questionRouter = require('./routers/questionRouter.js');
 const informRouter = require('./routers/informRouter.js');
 const recruitRouter = require('./routers/recruitRouter.js');
+const mypageRouter = require('./routers/mypageRouter.js');
+const loginRouter = require('./routers/loginRouter.js');
 const commentRouter = require('./routers/commentRouter.js');
 const likeRouter = require('./routers/likeRouter.js');
 
@@ -54,12 +56,12 @@ app.use('/post', postRouter);
 app.use('/question', questionRouter);
 app.use('/inform', informRouter);
 app.use('/recruit', recruitRouter);
+app.use('/mypage', mypageRouter);
+app.use('/auth', loginRouter);
 app.use('/comment', commentRouter);
 app.use('/like', likeRouter);
 
 app.get('/', homeController.getPosts);
-app.get('/logout', loginController.logoutProcess);
-
 
 app.listen(app.get('port'), ()=>{
     console.log(app.get('port'), '번 포트에서 대기 중');
