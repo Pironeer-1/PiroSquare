@@ -14,7 +14,7 @@ module.exports = {
             return;
         }
 
-        const question_posts = await questionModel.getAll();
+        const question_posts = await postModel.getAll(3);
         res.render('question/question_main.ejs', {question_posts: question_posts});
     },
     // 질문게시글
@@ -27,7 +27,7 @@ module.exports = {
         }
 
         const questionId=req.params.post_id
-        const question = await questionModel.detail(questionId);
+        const question = await postModel.detail(questionId);
 
         const comments = await commentModel.getComments(questionId);
 
@@ -96,7 +96,7 @@ module.exports = {
             // 임시로 main으로 redirect 시켰음
             res.redirect(`/?error=${message}`);
         }else{
-            await questionModel.deletePost(postId);
+            await postModel.deletePost(postId);
             res.redirect('/question');
         }
     },
@@ -133,22 +133,13 @@ module.exports = {
             return;
         }
 
-        const userId=await userModel.getUserId(user.ID);
         const postId=req.params.post_id
 
-        // 글의 작성자와 요청하는 사람이 같은지 확인
-        const post = await postModel.detail(postId);
-        if(post.user_id===null || post.user_id!==userId){
-            const message = encodeURIComponent('글의 작성자만 글을 수정할 수 있습니다.');
-            // 임시로 main으로 redirect 시켰음
-            res.redirect(`/?error=${message}`);
-        }else{
-            const newPost = req.body;
-            await questionModel.updatePost(postId, newPost);
+        const newPost = req.body;
+        await questionModel.updatePost(postId, newPost);
             
-            const question = await questionModel.detail(postId);
-            const comments = await commentModel.getComments(postId);
-            res.render('question/question_detail.ejs', {question: question, comments: comments});
-        }
+        const question = await questionModel.detail(postId);
+        const comments = await commentModel.getComments(postId);
+        res.render('question/question_detail.ejs', {question: question, comments: comments});
     },
 }
