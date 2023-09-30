@@ -3,12 +3,32 @@ const db = require('../config/db.js');
 module.exports = {
 
     getAll: async()=>{
-        const query = "SELECT * FROM Post where board_type_id='1';"
-        const posts = await db.query(query);
-        return posts[0];
+        const query = `
+        SELECT 
+            Post.*, 
+            User.name AS user_name 
+        FROM 
+            Post 
+        INNER JOIN 
+            User ON Post.user_id = User.user_id 
+        WHERE 
+            Post.board_type_id = '1';
+    `;
+    const posts = await db.query(query);
+    return posts[0];
     },
     detail: async (postId) => {
-        const query = 'SELECT * FROM Post where post_id= ?;'
+        const query = 
+        `SELECT 
+            Post.*, 
+            User.name AS user_name 
+        FROM 
+            Post 
+        INNER JOIN 
+            User ON Post.user_id = User.user_id 
+        WHERE 
+            Post.board_type_id = '1' and post_id= ?;;
+        `;
         const post = await db.query(query, [postId]);
         return post[0][0];
     },
@@ -26,7 +46,7 @@ module.exports = {
     createNewPost: async(newPostData, userId) => {
         const query = 'INSERT INTO Post (title, content, board_type_id, user_id) VALUES (?, ?, ?, ?);';
         const NewPost = await db.query(query, [newPostData.title, 
-            newPostData.content, 1, userId]); //user_id 임시
+            newPostData.content, 1, userId]);
         return NewPost[0].insertId;
     },
 
@@ -40,4 +60,21 @@ module.exports = {
         await db.query(query, [newPostData.title, newPostData.content, postId]);
     },
     
+    // 좋아요 개수 업데이트
+    likeCount: async(postId, action) => {
+        let query;
+        if(action==='like'){
+            query = 'UPDATE Post SET likes_count=likes_count+1 WHERE post_id=?;';
+        }else if(action==='unlike'){
+            query = 'UPDATE Post SET likes_count=likes_count-1 WHERE post_id=?;';
+        }
+        await db.query(query, [postId]);
+    },
+
+    //user불러오기
+    getUser :async(userId) => {
+        const query = 'SELECT * FROM User WHERE user_id=?;';
+        const user = await db.query(query, [userId]);
+        return user[0][0];
+    },
 }

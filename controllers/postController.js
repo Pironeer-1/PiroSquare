@@ -1,6 +1,7 @@
 const homeModel = require('../models/homeModel.js');
 const postModel = require('../models/postModel.js');
 const commentModel = require('../models/commentModel.js');
+
 module.exports = {
     // 자유 게시판 메인
     getAll: async(req, res) =>{
@@ -56,6 +57,7 @@ module.exports = {
         await postModel.updatePost(postId, newPostData);
         res.redirect(`/post/detail/${postId}`);
     },
+    
 }
 
 

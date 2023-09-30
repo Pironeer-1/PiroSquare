@@ -33,5 +33,15 @@ module.exports = {
         const query = "DELETE FROM Comment WHERE comment_id = ?;";
         await db.query(query, [commentId]);
     },
-}
 
+    // 좋아요 개수 업데이트
+    likeCount: async(commentId, action) => {
+        let query;
+        if(action==='like'){
+            query = 'UPDATE Comment SET likes_count=likes_count+1 WHERE comment_id=?;';
+        }else if(action==='unlike'){
+            query = 'UPDATE Comment SET likes_count=likes_count-1 WHERE comment_id=?;';
+        }
+        await db.query(query, [commentId]);
+    },
+}

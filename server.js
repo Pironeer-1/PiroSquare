@@ -48,12 +48,14 @@ const questionRouter = require('./routers/questionRouter.js');
 const informRouter = require('./routers/informRouter.js');
 const recruitRouter = require('./routers/recruitRouter.js');
 const commentRouter = require('./routers/commentRouter.js');
+const likeRouter = require('./routers/likeRouter.js');
 
 app.use('/post', postRouter);
 app.use('/question', questionRouter);
 app.use('/inform', informRouter);
 app.use('/recruit', recruitRouter);
 app.use('/comment', commentRouter);
+app.use('/like', likeRouter);
 
 app.get('/', homeController.getPosts);
 app.get('/logout', loginController.logoutProcess);
