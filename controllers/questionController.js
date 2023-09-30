@@ -11,6 +11,7 @@ module.exports = {
         if(user === undefined){
             const message = encodeURIComponent('승인된 회원만 이용할 수 있습니다.');
             res.redirect(`/?error=${message}`);
+            return;
         }
 
         const question_posts = await questionModel.getAll();
@@ -22,6 +23,7 @@ module.exports = {
         if(user === undefined){
             const message = encodeURIComponent('승인된 회원만 이용할 수 있습니다.');
             res.redirect(`/?error=${message}`);
+            return;
         }
 
         const questionId=req.params.post_id
@@ -37,6 +39,7 @@ module.exports = {
         if(user === undefined){
             const message = encodeURIComponent('승인된 회원만 이용할 수 있습니다.');
             res.redirect(`/?error=${message}`);
+            return;
         }
 
         const search=req.body.search;
@@ -52,6 +55,7 @@ module.exports = {
         if(user === undefined){
             const message = encodeURIComponent('승인된 회원만 이용할 수 있습니다.');
             res.redirect(`/?error=${message}`);
+            return;
         }
 
         res.render('question/question_create.ejs');
@@ -62,6 +66,7 @@ module.exports = {
         if(user === undefined){
             const message = encodeURIComponent('승인된 회원만 이용할 수 있습니다.');
             res.redirect(`/?error=${message}`);
+            return;
         }
 
         const userId=await userModel.getUserId(user.ID);
@@ -78,6 +83,7 @@ module.exports = {
         if(user === undefined){
             const message = encodeURIComponent('승인된 회원만 이용할 수 있습니다.');
             res.redirect(`/?error=${message}`);
+            return;
         }
 
         const userId=await userModel.getUserId(user.ID);
@@ -100,6 +106,7 @@ module.exports = {
         if(user === undefined){
             const message = encodeURIComponent('승인된 회원만 이용할 수 있습니다.');
             res.redirect(`/?error=${message}`);
+            return;
         }
 
         const userId=await userModel.getUserId(user.ID);
@@ -123,6 +130,7 @@ module.exports = {
         if(user === undefined){
             const message = encodeURIComponent('승인된 회원만 이용할 수 있습니다.');
             res.redirect(`/?error=${message}`);
+            return;
         }
 
         const userId=await userModel.getUserId(user.ID);

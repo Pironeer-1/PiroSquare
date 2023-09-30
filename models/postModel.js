@@ -41,7 +41,7 @@ module.exports = {
     },
     
     // 좋아요 개수 업데이트
-    likeCount: async(postId, action) => {
+    likeCountUpdate: async(postId, action) => {
         let query;
         if(action==='like'){
             query = 'UPDATE Post SET likes_count=likes_count+1 WHERE post_id=?;';
