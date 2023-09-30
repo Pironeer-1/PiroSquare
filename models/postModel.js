@@ -3,12 +3,32 @@ const db = require('../config/db.js');
 module.exports = {
     // board_type_id 로 서로 다른 게시글 데이터를 가져옴
     getAll: async(board_type_id)=>{
-        const query = "SELECT * FROM Post where board_type_id=?;"
+        const query = `
+        SELECT 
+            Post.*, 
+            User.name AS user_name 
+        FROM 
+            Post 
+        INNER JOIN 
+            User ON Post.user_id = User.user_id 
+        WHERE 
+            Post.board_type_id = '?';
+        `;
         const posts = await db.query(query, [board_type_id]);
         return posts[0];
     },
     detail: async (postId) => {
-        const query = 'SELECT * FROM Post where post_id= ?;'
+        const query =
+        `SELECT 
+            Post.*, 
+            User.name AS user_name 
+        FROM 
+            Post 
+        INNER JOIN 
+            User ON Post.user_id = User.user_id 
+        WHERE 
+            post_id= ?;
+        `;
         const post = await db.query(query, [postId]);
         return post[0][0];
     },
