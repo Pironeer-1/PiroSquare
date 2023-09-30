@@ -23,10 +23,10 @@ module.exports = {
     return posts[0];
     },
 
-    createNewPost: async(newPostData) => {
+    createNewPost: async(newPostData, userId) => {
         const query = 'INSERT INTO Post (title, content, board_type_id, user_id) VALUES (?, ?, ?, ?);';
         const NewPost = await db.query(query, [newPostData.title, 
-            newPostData.content, 1, 1]); //user_id 임시
+            newPostData.content, 1, userId]); //user_id 임시
         return NewPost[0].insertId;
     },
 

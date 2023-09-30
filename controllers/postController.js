@@ -7,7 +7,7 @@ module.exports = {
         const posts = await postModel.getAll();
         res.render('post/post.ejs', {posts: posts});
     },
-    // 검색 하기
+    // 자유게시판 검색 하기
     searchPost: async (req, res) =>{
         const search=req.body.search;
         const searchPosts = await postModel.search(search);
@@ -30,7 +30,10 @@ module.exports = {
     //글 작성 하기
     createNewPost: async (req, res) =>{
         const newPostData = req.body;
-        const insertId = await postModel.createNewPost(newPostData);
+        const user = await req.user
+        console.log(user);
+        const userId = user.user_id;
+        const insertId = await postModel.createNewPost(newPostData, userId);
         res.redirect(`/post/detail/${insertId}`);
     },
     // 글 삭제

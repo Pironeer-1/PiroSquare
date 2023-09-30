@@ -29,11 +29,6 @@ module.exports = {
         await db.query(query,[commentId]);
     },
 
-    updateParentComment: async (commentId) => {
-        const query = "UPDATE Comment SET parent_comment_id = NULL WHERE comment_id = ?;";
-        await db.query(query, [commentId]);
-    },
-    
     deleteReply: async (commentId) => {
         const query = "DELETE FROM Comment WHERE comment_id = ?;";
         await db.query(query, [commentId]);

@@ -3,12 +3,10 @@ const recruitModel = require('../models/recruitModel.js');
 const commentModel = require('../models/commentModel.js');
 
 module.exports = {
-    
     getAll: async(req, res) =>{
         const posts = await recruitModel.getAll();
         res.render('recruit/recruit.ejs', {posts: posts});
     },
-
     detail: async (req, res) =>{
         const postId=req.params.post_id
         const post = await recruitModel.detail(postId);
@@ -27,19 +25,16 @@ module.exports = {
         const posts = await recruitModel.getAll();
         res.render('recruit/recruitCreate.ejs', {posts: posts});
     },
-
     createNewRecruit: async (req, res) =>{
         const newPostData = req.body;
         const insertId = await recruitModel.createNewRecruit(newPostData);
         res.redirect(`/recruit/detail/${insertId}`);
     },
-
     deleteRecruit: async (req, res) =>{
         const postId = req.params.post_id;
         await recruitModel.deleteRecruit(postId);
         res.redirect(`/recruit`);
     },
-
     updateRecruit: async (req, res) =>{
         const postId=req.params.post_id
         const post = await recruitModel.detail(postId);
