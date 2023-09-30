@@ -8,12 +8,6 @@ module.exports = {
     const comments = await db.query(query, [postId]);
         return comments[0];
     },
-    //대댓글 가져오기
-    getReply: async (parentCommentId) => {
-        const query = "SELECT * FROM Comment WHERE parent_comment_id=?";
-        replyComment = await db.query(query, [parentCommentId]);
-        return replyComment[0];
-    },
     // comment에 대한 post_id 불러오기
     getComment: async (commentId) => {
         const query = "SELECT * FROM Comment where comment_id=?;";
@@ -33,6 +27,11 @@ module.exports = {
     deleteComment: async (commentId)=>{
         const query = "DELETE FROM Comment WHERE comment_id = ?;";
         await db.query(query,[commentId]);
+    },
+
+    deleteReply: async (commentId) => {
+        const query = "DELETE FROM Comment WHERE comment_id = ?;";
+        await db.query(query, [commentId]);
     },
 
     // 좋아요 개수 업데이트
