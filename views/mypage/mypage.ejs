@@ -8,8 +8,35 @@
 <p>소개문구: <%= user.introduce %></p>
 <a href="/mypage/updateUser">회원정보 수정</a>
 <br>
-<p>좋아요한 게시글</p>
-<p>like</p>
+<h3>작성한 게시글</h3>
+<ul>
+    <% userPosts.forEach((userPost) => { %>
+    <li>
+        <a href="/post/<%= userPost.post_id %>">
+        <%= userPost.title %> (글쓴이: <%= userPost.user_nickname %>)
+        </a>
+    </li>
+    <% }); %>
+</ul>
 <br>
-<p>작성한 게시글</p>
-<p>like</p>
+<h3>좋아요한 게시글</h3>
+<ul>
+    <% likePosts.forEach((likePost) => { %>
+    <li>
+        <a href="/post/<%= likePost.post_id %>">
+        <%= likePost.title %> (글쓴이: <%= likePost.user_id %>)
+        </a>
+    </li>
+    <% }); %>
+</ul>
+<br>
+<h3>댓글남긴 게시글</h3>
+<ul>
+    <% commentPosts.forEach((commentPost) => { %>
+    <li>
+        <a href="/post/<%= commentPost.post_id %>">
+        <%= commentPost.title %> (글쓴이: <%= commentPost.user_id %>)
+        </a>
+    </li>
+    <% }); %>
+</ul>
