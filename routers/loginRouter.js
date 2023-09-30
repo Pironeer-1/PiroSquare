@@ -14,13 +14,12 @@ const storage = multer.diskStorage({
     },
 });
 const upload = multer({ storage: storage });
-
 const router = express.Router();
 
-const mypageController = require('../controllers/mypageController.js');
+const loginController = require('../controllers/loginController.js');
 
-router.get('/', mypageController.getUserInfo);
-router.get('/updateUser', mypageController.updateUser);
-router.post('/updateUser/:user_id', upload.single('image'), mypageController.updateNewUser);
+router.get('/logout', loginController.logoutProcess);
+router.get('/newUser', loginController.newUser);
+router.post('/newUserProfile', upload.single('image'), loginController.newUserProfile);
 
 module.exports = router;

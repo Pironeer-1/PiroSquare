@@ -21,7 +21,7 @@ module.exports = function (app) {
         {
             clientID: process.env.NAVER_ID,
             clientSecret: process.env.NAVER_SECRET,
-            callbackURL: 'login/naver/callback',
+            callbackURL: 'naver/callback',
         },
         async function (accessToken, refreshToken, profile, done) {
             console.log('Naver Strategy profile:', profile);
@@ -35,6 +35,7 @@ module.exports = function (app) {
                         ID: profile.id,
                         nickname: profile.nickname,
                     });
+                    newUser.newUser = true;
                     return done(null, newUser);
                 }
             } catch (error) {
@@ -46,9 +47,14 @@ module.exports = function (app) {
 
 
     app.get('/naver', passport.authenticate('naver', { authType: 'reprompt' }));
-    app.get('/login/naver/callback',
+    app.get('/naver/callback',
         passport.authenticate('naver', { failureRedirect: '/' }),
         (req, res) => {
+            console.log('res.user', req.user);
+            console.log('res.user.newUser', req.user.newUser);
+            if (req.user && req.user.newUser) {
+                return res.redirect('/auth/newUser');
+            }
             res.redirect('/');
         },
     );

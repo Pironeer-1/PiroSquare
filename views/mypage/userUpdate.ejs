@@ -1,15 +1,18 @@
 <link rel="stylesheet" href="/css/input.css">
 
-<form action="/mypage/updateUser/<%= user.user_id %>"method="post">
-    <input type="text" name="name" placeholder="이름" value="<%= user.name %>">
+<form action="/mypage/updateUser/<%= user.user_id %>" method="post" enctype="multipart/form-data">
+    <input type="text" name="name" placeholder="이름" value="<%= user.name %>" disabled>
+    <select name="year" disabled>
+        <% for (let i = 1; i <= 20; i++) { %>
+            <option value="<%= i %>" <%= i === user.year ? 'selected' : '' %>>
+            <%= i %>기
+            </option>
+        <% } %>
+        </select>
     <input type="text" name="nickname" placeholder="닉네임" value="<%= user.nickname %>">
-    <select name="year">
-    <% for (let i = 1; i <= 20; i++) { %>
-        <option value="<%= i %>" <%= i === user.year ? 'selected' : '' %>>
-        <%= i %>기
-        </option>
-    <% } %>
-    </select>
+    <input type="text" name="email" placeholder="이메일" value="<%= user.email %>">
+    
+    <input type="file" name="image">
     <textarea name="introduce" id="" cols="20" placeholder="한줄 소개"><%= user.introduce %></textarea>
     <button>회원 수정 완료</button>
 </form>

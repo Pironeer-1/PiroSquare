@@ -3,7 +3,7 @@
 <h1>Welcome!</h1>
 <% if (user) { %>
     <p><%= user.nickname %> 반갑습니다!</p>
-    <a href="/logout">로그아웃</a>
+    <a href="/auth/logout">로그아웃</a>
     <a href="/mypage">마이페이지</a>
 <% } else { %>
     <a href="/naver">네이버로그인</a>
