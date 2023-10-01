@@ -66,7 +66,7 @@ module.exports = {
         const userId=await userModel.getUserId(user.ID);
 
         const newPostData = req.body;
-        const insertId = await recruitModel.createNewRecruit(newPostData, userId);
+        const insertId = await recruitModel.createNewRecruit(newPostData, userId, 4);
         res.redirect(`/recruit/detail/${insertId}`);
     },
     deleteRecruit: async (req, res) =>{

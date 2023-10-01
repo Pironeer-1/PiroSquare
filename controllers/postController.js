@@ -71,7 +71,7 @@ module.exports = {
 
         console.log(user);
    
-        const insertId = await postModel.createNewPost(newPostData, userId);
+        const insertId = await postModel.createNewPost(newPostData, userId, 1);
         res.redirect(`/post/detail/${insertId}`);
     },
     // 글 삭제
