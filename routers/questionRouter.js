@@ -20,10 +20,11 @@ const upload = multer({ storage: storage });
 const questionController = require('../controllers/questionController.js');
 
 router.get('/', questionController.getAll);
-router.post('/', questionController.filteringPost);
+router.get('/search', questionController.filteringPost);
 router.get('/create', questionController.createForm);
 router.post('/create', upload.single('image'), questionController.createPost);
 router.get('/read/:post_id', questionController.detailPost);
+router.get('/detail/:post_id', questionController.detailPost);
 router.post('/delete/:post_id', questionController.deletePost);
 router.get('/update/:post_id', questionController.updateForm);
 router.post('/update/:post_id', upload.single('image'), questionController.updatePost);

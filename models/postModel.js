@@ -42,6 +42,7 @@ module.exports = {
         search='%'+search+'%';
         query = "SELECT * FROM Post where board_type_id=? and title LIKE ?;";
         posts = await db.query(query, [board_type_id, search]);
+
         return posts[0];
     },
     // 게시글 생성

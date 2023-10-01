@@ -4,15 +4,15 @@ module.exports = {
     //모든 댓글 가져오기
     getComments: async (postId) => {
     const query = `
-    SELECT 
-        comment.*, 
-        User.name AS user_name 
-    FROM 
-        Comment
-    INNER JOIN 
-        User ON Comment.user_id = User.user_id 
-    WHERE 
-        post_id=?;
+        SELECT 
+            Comment.*, 
+            User.name AS user_name 
+        FROM 
+            Comment 
+        INNER JOIN 
+            User ON Comment.user_id = User.user_id 
+        WHERE 
+            Comment.post_id = ?;
     `;
     const comments = await db.query(query, [postId]);
         return comments[0];
@@ -35,12 +35,12 @@ module.exports = {
     },
     createComment: async (postId, userId, newCommentData) => {
         const query = "INSERT INTO Comment (content, post_id, user_id) VALUES (?,?,?);";
-        await db.query(query, [newCommentData, postId, userId]); //user_id 임시
+        await db.query(query, [newCommentData, postId, userId]);
     },
     //대댓글 작성
     createReply: async (postId, userId, newReplyData, parentCommentId) => {
         const query = "INSERT INTO Comment (content, post_id, parent_comment_id, user_id) VALUES (?, ?, ?, ?);";
-        await db.query(query, [newReplyData, postId, parentCommentId, userId]); // user_id 임시
+        await db.query(query, [newReplyData, postId, parentCommentId, userId]);
     },
     //댓글 삭제
     deleteComment: async (commentId)=>{

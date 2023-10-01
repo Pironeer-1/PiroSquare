@@ -7,67 +7,72 @@ const postModel = require('../models/postModel.js');
 module.exports = {
     // 질문게시판 메인
     getAll: async(req,res)=>{
-        const user = await req.user;
-        if(user === undefined){
-            const message = encodeURIComponent('승인된 회원만 이용할 수 있습니다.');
-            res.redirect(`/?error=${message}`);
-            return;
-        }
+        // const user = await req.user;
+        // if(user === undefined){
+        //     const message = encodeURIComponent('승인된 회원만 이용할 수 있습니다.');
+        //     res.redirect(`/?error=${message}`);
+        //     return;
+        // }
 
         const question_posts = await postModel.getAll(3);
-        res.render('question/question_main.ejs', {question_posts: question_posts});
+        // res.render('question/question_main.ejs', {question_posts: question_posts});
+        res.json({question_posts: question_posts});
     },
     // 질문게시글
     detailPost: async (req, res) =>{
-        const user = await req.user;
-        if(user === undefined){
-            const message = encodeURIComponent('승인된 회원만 이용할 수 있습니다.');
-            res.redirect(`/?error=${message}`);
-            return;
-        }
+        // const user = await req.user;
+        // if(user === undefined){
+        //     const message = encodeURIComponent('승인된 회원만 이용할 수 있습니다.');
+        //     res.redirect(`/?error=${message}`);
+        //     return;
+        // }
 
         const questionId=req.params.post_id;
         const question = await postModel.detail(questionId);
 
         const comments = await commentModel.getComments(questionId);
 
-        res.render('question/question_detail.ejs', {question: question, comments: comments});
+        // res.render('question/question_detail.ejs', {question: question, comments: comments});
+        res.json({question: question, comments: comments});
     },
     // 필터링
     filteringPost: async (req, res) =>{
-        const user = await req.user;
-        if(user === undefined){
-            const message = encodeURIComponent('승인된 회원만 이용할 수 있습니다.');
-            res.redirect(`/?error=${message}`);
-            return;
-        }
+        // const user = await req.user;
+        // if(user === undefined){
+        //     const message = encodeURIComponent('승인된 회원만 이용할 수 있습니다.');
+        //     res.redirect(`/?error=${message}`);
+        //     return;
+        // }
 
-        const search=req.body.search;
-        const filter=req.body.filter;
+        // const search=req.body.search;
+        // const filter=req.body.filter;
 
-        const filteredposts = await questionModel.search(search,filter);
+        // const filteredposts = await questionModel.search(search,filter);
+        const search=req.query.keyword;
+        const searchPosts = await postModel.search(search, 3);
 
-        res.render('question/question_main.ejs', {question_posts: filteredposts});
+        res.render('question/question_main.ejs', {question_posts: searchPosts});
     },
     // 질문게시글 작성
     createForm: async (req,res) => {
-        const user = await req.user;
-        if(user === undefined){
-            const message = encodeURIComponent('승인된 회원만 이용할 수 있습니다.');
-            res.redirect(`/?error=${message}`);
-            return;
-        }
+        // const user = await req.user;
+        // if(user === undefined){
+        //     const message = encodeURIComponent('승인된 회원만 이용할 수 있습니다.');
+        //     res.redirect(`/?error=${message}`);
+        //     return;
+        // }
 
         res.render('question/question_create.ejs');
     },
     // 작성된 질문게시글 생성
     createPost: async (req,res) => {
         const user = await req.user;
-        if(user === undefined){
-            const message = encodeURIComponent('승인된 회원만 이용할 수 있습니다.');
-            res.redirect(`/?error=${message}`);
-            return;
-        }
+        // if(user === undefined){
+        //     const message = encodeURIComponent('승인된 회원만 이용할 수 있습니다.');
+        //     res.redirect(`/?error=${message}`);
+        //     return;
+        // }
+
         const userId=await userModel.getUserId(user.ID);
         const newPost = req.body;
         const imagePath = req.file ? `/post/image/${req.file.filename}` : '';
@@ -78,12 +83,12 @@ module.exports = {
     },
     // 게시글 삭제
     deletePost: async (req, res) =>{
-        const user = await req.user;
-        if(user === undefined){
-            const message = encodeURIComponent('승인된 회원만 이용할 수 있습니다.');
-            res.redirect(`/?error=${message}`);
-            return;
-        }
+        // const user = await req.user;
+        // if(user === undefined){
+        //     const message = encodeURIComponent('승인된 회원만 이용할 수 있습니다.');
+        //     res.redirect(`/?error=${message}`);
+        //     return;
+        // }
 
         const userId=await userModel.getUserId(user.ID);
         const postId = req.params.post_id;
@@ -101,12 +106,12 @@ module.exports = {
     },
     // 게시글 업데이트 폼
     updateForm: async (req, res) =>{
-        const user = await req.user;
-        if(user === undefined){
-            const message = encodeURIComponent('승인된 회원만 이용할 수 있습니다.');
-            res.redirect(`/?error=${message}`);
-            return;
-        }
+        // const user = await req.user;
+        // if(user === undefined){
+        //     const message = encodeURIComponent('승인된 회원만 이용할 수 있습니다.');
+        //     res.redirect(`/?error=${message}`);
+        //     return;
+        // }
 
         const userId=await userModel.getUserId(user.ID);
         const postId=req.params.post_id;
@@ -125,12 +130,12 @@ module.exports = {
     },
     // 게시글 업데이트
     updatePost: async (req, res) =>{
-        const user = await req.user;
-        if(user === undefined){
-            const message = encodeURIComponent('승인된 회원만 이용할 수 있습니다.');
-            res.redirect(`/?error=${message}`);
-            return;
-        }
+        // const user = await req.user;
+        // if(user === undefined){
+        //     const message = encodeURIComponent('승인된 회원만 이용할 수 있습니다.');
+        //     res.redirect(`/?error=${message}`);
+        //     return;
+        // }
 
         const postId=req.params.post_id;
         const newPost = req.body;
