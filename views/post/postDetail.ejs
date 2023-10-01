@@ -23,7 +23,16 @@
     <% for (let comment of comments) { %>
         <% if (comment.parent_comment_id === null || comment.parent_comment_id===-1) { %> 
             <p>------댓글------</p>
-            <p><%= comment.content %></p>
+            <% if(comment.content==="삭제된 댓글입니다.") { %>
+                <p> 내용: <%= comment.content %></p>
+            <% } else { %>
+                <p>댓글쓴사람: <%= comment.user_name %>
+                <p> 내용: <%= comment.content %></p>
+                </p> 
+            <% } %>
+            <form action="/like/comment/<%= comment.comment_id %>" method="post">
+                <button>좋아요</button>
+            </form>
             <form action="/comment/delete/<%= comment.comment_id %>" method="post">
                 <button>삭제하기</button>
             </form>
@@ -36,7 +45,12 @@
             <p>------대댓글------</p>
             <% for (let reply of comments) { %>
                 <% if (reply.parent_comment_id === comment.comment_id) { %>
-                    <p><%= reply.content %></p>
+                    <p>대댓글쓴사람: <%= reply.user_name %>
+                        <p>내용: <%= reply.content %></p>
+                    </p> 
+                    <form action="/like/comment/<%= reply.comment_id %>" method="post">
+                        <button>좋아요</button>
+                    </form>
                     <form action="/comment/reply/delete/<%= reply.comment_id %>" method="post">
                         <button>삭제하기</button>
                     </form>
@@ -45,7 +59,5 @@
         <% } %>
     <% } %>
 
-
-    
 </div>
 <p><a href="/post">목록으로</a></p>

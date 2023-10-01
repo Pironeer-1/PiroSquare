@@ -68,11 +68,10 @@ module.exports = {
             res.redirect(`/?error=${message}`);
             return;
         }
-
         const userId=await userModel.getUserId(user.ID);
-
         const newPost = req.body;
-        const resultId = await questionModel.createNewPost(newPost, userId);
+        const imagePath = req.file ? `/post/image/${req.file.filename}` : '';
+        const resultId = await questionModel.createNewPost(newPost, userId, imagePath);
         
         res.redirect(`/question/read/${resultId}`);
         // res.json({insertId: result.insertId});
@@ -119,7 +118,7 @@ module.exports = {
             // 임시로 main으로 redirect 시켰음
             res.redirect(`/?error=${message}`);
         }else{
-            const question = await questionModel.detail(postId);
+            const question = await postModel.detail(postId);
             res.render('question/question_update.ejs', {question: question});
         }
         
@@ -134,11 +133,11 @@ module.exports = {
         }
 
         const postId=req.params.post_id;
-
         const newPost = req.body;
-        await questionModel.updatePost(postId, newPost);
-            
-        const question = await questionModel.detail(postId);
+        const imagePath = req.file ? `/post/image/${req.file.filename}` : '';
+        await questionModel.updatePost(postId, newPost, imagePath);
+        
+        const question = await postModel.detail(postId);
         const comments = await commentModel.getComments(postId);
         res.render('question/question_detail.ejs', {question: question, comments: comments});
     },

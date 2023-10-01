@@ -1,4 +1,4 @@
-<form action="/recruit/create" method="post">
+<form action="/recruit/create" method="post" enctype="multipart/form-data">
     
     <label for="category">Category:</label>
     <select name="category" id="category">
@@ -6,7 +6,7 @@
         <option value="project">project</option>
         <option value="recruit">recruit</option>
     </select>
-
+    <input type="file" name="image">
     <input type="text" name="title" placeholder="title">
     <textarea name="content" id="" cols="20" placeholder="content"></textarea>
     <button type="submit">글 작성 완료</button>

@@ -23,23 +23,23 @@ module.exports = {
         return posts[0];
     },
 
-    createNewRecruit: async(newPostData, userId) => {
+    createNewRecruit: async(newPostData, userId, imagePath) => {
         let query='';
         let NewPost;
         if(newPostData.category=='study'){
-            query = 'INSERT INTO Post (title, content, board_type_id, user_id, category ) VALUES (?, ?, ?, ?, ?);';
+            query = 'INSERT INTO Post (title, content, board_type_id, user_id, post_image, category ) VALUES (?, ?, ?, ?, ?, ?);';
             NewPost = await db.query(query, [newPostData.title, 
-                newPostData.content, 4, userId, 1]);
+                newPostData.content, 4, userId, imagePath, 1]);
         }
         else if(newPostData.category=='project'){
-            query = 'INSERT INTO Post (title, content, board_type_id, user_id, category ) VALUES (?, ?, ?, ?, ?);';
+            query = 'INSERT INTO Post (title, content, board_type_id, user_id, post_image, category ) VALUES (?, ?, ?, ?, ?, ?);';
             NewPost = await db.query(query, [newPostData.title, 
-                newPostData.content, 4, userId, 2]);
+                newPostData.content, 4, userId, imagePath, 2]);
         }
         else if(newPostData.category=='recruit'){
-            query = 'INSERT INTO Post (title, content, board_type_id, user_id, category ) VALUES (?, ?, ?, ?, ?);';
+            query = 'INSERT INTO Post (title, content, board_type_id, user_id, post_image, category ) VALUES (?, ?, ?, ?, ?, ?);';
             NewPost = await db.query(query, [newPostData.title, 
-                newPostData.content, 4, userId, 3]);
+                newPostData.content, 4, userId, imagePath, 3]);
         }
         return NewPost[0].insertId;
     },    

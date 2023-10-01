@@ -1,6 +1,5 @@
 const express = require('express');
 const app = express();
-const router = express.Router();
 
 // 포트 번호 설정
 require('dotenv').config()

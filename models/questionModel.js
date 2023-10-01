@@ -37,30 +37,30 @@ module.exports = {
         return questions[0];
     },
     // 새로운 질문게시글 생성
-    createNewPost: async (newPostData, userId) => {
+    createNewPost: async (newPostData, userId, imagePath) => {
         let query='';
         let NewPost='';
         if(newPostData.useCodeBlock=='yes' && newPostData.hidden_ta!=null){
             // const defendXSS = xss(newPostData.hidden_ta);
-            query = 'INSERT INTO Post (title, content, board_type_id, user_id, code_language, code) VALUES (?, ?, ?, ?, ?, ?);';
-            NewPost = await db.query(query, [newPostData.title, newPostData.content, 3, userId, newPostData.codeLanguage, newPostData.hidden_ta]);
+            query = 'INSERT INTO Post (title, content, board_type_id, user_id, post_image, code_language, code) VALUES (?, ?, ?, ?, ?, ? ,?);';
+            NewPost = await db.query(query, [newPostData.title, newPostData.content, 3, userId, imagePath, newPostData.codeLanguage, newPostData.hidden_ta]);
         }else{
-            query = 'INSERT INTO Post (title, content, board_type_id, user_id) VALUES (?, ?, ?, ?);';
-            NewPost = await db.query(query, [newPostData.title, newPostData.content, 3, userId]); //임시
+            query = 'INSERT INTO Post (title, content, board_type_id, user_id, post_image) VALUES (?, ?, ?, ?, ?);';
+            NewPost = await db.query(query, [newPostData.title, newPostData.content, 3, userId, imagePath ]);
         }
 
         return NewPost[0].insertId;
     },
     // 질문게시글 업데이트
-    updatePost: async (postId, newPostData) => {
+    updatePost: async (postId, newPostData, imagePath) => {
         let query='';
         let NewPost='';
         if(newPostData.useCodeBlock=='yes' && newPostData.hidden_ta!=null){
-            query = 'UPDATE Post SET title=?, content=?, code_language=?, code=? WHERE post_id=?;';
-            NewPost = await db.query(query, [newPostData.title, newPostData.content, newPostData.codeLanguage, newPostData.hidden_ta, postId]);
+            query = 'UPDATE Post SET title=?, content=?, post_image=? code_language=?, code=? WHERE post_id=?;';
+            NewPost = await db.query(query, [newPostData.title, newPostData.content, imagePath, newPostData.codeLanguage, newPostData.hidden_ta, postId]);
         }else{
-            query = 'UPDATE Post SET title=?, content=? WHERE post_id=?;';
-            NewPost = await db.query(query, [newPostData.title, newPostData.content, postId]);
+            query = 'UPDATE Post SET title=?, content=?, post_image=? WHERE post_id=?;';
+            NewPost = await db.query(query, [newPostData.title, newPostData.content, imagePath, postId]);
         }
     },
 }

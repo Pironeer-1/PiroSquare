@@ -2,6 +2,7 @@
     <hr>
     <a href="/question">목록으로</a>
     <p>제목: <%=question.title %></p>
+    <img width="300" height="200" src="<%= question.post_image %>" alt="postImage">
     <p>answer(solved 여부, 1 : 해결된 질문) : <%=question.answer %></p>
     <p>comments</p>
     <p>생성일자: <%= question.created_at %></p>

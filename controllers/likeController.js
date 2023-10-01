@@ -54,18 +54,20 @@ module.exports = {
         if(isliked){ // true면 좋아요 되어있다는 뜻
             await commentLikeModel.unlike(userId, commentId);
 
-            await commentModel.likeCountUpdate(commentId, 'like');
+            await commentModel.likeCount(commentId, 'unlike');
 
-            // 임시로 메인으로 리다이렉트시킴, 나중에 json반환으로 바꿔야함
-            const message = encodeURIComponent(`해당 게시글에 좋아요 등록이 되었습니다.\n post_id:${commentId},\n user_id:${userId}`);
+            const message = encodeURIComponent(`해당 댓글의 좋아요가 해제 되었습니다.\n comment_id:${commentId},\n user_id:${userId}`);
             res.redirect(`/?error=${message}`);
         }else{  // false면 좋아요 안되어있다는 뜻
             await commentLikeModel.like(userId, commentId);
 
-            await commentModel.likeCountUpdate(commentId, 'unlike');
+            await commentModel.likeCount(commentId, 'like');
 
-            const message = encodeURIComponent(`해당 게시글의 좋아요가 해제 되었습니다.\n post_id:${commentId},\n user_id:${userId}`);
+            // 임시로 메인으로 리다이렉트시킴, 나중에 json반환으로 바꿔야함
+            const message = encodeURIComponent(`해당 댓글에 좋아요 등록이 되었습니다.\n comment_id:${commentId},\n user_id:${userId}`);
             res.redirect(`/?error=${message}`);
+
         }
+        
     },
 }
