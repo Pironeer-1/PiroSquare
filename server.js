@@ -32,10 +32,14 @@ app.use(session({
     secret: 'asadlfkj!@#!@#dfgasdg',
     resave: false,
     saveUninitialized: true,
-    store:new FileStore()
+    store:new FileStore(),
+    cookie: {
+        maxAge: 1000 * 60 * 60 * 24, // 세션 유지 기간 (1일)
+    },
 }));
 
-
+const cookieParser = require('cookie-parser');
+app.use(cookieParser());
 //Controllers
 const passportController = require('./controllers/passportController.js')(app);
 const homeController = require('./controllers/homeController.js');
