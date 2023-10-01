@@ -33,12 +33,16 @@ module.exports = {
         const query = "INSERT INTO Comment (content, post_id, parent_comment_id, user_id) VALUES (?, ?, ?, ?);";
         await db.query(query, [newReplyData, postId, parentCommentId, 1]); // user_id 임시
     },
-    
+    //댓글 삭제
     deleteComment: async (commentId)=>{
         const query = "UPDATE Comment SET content='삭제된 댓글입니다.', parent_comment_id=-1 where comment_id=?;";
         await db.query(query,[commentId]);
     },
-
+    // 대댓글 삭제
+    deleteReply: async (commentId) => {
+        const query = "DELETE FROM Comment WHERE comment_id = ?;";
+        await db.query(query, [commentId]);
+    },
     // 좋아요 개수 업데이트
     likeCount: async(commentId, action) => {
         let query;
