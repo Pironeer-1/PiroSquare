@@ -4,7 +4,17 @@ const { post } = require('../routers/postRouter.js');
 module.exports = {
     //모든 댓글 가져오기
     getComments: async (postId) => {
-    const query = "SELECT * FROM Comment WHERE post_id=?;";
+    const query = `
+        SELECT 
+            Comment.*, 
+            User.name AS user_name 
+        FROM 
+            Comment 
+        INNER JOIN 
+            User ON Comment.user_id = User.user_id 
+        WHERE 
+            Comment.post_id = ?;
+    `;
     const comments = await db.query(query, [postId]);
         return comments[0];
     },
