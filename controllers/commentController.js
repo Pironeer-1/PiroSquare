@@ -9,13 +9,6 @@ module.exports = {
         await commentModel.createComment(postId, newCommentData.content);
         res.redirect(`/post/detail/${postId}`);
     },
-    //댓글 삭제
-    deleteComment: async(req, res)=>{
-        const commentId = req.params.comment_id;
-        const comment = await commentModel.getComment(commentId);
-        await commentModel.deleteComment(commentId);
-        res.redirect(`/post/detail/${comment.post_id}`);
-    },
     //대댓글 생성
     createReply: async (req, res) => {
         const parentCommentId = req.params.comment_id;
@@ -25,6 +18,13 @@ module.exports = {
         await commentModel.createReply(postId, newReplyData.content, parentCommentId);
         res.redirect(`/post/detail/${postId}`);
     },
+    //댓글 삭제
+    deleteComment: async(req, res)=>{
+        const commentId = req.params.comment_id;
+        const comment = await commentModel.getComment(commentId);
+        await commentModel.deleteComment(commentId);
+        res.redirect(`/post/detail/${comment.post_id}`);
+    },
     //대댓글 삭제
     deleteReply: async (req, res) => {
         const commentId = req.params.comment_id;
@@ -32,7 +32,5 @@ module.exports = {
         await commentModel.deleteReply(commentId);
         res.redirect(`/post/detail/${comment.post_id}`);
     },
-
-
-
+    
 }

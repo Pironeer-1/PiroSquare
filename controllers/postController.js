@@ -39,7 +39,7 @@ module.exports = {
             return;
         }
         
-        const postId=req.params.post_id
+        const postId=req.params.post_id;
         const posts = await postModel.getAll();
         const post = await postModel.detail(postId);
         const comments = await commentModel.getComments(postId);
@@ -64,14 +64,9 @@ module.exports = {
             res.redirect(`/?error=${message}`);
             return;
         }
-
         const userId=await userModel.getUserId(user.ID);
-
         const newPostData = req.body;
-
-        console.log(user);
-   
-        const insertId = await postModel.createNewPost(newPostData, userId);
+        const insertId = await postModel.createNewPost(newPostData, userId, 1);
         res.redirect(`/post/detail/${insertId}`);
     },
     // 글 삭제
@@ -107,7 +102,7 @@ module.exports = {
         }
 
         const userId=await userModel.getUserId(user.ID);
-        const postId=req.params.post_id
+        const postId=req.params.post_id;
 
         // 글의 작성자와 요청하는 사람이 같은지 확인
         const post = await postModel.detail(postId);
@@ -116,7 +111,7 @@ module.exports = {
             // 임시로 main으로 redirect 시켰음
             res.redirect(`/?error=${message}`);
         }else{
-            const postId=req.params.post_id
+            const postId=req.params.post_id;
             const post = await postModel.detail(postId);
             const posts = await homeModel.home();
             res.render('post/postUpdate.ejs', {posts: posts ,post: post});
