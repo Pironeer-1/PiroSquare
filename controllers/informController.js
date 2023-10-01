@@ -10,7 +10,7 @@ module.exports = {
     },
     //공지 게시판 디테일 
     detail: async(req, res) =>{
-        const postId = req.params.post_id
+        const postId = req.params.post_id;
         const inform = await postModel.detail(postId);
         const informs = await homeModel.home();
         res.render('inform/informDetail.ejs', {informs: informs, inform: inform});
