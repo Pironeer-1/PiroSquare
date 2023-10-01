@@ -23,9 +23,6 @@ module.exports = {
         
         await commentModel.createReply(postId, userId, newReplyData.content, parentCommentId);
         res.redirect(`/post/detail/${postId}`);
-
-
-
     },
     //댓글 삭제
     deleteComment: async(req, res)=>{
