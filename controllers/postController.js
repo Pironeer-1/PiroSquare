@@ -80,8 +80,8 @@ module.exports = {
         const newPostData = req.body;
 
         console.log(newPostData);
-   
-        const insertId = await postModel.createNewPost(newPostData, userId, 1);
+        const imagePath = req.file ? `/post/image/${req.file.filename}` : '';
+        const insertId = await postModel.createNewPost(newPostData, userId, imagePath, 1);
         // res.redirect(`/post/detail/${insertId}`);
         res.json({result: 'success'});
     },
@@ -110,7 +110,7 @@ module.exports = {
     },
     // 글 수정 폼
     updatePost: async (req, res) =>{
-        // const user = await req.user;
+        const user = await req.user;
         // if(user === undefined){
         //     const message = encodeURIComponent('승인된 회원만 이용할 수 있습니다.');
         //     res.redirect(`/?error=${message}`);
@@ -144,7 +144,9 @@ module.exports = {
 
         const postId=req.params.post_id;
         const newPostData = req.body;
-        await postModel.updatePost(postId, newPostData);
+        console.log(newPostData);
+        const imagePath = req.file ? `/post/image/${req.file.filename}` : '';
+        await postModel.updatePost(postId, newPostData, imagePath);
         res.redirect(`/post/detail/${postId}`);
     },
     

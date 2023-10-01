@@ -47,12 +47,12 @@ module.exports = {
     // 댓글에 대한 like
     // 좋아요 버튼을 누를 때 /like/comment/:comment_id 주소로 post 형식으로 보낼 것
     commentLikeAction: async(req,res)=>{
-        // const user = await req.user;
-        // if(user === undefined){
-        //     const message = encodeURIComponent('승인된 회원만 이용할 수 있습니다.');
-        //     res.redirect(`/?error=${message}`);
-        //     return;
-        // }
+        const user = await req.user;
+        if(user === undefined){
+            const message = encodeURIComponent('승인된 회원만 이용할 수 있습니다.');
+            res.redirect(`/?error=${message}`);
+            return;
+        }
 
         const userId=await userModel.getUserId(user.ID);
         const commentId=req.params.comment_id;
@@ -61,19 +61,20 @@ module.exports = {
         if(isliked){ // true면 좋아요 되어있다는 뜻
             await commentLikeModel.unlike(userId, commentId);
 
-            await commentModel.likeCountUpdate(commentId, 'like');
+            await commentModel.likeCount(commentId, 'unlike');
 
-            // 임시로 메인으로 리다이렉트시킴, 나중에 json반환으로 바꿔야함
-            // const message = encodeURIComponent(`해당 게시글에 좋아요 등록이 되었습니다.\n post_id:${commentId},\n user_id:${userId}`);
-            // res.redirect(`/?error=${message}`);
+            const message = encodeURIComponent(`해당 댓글의 좋아요가 해제 되었습니다.\n comment_id:${commentId},\n user_id:${userId}`);
+            res.redirect(`/?error=${message}`);
         }else{  // false면 좋아요 안되어있다는 뜻
             await commentLikeModel.like(userId, commentId);
 
-            await commentModel.likeCountUpdate(commentId, 'unlike');
+            await commentModel.likeCount(commentId, 'like');
 
-            // const message = encodeURIComponent(`해당 게시글의 좋아요가 해제 되었습니다.\n post_id:${commentId},\n user_id:${userId}`);
-            // res.redirect(`/?error=${message}`);
+            // 임시로 메인으로 리다이렉트시킴, 나중에 json반환으로 바꿔야함
+            const message = encodeURIComponent(`해당 댓글에 좋아요 등록이 되었습니다.\n comment_id:${commentId},\n user_id:${userId}`);
+            res.redirect(`/?error=${message}`);
+
         }
-        res.json({result: 'success'});
+        
     },
 }

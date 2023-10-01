@@ -5,7 +5,6 @@ module.exports = {
     checkLike: async (userId, postId) => {
         const query = "SELECT * FROM PostLike where user_id=? and post_id=?;";
         const result = await db.query(query, [userId, postId]);
-        
         if(result[0].length === 0){    // 좋아요 하고 있지 않은 상태
             return false;
         }else{  // 좋아요 하고 있는 상태

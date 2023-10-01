@@ -1,4 +1,5 @@
-<form action="/question/create" method="post">
+<form action="/question/create" method="post" enctype="multipart/form-data">
+    <input type="file" name="image">
     <input type="text" name="title" placeholder="title" style="display: block;">
     <textarea name="content" id="" cols="20" placeholder="content" style="display: block;"></textarea>
     <label>

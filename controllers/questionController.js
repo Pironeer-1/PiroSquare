@@ -66,7 +66,7 @@ module.exports = {
     },
     // 작성된 질문게시글 생성
     createPost: async (req,res) => {
-        // const user = await req.user;
+        const user = await req.user;
         // if(user === undefined){
         //     const message = encodeURIComponent('승인된 회원만 이용할 수 있습니다.');
         //     res.redirect(`/?error=${message}`);
@@ -74,9 +74,9 @@ module.exports = {
         // }
 
         const userId=await userModel.getUserId(user.ID);
-
         const newPost = req.body;
-        const resultId = await questionModel.createNewPost(newPost, userId);
+        const imagePath = req.file ? `/post/image/${req.file.filename}` : '';
+        const resultId = await questionModel.createNewPost(newPost, userId, imagePath);
         
         res.redirect(`/question/read/${resultId}`);
         // res.json({insertId: result.insertId});
@@ -123,7 +123,7 @@ module.exports = {
             // 임시로 main으로 redirect 시켰음
             res.redirect(`/?error=${message}`);
         }else{
-            const question = await questionModel.detail(postId);
+            const question = await postModel.detail(postId);
             res.render('question/question_update.ejs', {question: question});
         }
         
@@ -138,11 +138,11 @@ module.exports = {
         // }
 
         const postId=req.params.post_id;
-
         const newPost = req.body;
-        await questionModel.updatePost(postId, newPost);
-            
-        const question = await questionModel.detail(postId);
+        const imagePath = req.file ? `/post/image/${req.file.filename}` : '';
+        await questionModel.updatePost(postId, newPost, imagePath);
+        
+        const question = await postModel.detail(postId);
         const comments = await commentModel.getComments(postId);
         res.render('question/question_detail.ejs', {question: question, comments: comments});
     },

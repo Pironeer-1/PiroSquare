@@ -66,7 +66,8 @@ module.exports = {
         const userId=await userModel.getUserId(user.ID);
 
         const newPostData = req.body;
-        const insertId = await recruitModel.createNewRecruit(newPostData, userId, 4);
+        const imagePath = req.file ? `/post/image/${req.file.filename}` : '';
+        const insertId = await recruitModel.createNewRecruit(newPostData, userId, imagePath, 4);
         res.redirect(`/recruit/detail/${insertId}`);
     },
     deleteRecruit: async (req, res) =>{
@@ -125,7 +126,8 @@ module.exports = {
 
         const postId=req.params.post_id;
         const newPostData = req.body;
-        await postModel.updatePost(postId, newPostData);
+        const imagePath = req.file ? `/post/image/${req.file.filename}` : '';
+        await postModel.updatePost(postId, newPostData, imagePath);
         res.redirect(`/recruit/detail/${postId}`);
     },
 

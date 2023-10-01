@@ -1,5 +1,4 @@
 const db = require('../config/db.js');
-const { post } = require('../routers/postRouter.js');
 
 module.exports = {
     //모든 댓글 가져오기
@@ -20,18 +19,28 @@ module.exports = {
     },
     // comment에 대한 post_id 불러오기
     getComment: async (commentId) => {
-        const query = "SELECT * FROM Comment where comment_id=?;";
+        const query = `
+        SELECT 
+            comment.*, 
+            User.name AS user_name 
+        FROM 
+            Comment
+        INNER JOIN 
+            User ON Comment.user_id = User.user_id 
+        WHERE 
+            comment_id=?;
+        `;
         const comment = await db.query(query, [commentId]);
         return comment[0][0];
     },
-    createComment: async (postId, newCommentData) => {
+    createComment: async (postId, userId, newCommentData) => {
         const query = "INSERT INTO Comment (content, post_id, user_id) VALUES (?,?,?);";
-        await db.query(query, [newCommentData, postId, 1]); //user_id 임시
+        await db.query(query, [newCommentData, postId, userId]);
     },
     //대댓글 작성
-    createReply: async (postId, newReplyData, parentCommentId) => {
+    createReply: async (postId, userId, newReplyData, parentCommentId) => {
         const query = "INSERT INTO Comment (content, post_id, parent_comment_id, user_id) VALUES (?, ?, ?, ?);";
-        await db.query(query, [newReplyData, postId, parentCommentId, 1]); // user_id 임시
+        await db.query(query, [newReplyData, postId, parentCommentId, userId]);
     },
     //댓글 삭제
     deleteComment: async (commentId)=>{
