@@ -25,13 +25,8 @@ module.exports = {
     },
     
     deleteComment: async (commentId)=>{
-        const query = "DELETE FROM Comment WHERE comment_id = ?;";
+        const query = "UPDATE Comment SET content='삭제된 댓글입니다.', parent_comment_id=-1 where comment_id=?;";
         await db.query(query,[commentId]);
-    },
-
-    deleteReply: async (commentId) => {
-        const query = "DELETE FROM Comment WHERE comment_id = ?;";
-        await db.query(query, [commentId]);
     },
 
     // 좋아요 개수 업데이트
