@@ -15,12 +15,11 @@ module.exports = {
     },
     createUser: async function (user){
         const query = `
-        INSERT INTO User (ID, password, name, year, nickname, image, introduce, email)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        INSERT INTO User (ID, name, year, nickname, image, introduce, email)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
         `;
         const User = [
         user.ID,
-        user.password || 'password', 
         user.name || 'username',
         user.year || 19,
         user.nickname || 'piro',
