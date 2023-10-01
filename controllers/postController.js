@@ -66,7 +66,8 @@ module.exports = {
         }
         const userId=await userModel.getUserId(user.ID);
         const newPostData = req.body;
-        const insertId = await postModel.createNewPost(newPostData, userId, 1);
+        const imagePath = req.file ? `/post/image/${req.file.filename}` : '';
+        const insertId = await postModel.createNewPost(newPostData, userId, imagePath, 1);
         res.redirect(`/post/detail/${insertId}`);
     },
     // 글 삭제
@@ -125,10 +126,11 @@ module.exports = {
             res.redirect(`/?error=${message}`);
             return;
         }
-
         const postId=req.params.post_id;
         const newPostData = req.body;
-        await postModel.updatePost(postId, newPostData);
+        console.log(newPostData);
+        const imagePath = req.file ? `/post/image/${req.file.filename}` : '';
+        await postModel.updatePost(postId, newPostData, imagePath);
         res.redirect(`/post/detail/${postId}`);
     },
     

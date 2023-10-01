@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const router = express.Router();
 
 // 포트 번호 설정
 require('dotenv').config()
@@ -24,7 +25,6 @@ app.use(expressLayouts);
 app.set('layout', 'index.ejs');
 app.set('layout extractStyles', true);
 app.use(express.static('public'));
-app.use('/user', express.static('uploads/profile'));
 //login_process 미들웨어
 const session = require('express-session');
 const FileStore = require('session-file-store')(session);
@@ -60,7 +60,8 @@ app.use('/mypage', mypageRouter);
 app.use('/auth', loginRouter);
 app.use('/comment', commentRouter);
 app.use('/like', likeRouter);
-
+app.use('/user', express.static('uploads/profile'));
+app.use('/post/image', express.static('uploads/post'));
 app.get('/', homeController.getPosts);
 
 app.listen(app.get('port'), ()=>{

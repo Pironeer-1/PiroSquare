@@ -146,5 +146,5 @@ dist
 #express-session
 /sessions/
 
-/uploads/profile/*
+/uploads/
 !/uploads/profile/.gitkeep
