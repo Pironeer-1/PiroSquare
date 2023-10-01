@@ -6,9 +6,8 @@ require('dotenv').config()
 app.set('port', process.env.SERVER_PORT || 8000);
 // app.set(1,2) 1을 2로 설정
 
-// client 접근 허용(나중에 주석 해제)
-// const cors = require('cors');
-// app.use(cors());
+const cors = require('cors');
+app.use(cors());
 
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: false }))
