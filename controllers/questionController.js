@@ -26,7 +26,7 @@ module.exports = {
             return;
         }
 
-        const questionId=req.params.post_id
+        const questionId=req.params.post_id;
         const question = await postModel.detail(questionId);
 
         const comments = await commentModel.getComments(questionId);
@@ -110,7 +110,7 @@ module.exports = {
         }
 
         const userId=await userModel.getUserId(user.ID);
-        const postId=req.params.post_id
+        const postId=req.params.post_id;
 
         // 글의 작성자와 요청하는 사람이 같은지 확인
         const post = await postModel.detail(postId);
@@ -133,7 +133,7 @@ module.exports = {
             return;
         }
 
-        const postId=req.params.post_id
+        const postId=req.params.post_id;
 
         const newPost = req.body;
         await questionModel.updatePost(postId, newPost);
