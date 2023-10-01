@@ -64,13 +64,8 @@ module.exports = {
             res.redirect(`/?error=${message}`);
             return;
         }
-
         const userId=await userModel.getUserId(user.ID);
-
         const newPostData = req.body;
-
-        console.log(user);
-   
         const insertId = await postModel.createNewPost(newPostData, userId, 1);
         res.redirect(`/post/detail/${insertId}`);
     },

@@ -32,9 +32,9 @@
             </form>
             <p>------대댓글------</p>
             <% for (let reply of comments) { %>
-                <% if (reply.parent_comment_id === comment.comment_id || reply.parent_comment_id===-1) { %>
+                <% if (reply.parent_comment_id === comment.comment_id) { %>
                     <p><%= reply.content %></p>
-                    <form action="/comment/delete/<%= reply.comment_id %>" method="post">
+                    <form action="/comment/reply/delete/<%= reply.comment_id %>" method="post">
                         <button>삭제하기</button>
                     </form>
                 <% } %>
