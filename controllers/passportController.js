@@ -46,7 +46,6 @@ module.exports = function (app) {
         }
     ));
 
-
     app.get('/naver', passport.authenticate('naver', { authType: 'reprompt' }));
     app.get('/naver/callback',
         passport.authenticate('naver', { failureRedirect: '/' }),
