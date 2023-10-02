@@ -97,7 +97,7 @@ module.exports = {
         const imagePath = req.file ? `/post/image/${req.file.filename}` : '';
         const insertId = await postModel.createNewPost(newPostData, userId, imagePath, 1);
         // res.redirect(`/post/detail/${insertId}`);
-        res.json({result: 'success'});
+        res.json({insertId: insertId});
     },
     // 글 삭제
     deletePost: async (req, res) =>{
@@ -114,12 +114,14 @@ module.exports = {
         // 글의 작성자와 요청하는 사람이 같은지 확인
         const post = await postModel.detail(postId);
         if(post.user_id===null || post.user_id!==userId){
-            const message = encodeURIComponent('글의 작성자만 글을 삭제할 수 있습니다.');
-            // 임시로 main으로 redirect 시켰음
-            res.redirect(`/?error=${message}`);
+            // const message = encodeURIComponent('글의 작성자만 글을 삭제할 수 있습니다.');
+            // // 임시로 main으로 redirect 시켰음
+            // res.redirect(`/?error=${message}`);
+            res.json({result: "fail"});
         }else{
             await postModel.deletePost(postId);
-            res.redirect('/post');
+            // res.redirect('/post');
+            res.json({result: "success"});
         }
     },
     // 글 수정 폼
@@ -149,19 +151,29 @@ module.exports = {
     },
     //글 수정 하기
     updateNewPost: async (req, res) =>{
-        // const user = await req.user;
+        const user = await req.user;
         // if(user === undefined){
         //     const message = encodeURIComponent('승인된 회원만 이용할 수 있습니다.');
         //     res.redirect(`/?error=${message}`);
         //     return;
         // }
 
+        const userId=await userModel.getUserId(user.ID);
         const postId=req.params.post_id;
-        const newPostData = req.body;
-        console.log(newPostData);
-        const imagePath = req.file ? `/post/image/${req.file.filename}` : '';
-        await postModel.updatePost(postId, newPostData, imagePath);
-        res.redirect(`/post/detail/${postId}`);
+
+        // 글의 작성자와 요청하는 사람이 같은지 확인
+        const post = await postModel.detail(postId);
+        if(post.user_id===null || post.user_id!==userId){
+            res.json({result: "fail"});
+        }else{
+            const newPostData = req.body;
+            // console.log(newPostData);
+            const imagePath = req.file ? `/post/image/${req.file.filename}` : '';
+
+            await postModel.updatePost(postId, newPostData, imagePath);
+            // res.redirect(`/post/detail/${postId}`);
+            res.json({result: "success"});
+        }
     },
 
 }
