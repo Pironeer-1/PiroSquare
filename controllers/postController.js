@@ -14,8 +14,8 @@ module.exports = {
         // }
 
         const posts = await postModel.getAll(1);
-        //res.render('post/post.ejs', {posts: posts});
-        res.json({posts: posts});
+        res.render('post/post.ejs', {posts: posts});
+        //res.json({posts: posts});
     },
     // 자유게시판 검색 하기
     searchPost: async (req, res) =>{
