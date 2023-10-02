@@ -14,8 +14,8 @@ module.exports = {
         // }
 
         const posts = await postModel.getAll(1);
-        res.render('post/post.ejs', {posts: posts});
-        //res.json({posts: posts});
+        //res.render('post/post.ejs', {posts: posts});
+        res.json({posts: posts});
     },
     // 자유게시판 검색 하기
     searchPost: async (req, res) =>{
@@ -65,8 +65,8 @@ module.exports = {
         // console.log(post);
         // console.log(comments);
 
-        res.render('post/postDetail.ejs', {post: post, comments: comments});
-        //res.json({post: post, comments: comments});
+        //res.render('post/postDetail.ejs', {post: post, comments: comments});
+        res.json({post: post, comments: comments});
     },
     // 글 작성 폼
     createPost: async (req, res) =>{
