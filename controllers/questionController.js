@@ -15,7 +15,7 @@ module.exports = {
         // }
 
         const question_posts = await postModel.getAll(3);
-        // res.render('question/question_main.ejs', {question_posts: question_posts});
+        //res.render('question/question_main.ejs', {question_posts: question_posts});
         res.json({question_posts: question_posts});
     },
     // 질문게시글
@@ -32,7 +32,7 @@ module.exports = {
 
         const comments = await commentModel.getComments(questionId);
 
-        // res.render('question/question_detail.ejs', {question: question, comments: comments});
+        //res.render('question/question_detail.ejs', {question: question, comments: comments});
         res.json({question: question, comments: comments});
     },
     // 필터링
@@ -78,8 +78,8 @@ module.exports = {
         const imagePath = req.file ? `/post/image/${req.file.filename}` : '';
         const resultId = await questionModel.createNewPost(newPost, userId, imagePath);
         
-        res.redirect(`/question/read/${resultId}`);
-        // res.json({insertId: result.insertId});
+        //res.redirect(`/question/read/${resultId}`);
+        res.json({insertId: result.insertId});
     },
     // 게시글 삭제
     deletePost: async (req, res) =>{

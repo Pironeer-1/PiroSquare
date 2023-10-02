@@ -14,8 +14,7 @@ module.exports = {
         // }
 
         const posts = await postModel.getAll(1);
-
-        // res.render('post/post.ejs', {posts: posts});
+        //res.render('post/post.ejs', {posts: posts});
         res.json({posts: posts});
     },
     // 자유게시판 검색 하기
@@ -31,8 +30,23 @@ module.exports = {
         const search=req.query.keyword;
         const searchPosts = await postModel.search(search, 1);
 
-        // res.render('post/post.ejs', {posts: searchPosts});
+        //res.render('post/post.ejs', {posts: searchPosts});
         res.json({posts: searchPosts});
+    },
+
+    //필터링
+    filteringPost: async (req, res) =>{
+        const user = await req.user;
+        if(user === undefined){
+            const message = encodeURIComponent('승인된 회원만 이용할 수 있습니다.');
+            res.redirect(`/?error=${message}`);
+            return;
+        }
+        const latest=req.body.latest;
+        const popular=req.body.popular;
+        console.log(latest,popular);
+        const filteredPosts = await postModel.filter(latest, popular, 1);
+        res.render('post/post.ejs', {posts: filteredPosts});
     },
 
     // 자유 게시판 디테일
@@ -51,7 +65,7 @@ module.exports = {
         // console.log(post);
         // console.log(comments);
 
-        // res.render('post/postDetail.ejs', { posts: posts, post: post, comments: comments});
+        //res.render('post/postDetail.ejs', {post: post, comments: comments});
         res.json({post: post, comments: comments});
     },
     // 글 작성 폼
@@ -149,7 +163,7 @@ module.exports = {
         await postModel.updatePost(postId, newPostData, imagePath);
         res.redirect(`/post/detail/${postId}`);
     },
-    
+
 }
 
 
