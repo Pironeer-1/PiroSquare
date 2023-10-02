@@ -6,7 +6,7 @@ module.exports = {
         const query = `
         SELECT 
             Post.*, 
-            User.name AS user_name 
+            User.*
         FROM 
             Post 
         INNER JOIN 
@@ -21,7 +21,7 @@ module.exports = {
         const query =
         `SELECT 
             Post.*, 
-            User.name AS user_name 
+            User.*
         FROM 
             Post 
         INNER JOIN 
@@ -43,6 +43,17 @@ module.exports = {
         query = "SELECT * FROM Post where board_type_id=? and title LIKE ?;";
         posts = await db.query(query, [board_type_id, search]);
 
+        return posts[0];
+    },
+    filter: async (latest, popular, board_type_id) => {
+        let query = "SELECT * FROM Post WHERE board_type_id=?";
+        
+        if (latest === 'latest') { // 최신순
+            query += " ORDER BY created_at DESC;";
+        } else if (popular === 'popular') { // 좋아요순
+            query += " ORDER BY likes_count DESC, created_at DESC;";
+        }
+        const posts = await db.query(query, [board_type_id]);
         return posts[0];
     },
     // 게시글 생성

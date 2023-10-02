@@ -19,6 +19,7 @@ const upload = multer({ storage: storage });
 const postController = require('../controllers/postController.js');
 
 router.get('/', postController.getAll); //자유게시판 메인
+router.post('/', postController.filteringPost); //필터 검색
 router.get('/search', postController.searchPost); //검색하기
 router.get('/detail/:post_id', postController.detailPost);
 router.get('/create', postController.createPost);
