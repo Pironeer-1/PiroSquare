@@ -6,7 +6,7 @@ module.exports = {
     const query = `
         SELECT 
             Comment.*, 
-            User.name AS user_name 
+            User.*
         FROM 
             Comment 
         INNER JOIN 
@@ -22,7 +22,7 @@ module.exports = {
         const query = `
         SELECT 
             comment.*, 
-            User.name AS user_name 
+            User.*
         FROM 
             Comment
         INNER JOIN 
