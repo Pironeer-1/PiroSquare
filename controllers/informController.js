@@ -6,14 +6,16 @@ module.exports = {
     getAll: async(req, res) =>{
         const informs = await postModel.getAll(2);
         const allPosts = await homeModel.home();
-        res.render('inform/inform.ejs', {informs: informs});
+        // res.render('inform/inform.ejs', {informs: informs});
+        res.json({informs: informs});
     },
     //공지 게시판 디테일 
     detail: async(req, res) =>{
         const postId = req.params.post_id;
         const inform = await postModel.detail(postId);
         const informs = await homeModel.home();
-        res.render('inform/informDetail.ejs', {informs: informs, inform: inform});
+        // res.render('inform/informDetail.ejs', {informs: informs, inform: inform});
+        res.json({informs: informs, inform: inform});
     },
 
     

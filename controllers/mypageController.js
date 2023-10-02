@@ -8,7 +8,8 @@ module.exports = {
         console.log('userPosts', userPosts[0]);
         console.log('likePosts', likePosts[0]);
         console.log('commentPosts', commentPosts[0]);
-        res.render('mypage/mypage.ejs', {user: user, userPosts: userPosts[0], likePosts: likePosts[0], commentPosts: commentPosts[0]});
+        // res.render('mypage/mypage.ejs', {user: user, userPosts: userPosts[0], likePosts: likePosts[0], commentPosts: commentPosts[0]});
+        res.json({user: user, userPosts: userPosts[0], likePosts: likePosts[0], commentPosts: commentPosts[0]});
     },
     updateUser: async (req, res) => {
         const user = await req.user
@@ -19,6 +20,7 @@ module.exports = {
         const updateUser = req.body;
         const imagePath = req.file ? `/user/${req.file.filename}` : '';
         await mypageModel.updateNewUser(user, updateUser, imagePath);
-        res.redirect('/mypage');
+        // res.redirect('/mypage');
+        res.json({result: 'success'});
     },
 }

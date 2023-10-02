@@ -14,7 +14,8 @@ module.exports = {
         }
 
         const posts = await postModel.getAll(4);
-        res.render('recruit/recruit.ejs', {posts: posts});
+        // res.render('recruit/recruit.ejs', {posts: posts});
+        res.json({posts: posts});
     },
     detail: async (req, res) =>{
         const user = await req.user;
@@ -28,7 +29,8 @@ module.exports = {
         const post = await postModel.detail(postId);
         const posts = await postModel.getAll(4);
         const comments = await commentModel.getComments(postId);
-        res.render('recruit/recruitDetail.ejs', {posts: posts ,post: post, comments: comments});
+        // res.render('recruit/recruitDetail.ejs', {posts: posts ,post: post, comments: comments});
+        res.json({posts: posts ,post: post, comments: comments});
     },
     //필터링 
     filteringPost: async (req, res) =>{
@@ -68,7 +70,8 @@ module.exports = {
         const newPostData = req.body;
         const imagePath = req.file ? `/post/image/${req.file.filename}` : '';
         const insertId = await recruitModel.createNewRecruit(newPostData, userId, imagePath, 4);
-        res.redirect(`/recruit/detail/${insertId}`);
+        // res.redirect(`/recruit/detail/${insertId}`);
+        res.json({insertId: insertId});
     },
     deleteRecruit: async (req, res) =>{
         const user = await req.user;
@@ -84,12 +87,10 @@ module.exports = {
         // 글의 작성자와 요청하는 사람이 같은지 확인
         const post = await postModel.detail(postId);
         if(post.user_id===null || post.user_id!==userId){
-            const message = encodeURIComponent('글의 작성자만 글을 삭제할 수 있습니다.');
-            // 임시로 main으로 redirect 시켰음
-            res.redirect(`/?error=${message}`);
+            res.json({result: "fail"});
         }else{
             await postModel.deletePost(postId);
-            res.redirect('/recruit');
+            res.json({result: "success"});
         }
     },
     updateRecruit: async (req, res) =>{
@@ -124,11 +125,20 @@ module.exports = {
             return;
         }
 
+        const userId=await userModel.getUserId(user.ID);
         const postId=req.params.post_id;
-        const newPostData = req.body;
-        const imagePath = req.file ? `/post/image/${req.file.filename}` : '';
-        await postModel.updatePost(postId, newPostData, imagePath);
-        res.redirect(`/recruit/detail/${postId}`);
+
+        // 글의 작성자와 요청하는 사람이 같은지 확인
+        const post = await postModel.detail(postId);
+        if(post.user_id===null || post.user_id!==userId){
+            res.json({result: "fail"});
+        }else{
+            const newPostData = req.body;
+            const imagePath = req.file ? `/post/image/${req.file.filename}` : '';
+            await postModel.updatePost(postId, newPostData, imagePath);
+            // res.redirect(`/recruit/detail/${postId}`);
+            res.json({result: "success"});
+        }
     },
 
 }
