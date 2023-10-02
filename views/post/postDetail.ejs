@@ -26,7 +26,8 @@
             <% if(comment.content==="삭제된 댓글입니다.") { %>
                 <p> 내용: <%= comment.content %></p>
             <% } else { %>
-                <p>댓글쓴사람: <%= comment.user_name %>
+                <p>댓글쓴사람: <%= comment.name %>
+                    사진: <img width="30" height="30" src="<%= comment.image %>" alt="profileImage">
                 <p> 내용: <%= comment.content %></p>
                 </p> 
             <% } %>
@@ -45,7 +46,7 @@
             <p>------대댓글------</p>
             <% for (let reply of comments) { %>
                 <% if (reply.parent_comment_id === comment.comment_id) { %>
-                    <p>대댓글쓴사람: <%= reply.user_name %>
+                    <p>대댓글쓴사람: <%= reply.name %>
                         <p>내용: <%= reply.content %></p>
                     </p> 
                     <form action="/like/comment/<%= reply.comment_id %>" method="post">

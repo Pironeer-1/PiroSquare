@@ -65,8 +65,8 @@ module.exports = {
         // console.log(post);
         // console.log(comments);
 
-        //res.render('post/postDetail.ejs', {post: post, comments: comments});
-        res.json({post: post, comments: comments});
+        res.render('post/postDetail.ejs', {post: post, comments: comments});
+        //res.json({post: post, comments: comments});
     },
     // 글 작성 폼
     createPost: async (req, res) =>{
