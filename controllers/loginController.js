@@ -17,6 +17,6 @@ module.exports = {
         const loginUser = req.body;
         const imagePath = req.file ? `/user/${req.file.filename}` : '';
         await loginModel.newUserProfile(user, loginUser, imagePath);
-        res.redirect('/');
+        res.json({data: user, message: 'ok'});
     },
 }
