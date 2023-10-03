@@ -13,7 +13,7 @@ module.exports = {
     },
     updateUser: async (req, res) => {
         const user = await req.user
-        res.render('mypage/userUpdate.ejs', {user: user});
+        res.json({user: user});
     },
     updateNewUser: async (req, res) => {
         const user = await req.user;
