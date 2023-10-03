@@ -15,6 +15,11 @@ module.exports = {
 
         return posts[0];
     },
+    getUser: async (username)=>{
+        const query = `SELECT * FROM User WHERE ID = ?`;
+        const [rows, fields] = await db.query(query, [username]);
+        return rows[0];
+    },
     getSession: async (req) => {
         const loggedInUser = req.session; 
 
