@@ -1,0 +1,66 @@
+[
+  {
+    "id": 1,
+    "username": "pororo",
+    "userProfile": "https://static.ebs.co.kr/images/public/lectures/2014/06/19/10/bhpImg/44deb98d-1c50-4073-9bd7-2c2c28d65f9e.jpg",
+    "content": "Axios는 간결하고 가독성이 높은 코드를 작성할 수 있도록 도와줍니다. 또한 Axios는 JSON 형식의 응답을 자동으로 파싱해줘서 웬만하면 요즘 현업에서는 다 Axios를 사용합니다. 저같은 경우에는 이렇게 코드를 구현하겠네요.",
+    "code": "useEffect(() => {    axios.get('/data/vote_list.json')      .then(response => {        setLoading(false);      })      .catch(error => {        console.error('Error fetching data:', error);        setLoading(false); // Make sure to handle errors appropriately      });  }, []);",
+    "code_language": "javascript",
+    "created_at": "2023.09.20",
+    "is_solved": true,
+    "like_amount": 24,
+    "is_user_like": true,
+    "comments": [
+      {
+        "id": 1,
+        "created_at": "2023.10.01",
+        "username": "미키오",
+        "content": "멋있다..멋있다..멋있다..",
+        "like_amount": 5,
+        "is_user_like": true,
+        "profile_img": "https://i.namu.wiki/i/qWyoh8nA_DcTuY4gqcmkFC2k5Sbn8D6yVCVRQHMhJD-eRYtugUDNg6jP-v0VqbnFdCjL4jYrepNXw9ey8ouFAA.webp"
+      },
+      {
+        "id": 2,
+        "created_at": "2023.10.01",
+        "username": "마리오",
+        "content": "맛있다...맛있다...맛있다...",
+        "like_amount": 8,
+        "is_user_like": false,
+        "profile_img": "https://t1.daumcdn.net/thumb/R720x0/?fname=http://t1.daumcdn.net/brunch/service/guest/image/JY5p0JOAh81KvxYMedE4NWcS15A.png"
+      },
+      {
+        "id": 3,
+        "created_at": "2023.10.01",
+        "username": "루이지",
+        "content": "아름답습니다.아름답습니다.아름답습니다.아름답습니다.아름답습니다.아름답습니다.아름답습니다.아름답습니다.아름답습니다.아름답습니다.아름답습니다.아름답습니다.아름답습니다.아름답습니다.",
+        "like_amount": 1,
+        "is_user_like": false,
+        "profile_img": "https://i.namu.wiki/i/IPBNbStIHLetV6UJnHJhRonRoA8s0SeYaAOz4_sceHUof-y9bxiCLxH8aM33qsPDiLaCO8SZ0ugXD4Kh6JHROw.webp"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "username": "crong",
+    "userProfile": "https://d2u3dcdbebyaiu.cloudfront.net/uploads/atch_img/245/51b79627831640164fc6b003faf240c3_res.jpeg",
+    "content": "저는 한번 Fetch로 구현해보았어요!",
+    "code": "useEffect(() => {    fetch('/data/vote_list.json')      .then(response => response.json())      .then(result => {        setLoading(false);      });  }, []);",
+    "code_language": "javascript",
+    "created_at": "2023.09.20",
+    "is_solved": true,
+    "like_amount": 7,
+    "is_user_like": false,
+    "comments": [
+      {
+        "id": 4,
+        "created_at": "2023.10.02",
+        "username": "피치공주",
+        "content": "배고프다배고프다배고프ㅏ배고프다배고프다배고프ㅏ배고프다배고프다배고프ㅏ배고프다배고프다배고프ㅏ배고프다배고프다배고프ㅏ배고프다배고프다배고프ㅏ배고프다배고프다배고프ㅏ배고프다배고프다배고프ㅏ배고프다배고프다배고프ㅏ배고프다배고프다배고프ㅏ배고프다배고프다배고프ㅏ배고프다배고프다배고프ㅏ배고프다배고프다배고프ㅏ배고프다배고프다배고프ㅏ.",
+        "like_amount": 0,
+        "is_user_like": false,
+        "profile_img": "https://i.namu.wiki/i/IWZgy_7zlDY4Lxggsf4CNgZlwWOk9UpkJffNAJzrjYMwPj4P8uREwTyBNtT2LTotcOe5rARzDYbb1OdcjI-g4w.webp"
+      }
+    ]
+  }
+]

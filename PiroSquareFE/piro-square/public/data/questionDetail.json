@@ -1,0 +1,14 @@
+{
+  "id": 4,
+  "title": "비동기 처리 방식 질문",
+  "username": "mikio",
+  "userProfile": "https://img1.daumcdn.net/thumb/C500x500/?fname=http://t1.daumcdn.net/brunch/service/user/dFGD/image/MH85tgXHFdoO6f8R3N_VcIjHStw.png",
+  "content": "리액트의 useEffect를 이용해서 백엔드로부터 데이터를 받아오고 싶은데.. 제가 아래 코드에서 사용한 방식 외에 다른 방법으로도 구현이 가능할까요?",
+  "code": "function Add(){a+b=2}",
+  "code_language": "javascript",
+  "created_at": "2023.09.20",
+  "is_solved": true,
+  "answers_amount": 2,
+  "like_amount": 12,
+  "is_user_like": true
+}

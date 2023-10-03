@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "created_at": "2023.10.01",
+    "username": "미키오",
+    "content": "멋있다..멋있다..멋있다..",
+    "like_amount": 5,
+    "is_user_like": true,
+    "profile_img": "https://i.namu.wiki/i/qWyoh8nA_DcTuY4gqcmkFC2k5Sbn8D6yVCVRQHMhJD-eRYtugUDNg6jP-v0VqbnFdCjL4jYrepNXw9ey8ouFAA.webp"
+  },
+  {
+    "id": 2,
+    "created_at": "2023.10.01",
+    "username": "마리오",
+    "content": "맛있다...맛있다...맛있다...",
+    "like_amount": 8,
+    "is_user_like": false,
+    "profile_img": "https://t1.daumcdn.net/thumb/R720x0/?fname=http://t1.daumcdn.net/brunch/service/guest/image/JY5p0JOAh81KvxYMedE4NWcS15A.png"
+  },
+  {
+    "id": 3,
+    "created_at": "2023.10.01",
+    "username": "루이지",
+    "content": "아름답습니다.아름답습니다.아름답습니다.아름답습니다.아름답습니다.아름답습니다.아름답습니다.아름답습니다.아름답습니다.아름답습니다.아름답습니다.아름답습니다.아름답습니다.아름답습니다.",
+    "like_amount": 1,
+    "is_user_like": false,
+    "profile_img": "https://i.namu.wiki/i/IPBNbStIHLetV6UJnHJhRonRoA8s0SeYaAOz4_sceHUof-y9bxiCLxH8aM33qsPDiLaCO8SZ0ugXD4Kh6JHROw.webp"
+  },
+  {
+    "id": 4,
+    "created_at": "2023.10.02",
+    "username": "피치공주",
+    "content": "배고프다배고프다배고프ㅏ배고프다배고프다배고프ㅏ배고프다배고프다배고프ㅏ배고프다배고프다배고프ㅏ배고프다배고프다배고프ㅏ배고프다배고프다배고프ㅏ배고프다배고프다배고프ㅏ배고프다배고프다배고프ㅏ배고프다배고프다배고프ㅏ배고프다배고프다배고프ㅏ배고프다배고프다배고프ㅏ배고프다배고프다배고프ㅏ배고프다배고프다배고프ㅏ배고프다배고프다배고프ㅏ.",
+    "like_amount": 0,
+    "is_user_like": false,
+    "profile_img": "https://i.namu.wiki/i/IWZgy_7zlDY4Lxggsf4CNgZlwWOk9UpkJffNAJzrjYMwPj4P8uREwTyBNtT2LTotcOe5rARzDYbb1OdcjI-g4w.webp"
+  }
+]
