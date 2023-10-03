@@ -15,10 +15,12 @@ module.exports = {
     detailPost: async (req, res) =>{
         const questionId=req.params.post_id;
         const question = await postModel.detail(questionId);
-
         const comments = await commentModel.getComments(questionId);
 
-        res.json({question: question, comments: comments});
+        const previous = await postModel.getPreviousPost(3, questionId); //이전글 (이전글이 없다면 undefined)
+        const next = await postModel.getNextPost(3, questionId); //다음글 (다음글이 없다면 undefined)
+
+        res.json({question: question, comments: comments, previous: previous, next: next});
     },
     // 필터링
     filteringPost: async (req, res) =>{

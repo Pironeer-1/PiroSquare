@@ -15,8 +15,11 @@ module.exports = {
         const post = await postModel.detail(postId);
         const posts = await postModel.getAll(4);
         const comments = await commentModel.getComments(postId);
+
+        const previous = await postModel.getPreviousPost(4, postId); //이전글 (이전글이 없다면 undefined)
+        const next = await postModel.getNextPost(4, postId); //다음글 (다음글이 없다면 undefined)
         
-        res.json({posts: posts ,post: post, comments: comments});
+        res.json({posts: posts ,post: post, comments: comments, previous: previous, next: next});
     },
     //필터링 
     filteringPost: async (req, res) =>{

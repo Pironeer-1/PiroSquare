@@ -89,4 +89,30 @@ module.exports = {
         const user = await db.query(query, [userId]);
         return user[0][0];
     },
+    // postModel.js
+
+    // 게시글 이전 글
+    getPreviousPost: async (boardTypeId, postId) => {
+        const query = `
+            SELECT * FROM Post
+            WHERE board_type_id = ? AND post_id < ?
+            ORDER BY post_id DESC
+            LIMIT 1;        
+        `;
+        const post = await db.query(query, [boardTypeId, postId]);
+        return post[0][0];
+    },
+
+    // 게시글 다음 글
+    getNextPost: async (boardTypeId, postId) => {
+        const query = `
+            SELECT * FROM Post
+            WHERE board_type_id = ? AND post_id > ?
+            ORDER BY post_id ASC
+            LIMIT 1;
+        `;
+        const post = await db.query(query, [boardTypeId, postId]);
+        return post[0][0];
+    }
+
 }
