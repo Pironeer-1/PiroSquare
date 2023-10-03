@@ -74,6 +74,7 @@ const userAuthenticationMiddleware = (req, res, next) => {
 // 로그인 검증 로직이 필요없는 URL
 app.get("/", homeController.getPosts);
 app.use("/auth", loginRouter);
+app.use("/api", apiRouter);
 
 // ** 맨처음 로그인하면 추가정보를 입력하기 위해 mypage로 이동하는데 이러한 추가정보를
 // 받는 로직을 따로 분리해서 유저 검증 미들웨어 위에 지정해야함
@@ -88,7 +89,6 @@ app.use("/recruit", recruitRouter);
 app.use("/mypage", mypageRouter);
 app.use("/comment", commentRouter);
 app.use("/like", likeRouter);
-app.use("/api", apiRouter);
 app.use("/user", express.static("uploads/profile"));
 app.use("/post/image", express.static("uploads/post"));
 
