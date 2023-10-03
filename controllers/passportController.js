@@ -4,6 +4,7 @@ const { Strategy: NaverStrategy } = require('passport-naver-v2');
 const cookieParser = require('cookie-parser');
 const loginModel = require('../models/loginModel');
 
+
 module.exports = function (app) {
     app.use(passport.initialize());
     app.use(passport.session());
@@ -46,6 +47,7 @@ module.exports = function (app) {
         }
     ));
 
+
     app.get('/naver', passport.authenticate('naver', { authType: 'reprompt' }));
     app.get('/naver/callback',
         passport.authenticate('naver', { failureRedirect: '/' }),
@@ -53,11 +55,10 @@ module.exports = function (app) {
             console.log('res.user', req.user);
             console.log('res.user.newUser', req.user.newUser);
             res.cookie('sessionID', req.sessionID, { maxAge: 1000 * 60 * 60 * 24 });
-            console.log('로그인 성공');
             if (req.user && req.user.newUser) {
                 return res.redirect('/auth/newUser');
             }
-            return res.redirect('/');
+            res.send();
         },
     );
 
