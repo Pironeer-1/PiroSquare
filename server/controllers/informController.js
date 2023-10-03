@@ -15,7 +15,10 @@ module.exports = {
         const inform = await postModel.detail(postId);
         const informs = await homeModel.home();
         
-        res.json({informs: informs, inform: inform});
+        const previous = await postModel.getPreviousPost(2, postId); //이전글 (이전글이 없다면 undefined)
+        const next = await postModel.getNextPost(2, postId); //다음글 (다음글이 없다면 undefined)
+
+        res.json({informs: informs, inform: inform, previous: previous, next: next});
     },
 
     

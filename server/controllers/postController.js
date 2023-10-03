@@ -7,14 +7,12 @@ module.exports = {
     // 자유 게시판 메인
     getAll: async(req, res) =>{
         const posts = await postModel.getAll(1);
-        
         res.json({posts: posts});
     },
     // 자유게시판 검색 하기
     searchPost: async (req, res) =>{
         const search=req.query.keyword;
         const searchPosts = await postModel.search(search, 1);
-
         res.json({posts: searchPosts});
     },
 
@@ -33,7 +31,10 @@ module.exports = {
         const post = await postModel.detail(postId);
         const comments = await commentModel.getComments(postId);
 
-        res.json({post: post, comments: comments});
+        const previous = await postModel.getPreviousPost(1, postId); //이전글 (이전글이 없다면 undefined)
+        const next = await postModel.getNextPost(1, postId); //다음글 (다음글이 없다면 undefined)
+
+        res.json({post: post, comments: comments, previous:previous, next:next});
     },
     // 글 작성 폼(프론트 사용 X)
     createPost: async (req, res) =>{
@@ -105,7 +106,6 @@ module.exports = {
             res.json({result: "success"});
         }
     },
-
 }
 
 
