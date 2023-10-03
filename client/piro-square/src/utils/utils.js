@@ -1,6 +1,7 @@
 export const fetchGET = async url => {
   const res = await fetch(url, {
     method: 'GET',
+    credentials: 'include',
     headers: {
       'Content-Type': 'application/json',
     },
@@ -14,6 +15,7 @@ export const fetchGET = async url => {
 export const fetchPOST = async (url, body) => {
   const res = await fetch(url, {
     method: 'POST',
+    credentials: 'include',
     headers: {
       'Content-Type': 'application/json',
     },

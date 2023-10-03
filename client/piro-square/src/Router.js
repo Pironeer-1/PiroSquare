@@ -38,7 +38,12 @@ const Router = () => {
 
   return (
     <AuthContext.Provider
-      value={{ isLoggedIn: isLoggedIn, login: login, logout: logout }}
+      value={{
+        userData: userData,
+        isLoggedIn: isLoggedIn,
+        login: login,
+        logout: logout,
+      }}
     >
       <BrowserRouter>
         <Routes>

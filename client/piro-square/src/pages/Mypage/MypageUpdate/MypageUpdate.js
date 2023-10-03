@@ -9,14 +9,14 @@ const MypageUpdate = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(`http://192.168.1.184:8000/mypage`, {
+    fetch(`http://localhost:8000/mypage`, {
       method: 'GET',
       credentials: 'include',
     })
-      // fetch('/data/userData.json')
       .then(response => response.json())
       .then(result => {
-        setInformation(result?.userInfo[0]);
+        setInformation(result.user);
+        console.log(result.user);
       });
   }, []);
 
@@ -47,23 +47,22 @@ const MypageUpdate = () => {
   const handleNickNameChange = e => {
     setNickname(e.target.value);
   };
-
+  console.log(information);
   const user_id = information.user_id;
   console.log('user_id', user_id);
 
   const onSubmit = async event => {
     event.preventDefault();
-    const url = `http://192.168.1.184:8000/mypage/updateUser/${user_id}`;
-    console.log(url);
+    const url = `http://localhost:8000/mypage/updateUser/${user_id}`;
+
     const body = {
+      user_id: user_id,
       email: email,
       nickname: nickname,
       introduce: introduction,
-      image: imgUrl,
-      user_id: user_id,
+      image: '',
     };
-    console.log(body);
-    console.log(url);
+
     const result = await fetchPOST(url, body);
     console.log(result);
     navigate('/my-page/card');
