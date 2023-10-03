@@ -12,11 +12,10 @@ const Mypage = () => {
     })
       .then(response => response.json())
       .then(result => {
-        setInformation(result?.userInfo[0]);
+        setInformation(result.user);
       });
   }, []);
 
-  console.log(information);
   const CardRef = useRef(null);
 
   const FrontImgBase64 = information.image;

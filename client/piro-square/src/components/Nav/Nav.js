@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import styled from 'styled-components';
 import { Link, useLocation } from 'react-router-dom';
+import { AuthContext } from '../../context/auth-context';
 
 const NAV_LIST = [
   { id: 1, title: '자유게시판', link: '/free' },
@@ -9,6 +10,7 @@ const NAV_LIST = [
   { id: 4, title: '공지', link: '/announce' },
 ];
 const Nav = () => {
+  const { userData } = useContext(AuthContext);
   const location = useLocation();
   const [activeMenu, setActiveMenu] = useState('');
 
@@ -46,7 +48,7 @@ const Nav = () => {
       </RightSection>
       <UserSection to="/my-page/update">
         <UserImg src="/images/Nav/sample_img.png" />
-        김피로
+        {userData.data.name}
       </UserSection>
     </Container>
   );
