@@ -58,18 +58,49 @@ const commentRouter = require("./routers/commentRouter.js");
 const likeRouter = require("./routers/likeRouter.js");
 const apiRouter = require("./routers/apiRouter.js");
 
+// 유저 검증 미들웨어 함수
+const userAuthenticationMiddleware = (req, res, next) => {
+  if (req.session && req.session.user) {
+    // 로그인된 경우 다음 미들웨어로 이동
+    next();
+  } else {
+    // 로그인되지 않은 경우 오류 처리 미들웨어로 이동
+    const error = new Error('Unauthorized');
+    error.status = 401;
+    next(error);
+  }
+};
+
+// 로그인 검증 로직이 필요없는 URL
+app.get("/", homeController.getPosts);
+app.use("/auth", loginRouter);
+
+// ** 맨처음 로그인하면 추가정보를 입력하기 위해 mypage로 이동하는데 이러한 추가정보를
+// 받는 로직을 따로 분리해서 유저 검증 미들웨어 위에 지정해야함
+
+// 아래의 모든 URL에 대해 유저 검증 미들웨어를 실행
+app.use(userAuthenticationMiddleware);
+
 app.use("/post", postRouter);
 app.use("/question", questionRouter);
 app.use("/inform", informRouter);
 app.use("/recruit", recruitRouter);
 app.use("/mypage", mypageRouter);
-app.use("/auth", loginRouter);
 app.use("/comment", commentRouter);
 app.use("/like", likeRouter);
 app.use("/api", apiRouter);
 app.use("/user", express.static("uploads/profile"));
 app.use("/post/image", express.static("uploads/post"));
-app.get("/", homeController.getPosts);
+
+// 오류 처리 미들웨어
+app.use((err, req, res, next) => {
+  res.status(err.status || 500);
+  if(err.message){
+    res.send('승인된 유저만 이용할 수 있습니다.\nerror : '+err.message);
+  }else{
+    res.send('Internal Server Error');
+  }
+});
 
 app.listen(app.get("port"), () => {
   console.log(app.get("port"), "번 포트에서 대기 중");
