@@ -2,7 +2,6 @@ const homeModel = require('../models/homeModel.js');
 
 module.exports = {
     getPosts: async (req,res) =>{
-        // console.log(req.session.passport.user);
         const user = await req.user;
         const posts = await homeModel.home();
         const users = await homeModel.getTest();

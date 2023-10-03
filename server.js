@@ -6,14 +6,14 @@ require("dotenv").config();
 app.set("port", process.env.SERVER_PORT || 8000);
 // app.set(1,2) 1을 2로 설정
 
-// const cors = require("cors");
-// const corsOptions = {
-//   origin: "http://192.168.1.86:3000",
-//   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-//   credentials: true,
-// };
+const cors = require("cors");
+const corsOptions = {
+  origin: "http://localhost:3000",
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  credentials: true,
+};
 
-// app.use(cors(corsOptions));
+app.use(cors(corsOptions));
 
 const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: false }));

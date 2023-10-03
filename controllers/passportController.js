@@ -58,7 +58,8 @@ module.exports = function (app) {
             if (req.user && req.user.newUser) {
                 return res.redirect('/auth/newUser');
             }
-            res.send();
+            // res.send();
+            res.json({data: req.user, message: 'ok'});
         },
     );
 
