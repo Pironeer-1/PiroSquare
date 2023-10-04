@@ -42,7 +42,6 @@ const FreeSearch = () => {
 
   const availabilityClassName = isRightPosition ? 'greenWord' : 'grayWord';
 
-  // if (loading) return;
   return (
     <Container>
       <Title onClick={handleFreeBtnClick}>자유게시판</Title>
