@@ -5,6 +5,19 @@ import { useNavigate, useLocation } from 'react-router-dom';
 const Paginator = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const currentId = parseInt(location.pathname.split('/').pop(), 10);
+
+  const handlePreviousClick = () => {
+    if (currentId > 1) {
+      const previousId = currentId - 1;
+      navigate(`${location.pathname.replace(currentId, previousId)}`);
+    }
+  };
+
+  const handleNextClick = () => {
+    const nextId = currentId + 1;
+    navigate(`${location.pathname.replace(currentId, nextId)}`);
+  };
 
   const handleListButtonClick = () => {
     if (location.pathname.startsWith('/free-detail')) {
@@ -26,16 +39,16 @@ const Paginator = () => {
     <Container>
       <LeftSection>
         <LeftImg src="/images/Button/left_polygon.png" />
-        <Previous>
+        <Previous onClick={handlePreviousClick}>
           <Prev>이전글</Prev>
-          <PrevTitle>보고싶은 친구들에게..</PrevTitle>
+          {/* <PrevTitle>보고싶은 친구들에게..</PrevTitle> */}
         </Previous>
       </LeftSection>
       <ListBtn onClick={handleListButtonClick}>목록으로</ListBtn>
       <RightSection>
-        <Next>
+        <Next onClick={handleNextClick}>
           <Nex>다음글</Nex>
-          <NexTitle>등산 가실 분?</NexTitle>
+          {/* <NexTitle>등산 가실 분?</NexTitle> */}
         </Next>
         <RightImg src="/images/Button/right_polygon.png" />
       </RightSection>

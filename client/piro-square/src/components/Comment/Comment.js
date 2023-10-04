@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import styled from 'styled-components';
 import CommentSection from './CommentSection/CommentSection';
 import CommentRegister from './CommentRegister/CommentRegister';
 import CommentCard from './CommentSection/CommentCard';
+import { AuthContext } from '../../context/AuthContext';
 
 const Comment = ({ comments }) => {
   const currentDate = new Date();
@@ -12,8 +13,8 @@ const Comment = ({ comments }) => {
   const timeString = `${hours.toString().padStart(2, '0')}:${minutes
     .toString()
     .padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-
-  const user = '김피로';
+  const { userData } = useContext(AuthContext);
+  const user = userData.data.nickname;
   const [newcomments, setNewcomments] = useState([]);
 
   const addComment = newComment => {

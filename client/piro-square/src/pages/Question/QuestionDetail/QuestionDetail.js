@@ -17,11 +17,10 @@ const QuestionDetail = () => {
   let { id } = useParams();
   const [questionDetail, setQuestionDetail] = useState([]);
   useEffect(() => {
-    fetch(`http://192.168.0.22:8000/question/detail/${id}`)
+    fetch(`http://localhost:8000/question/detail/${id}`)
       .then(response => response.json())
       .then(result => {
         setQuestionDetail(result.question);
-        console.log('Q', result.question);
       });
   }, []);
 
@@ -35,16 +34,13 @@ const QuestionDetail = () => {
   // }, []);
 
   useEffect(() => {
-    fetch(`http://192.168.0.22:8000/question/detail/${id}`)
+    fetch(`http://localhost:8000/question/detail/${id}`)
       .then(response => response.json())
       .then(result => {
         setAnswerDetail(result.comments);
-        console.log(result.comments);
-        console.log('A', result.comments);
       });
   }, []);
 
-  console.log('a', answerDetail);
   const navigate = useNavigate();
   const onClickListButton = () => {
     navigate(`/question`);

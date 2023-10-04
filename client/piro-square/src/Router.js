@@ -27,7 +27,6 @@ const Router = () => {
     }
   };
 
-  console.log('유저데이터', userData);
   useEffect(() => {
     fetchUserData();
   }, []);
@@ -54,7 +53,7 @@ const Router = () => {
           {isLoggedIn ? (
             <Route path="/*" element={<RouteWithNavFooter />} />
           ) : (
-            <Route path="/*" element={<Login />} />
+            <Route path="/" element={<Login />} />
           )}
         </Routes>
       </BrowserRouter>

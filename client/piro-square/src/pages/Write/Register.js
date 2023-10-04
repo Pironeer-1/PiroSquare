@@ -13,22 +13,13 @@ const Register = ({ onSubmit, btnAble }) => {
 
   return (
     <Container>
-      <RegisterBtn onClick={handleClick} disabled={!btnAble}>
+      <RegisterBtn onClick={onSubmit} disabled={!btnAble}>
         등록하기
       </RegisterBtn>
     </Container>
   );
 };
 export default Register;
-
-// const Register = ({onClick}) => {
-//   return (
-//     <Container onClick={onClick}>
-//       <RegisterBtn>등록하기</RegisterBtn>
-//     </Container>
-//   );
-// };
-// export default Register;
 
 const Container = styled.div`
   margin-top: 4rem;

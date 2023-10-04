@@ -41,38 +41,30 @@ const WriteFree = () => {
     }
   }, [title, content]);
 
-  // const onSubmit = () => {
-  //   const body = {
-  //     title: title,
-  //     content: content,
-  //     selectedBoard: selectedBoard,
-  //   };
-  //   console.log(body);
-  //   handleLocation();
-  // };
-
   const onSubmit = async event => {
+    event.preventDefault();
+    const confirmSubmit = window.confirm('게시글을 등록하시겠습니까?');
     const url = `http://localhost:8000/post/create`;
     const body = {
       title: title,
       content: content,
     };
 
-    try {
-      const result = await fetchPOST(url, body);
-      console.log(result);
+    if (confirmSubmit) {
+      try {
+        const result = await fetchPOST(url, body);
 
-      if (result.success) {
-        handleLocation();
-      } else {
+        if (result.success) {
+          handleLocation();
+        } else {
+          handleLocation();
+        }
+      } catch (error) {
+        console.error('Error:', error);
         alert('게시글 등록 실패! 다시 시도해주세요.');
       }
-    } catch (error) {
-      console.error('Error:', error);
-      alert('게시글 등록 실패! 다시 시도해주세요.');
     }
   };
-
   return (
     <Container>
       <Title>자유 게시판 글쓰기</Title>
@@ -92,7 +84,7 @@ const WriteFree = () => {
 
 export default WriteFree;
 
-const Container = styled.div`
+const Container = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;

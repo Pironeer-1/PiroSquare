@@ -53,8 +53,9 @@ const WriteQuestion = () => {
 
   const onSubmit = async event => {
     event.preventDefault();
+    const confirmSubmit = window.confirm('질문글을 등록하시겠습니까?');
 
-    const url = `http://192.168.0.22:8000/post/create`;
+    const url = `http://localhost:8000/post/create`;
 
     const editorInstance = editorRef.current.getInstance();
     const markdownContent = editorInstance.getMarkdown();
@@ -62,24 +63,24 @@ const WriteQuestion = () => {
     const body = {
       title: title,
       content: markdownContent,
-      selectedBoard: selectedBoard,
     };
-    console.log(body);
 
-    try {
-      const result = await fetchPOST(url, body);
-      console.log(result);
+    if (confirmSubmit) {
+      try {
+        const result = await fetchPOST(url, body);
 
-      if (result.success) {
-        handleLocation();
-      } else {
+        if (result.success) {
+          handleLocation();
+        } else {
+          handleLocation();
+        }
+      } catch (error) {
+        console.error('Error:', error);
         alert('게시글 등록 실패! 다시 시도해주세요.');
       }
-    } catch (error) {
-      console.error('Error:', error);
-      alert('게시글 등록 실패! 다시 시도해주세요.');
     }
   };
+
   return (
     <Container>
       <Title>질문하기</Title>

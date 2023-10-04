@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
 const MycommentCard = ({
   id,
@@ -10,19 +11,38 @@ const MycommentCard = ({
   board_name,
   comment_count,
 }) => {
+  const navigate = useNavigate();
+  const thumbnailSrc = thumbnail ? thumbnail : '/images/Nav/piro_logo.png';
+  const boardNameString =
+    board_name === 1 ? '자유게시판' : board_name === 2 ? '질문게시판' : '';
+
+  const dateString = created_at;
+  const datePart = dateString?.split('T')[0];
+
+  const onClickDetailButton = () => {
+    let detailUrl;
+
+    if (board_name === 1) {
+      detailUrl = `/free-detail/${id}`;
+    } else if (board_name === 2) {
+      detailUrl = `/question-detail/${id}`;
+    }
+    navigate(detailUrl);
+  };
+
   return (
-    <MycommentBox>
+    <MycommentBox onClick={onClickDetailButton}>
       <MycommentIcon>
-        <MycommentImg src={thumbnail} />
+        <MycommentImg src={thumbnailSrc} />
       </MycommentIcon>
       <Container>
         <CardTitle>
-          <CardSpan>[{board_name}]</CardSpan>
+          <CardSpan>[{boardNameString}]</CardSpan>
           {title}
         </CardTitle>
         <CardBottom>
           <CardAuthor>{username}</CardAuthor>
-          <CardDate>{created_at}</CardDate>
+          <CardDate>{datePart}</CardDate>
           <CardComment>
             <CommentImg src="/images/Mypage/chat_g.png" />
             {comment_count}

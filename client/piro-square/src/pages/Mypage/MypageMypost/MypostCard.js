@@ -1,19 +1,37 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
 const MypostCard = ({ id, title, created_at, thumbnail, board_name }) => {
+  const boardNameString =
+    board_name === 1 ? '자유게시판' : board_name === 2 ? '질문게시판' : '';
+  const dateString = created_at;
+  const datePart = dateString?.split('T')[0];
+  const thumbnailSrc = thumbnail ? thumbnail : '/images/Nav/piro_logo.png';
+  const navigate = useNavigate();
+  const onClickDetailButton = () => {
+    let detailUrl;
+
+    if (board_name === 1) {
+      detailUrl = `/free-detail/${id}`;
+    } else if (board_name === 2) {
+      detailUrl = `/question-detail/${id}`;
+    }
+    navigate(detailUrl);
+  };
+
   return (
-    <MypostBox>
+    <MypostBox onClick={onClickDetailButton}>
       <MypostIcon>
-        <MypostImg src={thumbnail} />
+        <MypostImg src={thumbnailSrc} />
       </MypostIcon>
       <Container>
         <CardTitle>
-          <CardSpan>[{board_name}]</CardSpan>
+          <CardSpan>[{boardNameString}]</CardSpan>
           {title}
         </CardTitle>
         <CardBottom>
-          <CardDate>{created_at}</CardDate>
+          <CardDate>{datePart}</CardDate>
         </CardBottom>
       </Container>
     </MypostBox>

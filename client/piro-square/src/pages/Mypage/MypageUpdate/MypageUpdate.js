@@ -16,7 +16,10 @@ const MypageUpdate = () => {
       .then(response => response.json())
       .then(result => {
         setInformation(result.user);
-        console.log(result.user);
+        setEmail(result.user.email || '');
+        setNickname(result.user.nickname || '');
+        setIntroduction(result.user.introduce || '');
+        setImgUrl(result.user.image || '');
       });
   }, []);
 
@@ -47,9 +50,8 @@ const MypageUpdate = () => {
   const handleNickNameChange = e => {
     setNickname(e.target.value);
   };
-  console.log(information);
+
   const user_id = information.user_id;
-  console.log('user_id', user_id);
 
   const onSubmit = async event => {
     event.preventDefault();
@@ -60,11 +62,11 @@ const MypageUpdate = () => {
       email: email,
       nickname: nickname,
       introduce: introduction,
-      image: '',
+      image: inputRef.current.files[0],
     };
 
     const result = await fetchPOST(url, body);
-    console.log(result);
+
     navigate('/my-page/card');
   };
 
@@ -106,7 +108,12 @@ const MypageUpdate = () => {
                 ref={inputRef}
               />
             </ProfileImgSection>
-            <ImgBtn onClick={() => inputRef.current.click()}>
+            <ImgBtn
+              onClick={e => {
+                e.preventDefault();
+                inputRef.current.click();
+              }}
+            >
               이미지 변경
             </ImgBtn>
             <ImgLabel>이미지 비율 11:14 권장</ImgLabel>
@@ -145,7 +152,7 @@ const MypageUpdate = () => {
 
 export default MypageUpdate;
 
-const Container = styled.div`
+const Container = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;

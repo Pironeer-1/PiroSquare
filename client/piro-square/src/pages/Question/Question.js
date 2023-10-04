@@ -40,14 +40,17 @@ const Question = () => {
     let url = '';
 
     if (isRightPosition1) {
-      url = 'data/solvedData.json'; // Fetch solved questions data
+      url = `http://localhost:8000/question`; // Fetch solved questions data
     } else if (isRightPosition2) {
-      url = 'data/unSolvedData.json'; // Fetch unsolved questions data
+      url = `http://localhost:8000/question`; // Fetch unsolved questions data
     } else {
-      url = 'data/questionData.json'; // Fetch all questions data
+      url = `http://localhost:8000/question`; // Fetch all questions data
     }
 
-    fetch(url)
+    fetch(url, {
+      method: 'POST',
+      credentials: 'include',
+    })
       .then(response => response.json())
       .then(result => {
         setQuestions(result);

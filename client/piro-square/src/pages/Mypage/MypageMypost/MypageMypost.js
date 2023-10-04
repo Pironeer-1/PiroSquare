@@ -6,10 +6,13 @@ import MypostCard from './MypostCard';
 const MypageMypost = () => {
   const [mypost, setMypost] = useState([]);
   useEffect(() => {
-    fetch('/data/myPost.json')
+    fetch(`http://localhost:8000/mypage`, {
+      method: 'GET',
+      credentials: 'include',
+    })
       .then(response => response.json())
       .then(result => {
-        setMypost(result);
+        setMypost(result?.userPosts);
       });
   }, []);
   const [currentPage, setCurrentPage] = useState(1);
@@ -45,12 +48,12 @@ const MypageMypost = () => {
           {currentItems.map(Mypost => {
             return (
               <MypostCard
-                key={Mypost.id}
-                id={Mypost.id}
+                key={Mypost.post_id}
+                id={Mypost.post_id}
                 title={Mypost.title}
                 created_at={Mypost.created_at}
-                thumbnail={Mypost.thumbnail}
-                board_name={Mypost.board_name}
+                thumbnail={Mypost.post_image}
+                board_name={Mypost.board_type_id}
               />
             );
           })}

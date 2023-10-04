@@ -27,6 +27,28 @@ const Nav = () => {
       setActiveMenu(matchingMenu.link);
     }
   }, [location.pathname]);
+
+  const handleLogout = async event => {
+    event.preventDefault();
+    const confirmLogout = window.confirm('정말로 로그아웃을 하시겠습니까?');
+
+    if (confirmLogout) {
+      try {
+        const response = await fetch(`http://localhost:8000/auth/logout`, {
+          method: 'POST',
+          credentials: 'include',
+        });
+
+        if (response.ok) {
+          window.location.reload();
+        } else {
+          console.error('Logout failed:', response.status, response.statusText);
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    }
+  };
   return (
     <Container>
       <RightSection>
@@ -46,10 +68,13 @@ const Nav = () => {
           ))}
         </MenuSection>
       </RightSection>
-      <UserSection to="/my-page/update">
-        <UserImg src="/images/Nav/sample_img.png" />
-        {userData.data.name}
-      </UserSection>
+      <LeftSection>
+        <LogoutSection onClick={handleLogout}>로그아웃</LogoutSection>
+        <UserSection to="/my-page/update">
+          <UserImg src="/images/Nav/sample_img.png" />
+          {userData.data.name}
+        </UserSection>
+      </LeftSection>
     </Container>
   );
 };
@@ -72,6 +97,8 @@ const LogoSection = styled(Link)`
 
 const LogoImg = styled.img`
   width: 3rem;
+  height: 3rem;
+  margin-top: 1rem;
 `;
 
 const LogoPhrase = styled.div`
@@ -128,4 +155,19 @@ const UserSection = styled(Link)`
 const UserImg = styled.img`
   width: 1.2rem;
   margin-right: 0.5rem;
+`;
+
+const LeftSection = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem 3rem;
+`;
+
+const LogoutSection = styled.div`
+  white-space: nowrap;
+  &:hover {
+    border-bottom: 1px solid #0bec12;
+    cursor: pointer;
+  }
 `;
