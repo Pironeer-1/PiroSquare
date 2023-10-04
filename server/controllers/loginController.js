@@ -4,10 +4,10 @@ const loginModel = require("../models/loginModel");
 
 module.exports = {
   logoutProcess: async (req, res) => {
-    if (!req.session.passport.user) {
+    if (!req.session || !req.session.passport || !req.session.passport.user) {
       res.status(400).send({ data: null, message: "not authorized" });
     } else {
-      req.session.destroy(); // 세션 삭제
+      req.session.destroy();
       res.json({ data: null, message: "ok" });
     }
   },
