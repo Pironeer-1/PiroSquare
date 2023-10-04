@@ -1,13 +1,19 @@
-// passportConfig.js
 const passport = require("passport");
 const { Strategy: NaverStrategy } = require("passport-naver-v2");
 const cookieParser = require("cookie-parser");
 const loginModel = require("../models/loginModel");
+const cors = require("cors");
+const corsOptions = {
+  origin: "http://localhost:3000",
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  credentials: true,
+};
 
 module.exports = function (app) {
   app.use(passport.initialize());
   app.use(passport.session());
   app.use(cookieParser());
+  app.use(cors(corsOptions));
 
   passport.serializeUser(function (user, done) {
     done(null, user.ID);
@@ -53,14 +59,15 @@ module.exports = function (app) {
     "/naver/callback",
     passport.authenticate("naver", { failureRedirect: "/" }),
     (req, res) => {
+      req.session.user = req.user;
       console.log("res.user", req.user);
       console.log("res.user.newUser", req.user.newUser);
       res.cookie("sessionID", req.sessionID, { maxAge: 1000 * 60 * 60 * 24 });
       if (req.user && req.user.newUser) {
-        return res.redirect("/auth/newUser");
+        return res.redirect("http://localhost:3000/my-page/update");
       }
       // res.send();
-      res.json({ data: req.user, message: "ok" });
+      res.redirect("http://localhost:3000/");
     }
   );
 

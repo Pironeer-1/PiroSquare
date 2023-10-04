@@ -21,5 +21,6 @@ const loginController = require('../controllers/loginController.js');
 router.get('/logout', loginController.logoutProcess);
 router.get('/newUser', loginController.newUser);
 router.post('/newUserProfile', upload.single('image'), loginController.newUserProfile);
+router.get('/isActive', loginController.isActiveUser);
 
 module.exports = router;

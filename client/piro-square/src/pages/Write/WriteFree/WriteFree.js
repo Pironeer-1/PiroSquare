@@ -41,19 +41,7 @@ const WriteFree = () => {
     }
   }, [title, content]);
 
-  // const onSubmit = () => {
-  //   const body = {
-  //     title: title,
-  //     content: content,
-  //     selectedBoard: selectedBoard,
-  //   };
-  //   console.log(body);
-  //   handleLocation();
-  // };
-
   const onSubmit = async event => {
-    event.preventDefault();
-
     const url = `http://localhost:8000/post/create`;
     const body = {
       title: title,

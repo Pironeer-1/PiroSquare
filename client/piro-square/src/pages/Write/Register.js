@@ -2,7 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Register = ({ onSubmit, btnAble }) => {
-  const handleClick = () => {
+  const handleClick = event => {
+    event.preventDefault();
     if (!btnAble) {
       alert('제목은 2자 이상, 내용은 10자 이상을 준수해주세요!');
       return;
