@@ -18,7 +18,7 @@ module.exports = {
     updateNewUser: async (req, res) => {
         const user = await req.user;
         const updateUser = req.body;
-        const imagePath = req.file ? `/user/${req.file.filename}` : '';
+        const imagePath = req.file ? `http://localhost:8000/user/${req.file.filename}` : '';
         await mypageModel.updateNewUser(user, updateUser, imagePath);
         // res.redirect('/mypage');
         res.json({result: 'success'});

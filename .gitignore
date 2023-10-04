@@ -134,3 +134,4 @@ yarn-error.log*
 .eslintcache
 
 server/sessions/
+server/uploads/profile/
