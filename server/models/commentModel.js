@@ -2,33 +2,59 @@ const db = require('../config/db.js');
 
 module.exports = {
     //모든 댓글 가져오기
-    getComments: async (postId) => {
+    getComments: async (userId, postId) => {
     const query = `
-        SELECT 
-            Comment.*, 
-            User.*
-        FROM 
-            Comment 
-        INNER JOIN 
-            User ON Comment.user_id = User.user_id 
-        WHERE 
-            Comment.post_id = ?;
+    SELECT 
+        A.*,
+        C.*,
+        (CASE
+            WHEN comment_like_id IS NULL THEN false
+            ELSE true 
+        END) AS is_user_like
+    FROM Comment A 
+        LEFT OUTER JOIN 
+            (SELECT * 
+            FROM commentlike 
+            WHERE user_id=?) B 
+            ON A.comment_id=B.comment_id
+        INNER JOIN
+            User C
+            ON A.user_id = C.user_id
+    WHERE A.post_id=?;
     `;
-    const comments = await db.query(query, [postId]);
+    const comments = await db.query(query, [userId, postId]);
         return comments[0];
     },
     // comment에 대한 post_id 불러오기
-    getComment: async (commentId) => {
+    getComment: async (userId, commentId) => {
         const query = `
         SELECT 
-            comment.*, 
-            User.*
-        FROM 
-            Comment
-        INNER JOIN 
-            User ON Comment.user_id = User.user_id 
-        WHERE 
-            comment_id=?;
+            A.*,
+            C.*,
+            (CASE
+                WHEN comment_like_id IS NULL THEN false
+                ELSE true 
+            END) AS is_user_like
+        FROM Comment A 
+            LEFT OUTER JOIN 
+                (SELECT * 
+                FROM commentlike 
+                WHERE user_id=?) B 
+                ON A.comment_id=B.comment_id
+            INNER JOIN
+                User C
+                ON A.user_id = C.user_id
+        WHERE A.comment_id=?;
+        `;
+        const comment = await db.query(query, [userId, commentId]);
+        return comment[0][0];
+    },
+    // comment 데이터만 필요한 경우
+    simpleComment: async (commentId) => {
+        const query = `
+        SELECT *
+        FROM Comment
+        WHERE comment_id=?;
         `;
         const comment = await db.query(query, [commentId]);
         return comment[0][0];

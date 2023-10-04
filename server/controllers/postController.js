@@ -6,7 +6,10 @@ const userModel = require('../models/userModel.js');
 module.exports = {
     // 자유 게시판 메인
     getAll: async(req, res) =>{
-        const posts = await postModel.getAll(1);
+        const user = await req.user;
+        const userId=await userModel.getUserId(user.ID);
+
+        const posts = await postModel.getAll(userId, 1);
         res.json({posts: posts});
     },
     // 자유게시판 검색 하기
@@ -26,10 +29,13 @@ module.exports = {
     },
 
     // 자유 게시판 디테일
-    detailPost: async (req, res) =>{        
+    detailPost: async (req, res) =>{
+        const user = await req.user;
+        const userId=await userModel.getUserId(user.ID);      
+
         const postId=req.params.post_id;
-        const post = await postModel.detail(postId);
-        const comments = await commentModel.getComments(postId);
+        const post = await postModel.detail(userId, postId);
+        const comments = await commentModel.getComments(userId, postId);
 
         const previous = await postModel.getPreviousPost(1, postId); //이전글 (이전글이 없다면 undefined)
         const next = await postModel.getNextPost(1, postId); //다음글 (다음글이 없다면 undefined)
@@ -59,7 +65,7 @@ module.exports = {
         const postId = req.params.post_id;
 
         // 글의 작성자와 요청하는 사람이 같은지 확인
-        const post = await postModel.detail(postId);
+        const post = await postModel.getPost(postId);
         if(post.user_id===null || post.user_id!==userId){
             res.json({result: "fail"});
         }else{
@@ -75,13 +81,13 @@ module.exports = {
         const postId=req.params.post_id;
 
         // 글의 작성자와 요청하는 사람이 같은지 확인
-        const post = await postModel.detail(postId);
+        const post = await postModel.getPost(postId);
         if(post.user_id===null || post.user_id!==userId){
             const message = encodeURIComponent('글의 작성자만 글을 수정할 수 있습니다.');
             res.redirect(`/?error=${message}`);
         }else{
             const postId=req.params.post_id;
-            const post = await postModel.detail(postId);
+            const post = await postModel.getPost(postId);
             const posts = await homeModel.home();
             res.render('post/postUpdate.ejs', {posts: posts ,post: post});
         }
@@ -93,7 +99,7 @@ module.exports = {
         const postId=req.params.post_id;
 
         // 글의 작성자와 요청하는 사람이 같은지 확인
-        const post = await postModel.detail(postId);
+        const post = await postModel.getPost(postId);
         if(post.user_id===null || post.user_id!==userId){
             res.json({result: "fail"});
         }else{

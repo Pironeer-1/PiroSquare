@@ -17,9 +17,10 @@ module.exports = {
     createReply: async (req, res) => {
         const user = await req.user;
         const userId=await userModel.getUserId(user.ID);
+
         const parentCommentId = req.params.comment_id;
         const newReplyData = req.body;
-        const parentComment = await commentModel.getComment(parentCommentId);
+        const parentComment = await commentModel.simpleComment(parentCommentId);
         const postId = parentComment.post_id;
         
         await commentModel.createReply(postId, userId, newReplyData.content, parentCommentId);
@@ -29,9 +30,10 @@ module.exports = {
     //댓글 삭제
     deleteComment: async(req, res)=>{
         const user = await req.user;
-        const commentId = req.params.comment_id;
-        const comment = await commentModel.getComment(commentId);
         const userId=await userModel.getUserId(user.ID);
+
+        const commentId = req.params.comment_id;
+        const comment = await commentModel.simpleComment(commentId);
 
         if(comment.user_id===null || comment.user_id!==userId){
             res.json({result: "fail"});
@@ -42,10 +44,11 @@ module.exports = {
     },
     //대댓글 삭제
     deleteReply: async (req, res) => {
-        const commentId = req.params.comment_id;
-        const comment = await commentModel.getComment(commentId);
         const user = await req.user;
         const userId=await userModel.getUserId(user.ID);
+
+        const commentId = req.params.comment_id;
+        const comment = await commentModel.simpleComment(commentId);
         
         if(comment.user_id===null || comment.user_id!==userId){
             res.json({result: "fail"});
