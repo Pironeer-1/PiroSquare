@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import AnswerCard from './AnswerCard';
 
 const AnswerSection = ({ answerDetail }) => {
-  console.log(answerDetail);
   return (
     <Container>
       <TopSection>

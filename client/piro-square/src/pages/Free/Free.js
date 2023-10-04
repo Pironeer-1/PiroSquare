@@ -34,7 +34,6 @@ const Free = () => {
         .then(response => response.json())
         .then(result => {
           setFrees([...result?.posts]);
-          console.log(result.posts);
         });
     } else {
       // 인기순 데이터를 가져오는 로직
@@ -45,7 +44,6 @@ const Free = () => {
         .then(response => response.json())
         .then(result => {
           setFrees([...result.posts]);
-          console.log(result.posts);
         });
     }
   }, [isRightPosition]);

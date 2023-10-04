@@ -15,7 +15,6 @@ const Login = () => {
   const Naver = () => {
     window.location.href = 'http://localhost:8000/naver';
     window.addEventListener('message', event => {
-      console.log(event);
       if (
         event.origin === `http://localhost:8000/` &&
         event.data === 'loginComplete'

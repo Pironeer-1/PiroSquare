@@ -15,7 +15,6 @@ const MypageUpdate = () => {
     })
       .then(response => response.json())
       .then(result => {
-        console.log(result);
         setInformation(result.user);
         setEmail(result.user.email || '');
         setNickname(result.user.nickname || '');
@@ -65,10 +64,9 @@ const MypageUpdate = () => {
       introduce: introduction,
       image: inputRef.current.files[0],
     };
-    console.log('body', body);
 
     const result = await fetchPOST(url, body);
-    console.log(result);
+
     navigate('/my-page/card');
   };
 

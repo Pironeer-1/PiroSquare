@@ -19,7 +19,7 @@ const CommentRegister = ({ onCommentSubmit }) => {
       content: comment,
     };
     const result = await fetchPOST(url, body);
-    console.log(result);
+
     setComment('');
   };
 

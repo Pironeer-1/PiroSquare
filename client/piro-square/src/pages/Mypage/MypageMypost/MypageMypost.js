@@ -13,7 +13,6 @@ const MypageMypost = () => {
       .then(response => response.json())
       .then(result => {
         setMypost(result?.userPosts);
-        console.log(result);
       });
   }, []);
   const [currentPage, setCurrentPage] = useState(1);

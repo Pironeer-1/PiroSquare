@@ -50,7 +50,6 @@ const LikeBtn = ({ initialLike, likeAmount, post_id }) => {
 
       if (response.ok) {
         const result = await response.json();
-        console.log(result);
       } else {
         console.error(
           'POST request failed:',

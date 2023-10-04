@@ -17,7 +17,6 @@ const Company = () => {
       .then(response => response.json())
       .then(result => {
         setRecruitments(result);
-        console.log(result);
       });
   }, [isRightPosition]);
 

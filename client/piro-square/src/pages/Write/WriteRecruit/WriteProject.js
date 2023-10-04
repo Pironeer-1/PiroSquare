@@ -59,12 +59,10 @@ const WriteProject = () => {
       endDate: endDate,
       personnel: personnel,
     };
-    console.log(body);
 
     if (confirmSubmit) {
       try {
         const result = await fetchPOST(url, body);
-        console.log(result);
 
         if (result.success) {
           handleLocation();

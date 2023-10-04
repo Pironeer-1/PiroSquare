@@ -13,7 +13,6 @@ const MypageMyLike = () => {
       .then(response => response.json())
       .then(result => {
         setMylike(result?.likePosts);
-        console.log(result);
       });
   }, []);
   const [currentPage, setCurrentPage] = useState(1);

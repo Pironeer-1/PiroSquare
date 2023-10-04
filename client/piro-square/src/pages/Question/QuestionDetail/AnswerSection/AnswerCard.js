@@ -14,7 +14,6 @@ const AnswerCard = ({
   is_user_like,
   comments,
 }) => {
-  console.log(comments);
   return (
     <>
       <Container>

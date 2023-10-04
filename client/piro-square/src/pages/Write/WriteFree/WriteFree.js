@@ -49,12 +49,10 @@ const WriteFree = () => {
       title: title,
       content: content,
     };
-    console.log(body);
 
     if (confirmSubmit) {
       try {
         const result = await fetchPOST(url, body);
-        console.log(result);
 
         if (result.success) {
           handleLocation();

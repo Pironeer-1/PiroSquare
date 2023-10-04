@@ -27,7 +27,6 @@ const Router = () => {
     }
   };
 
-  console.log('유저데이터', userData);
   useEffect(() => {
     fetchUserData();
   }, []);

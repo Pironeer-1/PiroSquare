@@ -64,12 +64,10 @@ const WriteQuestion = () => {
       title: title,
       content: markdownContent,
     };
-    console.log(body);
 
     if (confirmSubmit) {
       try {
         const result = await fetchPOST(url, body);
-        console.log(result);
 
         if (result.success) {
           handleLocation();
