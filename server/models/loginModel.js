@@ -35,4 +35,8 @@ module.exports = {
         const query = 'UPDATE User SET nickname=?, year=?, introduce=?, email=?, image=? WHERE user_id=?;';
         await db.query(query, [updateUser.nickname, updateUser.year, updateUser.introduce, updateUser.email, image, user.user_id]);
     },
+    isActiveUser: async (user) => {
+        const query = 'UPDATE User SET is_active = TRUE WHERE user_id=?;';
+        await db.query(query, [user.user_id]);
+    }
 }

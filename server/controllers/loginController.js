@@ -25,4 +25,9 @@ module.exports = {
     };
     handleLoginComplete();
   },
+  isActiveUser: async (req, res) => {
+    const user = await req.user;
+    await loginModel.isActiveUser(user);
+    res.json({ data: user, message: 'ok' });
+  }
 };
