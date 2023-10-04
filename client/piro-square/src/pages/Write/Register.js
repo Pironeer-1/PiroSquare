@@ -20,15 +20,6 @@ const Register = ({ onSubmit, btnAble }) => {
 };
 export default Register;
 
-// const Register = ({onClick}) => {
-//   return (
-//     <Container onClick={onClick}>
-//       <RegisterBtn>등록하기</RegisterBtn>
-//     </Container>
-//   );
-// };
-// export default Register;
-
 const Container = styled.div`
   margin-top: 4rem;
   margin-left: auto;

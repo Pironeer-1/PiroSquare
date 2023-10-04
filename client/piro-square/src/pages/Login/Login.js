@@ -1,7 +1,5 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { AuthContext } from '../../context/auth-context';
 
 const LOGIN_MENT = [
   {
