@@ -25,9 +25,18 @@ module.exports = {
     };
     handleLoginComplete();
   },
-  isActiveUser: async (req, res) => {
-    const user = await req.user;
-    await loginModel.isActiveUser(user);
-    res.json({ data: user, message: 'ok' });
-  }
+  activateUser: async (req, res) => {
+    const user_id = await req.params.user_id;
+    await loginModel.activateUser(user_id);
+    res.redirect('/auth/manageUsers');
+  },
+  manageUsers: async (req, res) => {
+    const users = await loginModel.getUsers();
+    res.render('admin/manageUsers.ejs', {users: users});
+  },
+  deactivateUser: async (req, res) => {
+    const user_id = await req.params.user_id;
+    await loginModel.deactivateUser(user_id);
+    res.redirect('/auth/manageUsers');
+  },
 };
