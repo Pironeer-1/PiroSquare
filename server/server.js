@@ -14,6 +14,11 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "http://localhost:3000"); // 클라이언트에서 서버로 리소스 허용
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 
 const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -59,9 +64,11 @@ const likeRouter = require("./routers/likeRouter.js");
 const apiRouter = require("./routers/apiRouter.js");
 
 // 유저 검증 미들웨어 함수
-const userAuthenticationMiddleware = (req, res, next) => {
-  if (req.session && req.session.user) {
+const userAuthenticationMiddleware = async (req, res, next) => {
+  const user = await req.user;
+  if (user && user.is_active) {
     // 로그인된 경우 다음 미들웨어로 이동
+    console.log('허용');
     next();
   } else {
     // 로그인되지 않은 경우 오류 처리 미들웨어로 이동
@@ -80,7 +87,7 @@ app.use("/api", apiRouter);
 // 받는 로직을 따로 분리해서 유저 검증 미들웨어 위에 지정해야함
 
 // 아래의 모든 URL에 대해 유저 검증 미들웨어를 실행
-//app.use(userAuthenticationMiddleware);
+app.use(userAuthenticationMiddleware);
 
 app.use("/post", postRouter);
 app.use("/question", questionRouter);
