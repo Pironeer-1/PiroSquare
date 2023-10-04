@@ -16,11 +16,28 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 const router = express.Router();
 
+// const adminAuthenticationMiddleware = async (req, res, next) => {
+//     const user = await req.user;
+//     if (user && user.is_admin) {
+//         console.log('허용');
+//         next();
+//     } else {
+//         const error = new Error('Unauthorized');
+//         error.status = 401;
+//         next(error);
+//     }
+// }; 
+
 const loginController = require('../controllers/loginController.js');
 
 router.get('/logout', loginController.logoutProcess);
 router.get('/newUser', loginController.newUser);
 router.post('/newUserProfile', upload.single('image'), loginController.newUserProfile);
-router.get('/isActive', loginController.isActiveUser);
+
+// router.use(adminAuthenticationMiddleware);
+
+router.get('/manageUsers', loginController.manageUsers);
+router.post('/activate/:user_id', loginController.activateUser);
+router.post('/deactivate/:user_id', loginController.deactivateUser);
 
 module.exports = router;
