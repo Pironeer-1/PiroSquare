@@ -1,13 +1,19 @@
-// passportConfig.js
 const passport = require("passport");
 const { Strategy: NaverStrategy } = require("passport-naver-v2");
 const cookieParser = require("cookie-parser");
 const loginModel = require("../models/loginModel");
+const cors = require("cors");
+const corsOptions = {
+  origin: "http://localhost:3000",
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  credentials: true,
+};
 
 module.exports = function (app) {
   app.use(passport.initialize());
   app.use(passport.session());
   app.use(cookieParser());
+  app.use(cors(corsOptions));
 
   passport.serializeUser(function (user, done) {
     done(null, user.ID);
