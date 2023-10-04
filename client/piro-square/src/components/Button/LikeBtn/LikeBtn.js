@@ -1,12 +1,17 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import styled from 'styled-components';
-import { fetchPOST } from '../../../utils/utils';
-import { useParams } from 'react-router-dom';
+import { AuthContext } from '../../../context/AuthContext';
 
 const LikeBtn = ({ initialLike, likeAmount, post_id }) => {
   const [isLike, setIsLike] = useState(initialLike);
   const [currentLikeAmount, setCurrentLikeAmount] = useState(likeAmount || 0);
-  let { id } = useParams();
+  const { userData } = useContext(AuthContext);
+  const realUserId = userData.data.user_id;
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setLoading(false); // 데이터 로드 후 로딩 상태 변경
+  }, []);
 
   const handleLikeToggle = newLikeStatus => {
     if (newLikeStatus) {
@@ -27,16 +32,16 @@ const LikeBtn = ({ initialLike, likeAmount, post_id }) => {
 
     fehandleLike();
 
-    const url = `http://192.168.0.22:8000/like/post/${id}`;
+    const url = `http://localhost:8000/like/post/${post_id}`;
     const body = {
-      userId: 3,
-      isLike: isLike,
+      user_id: realUserId,
       post_id: post_id,
     };
 
     try {
       const response = await fetch(url, {
         method: 'POST',
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -62,6 +67,9 @@ const LikeBtn = ({ initialLike, likeAmount, post_id }) => {
     ? '/images/Question/arrow_g.png'
     : '/images/Question/arrow.png';
 
+  if (loading) {
+    return <div>loading</div>;
+  }
   return (
     <Container onClick={handleLike}>
       <LikeImg src={isLikeImg} alt={isLike ? 'Liked' : 'Not Liked'} />

@@ -13,7 +13,7 @@ const Register = ({ onSubmit, btnAble }) => {
 
   return (
     <Container>
-      <RegisterBtn onClick={handleClick} disabled={!btnAble}>
+      <RegisterBtn onClick={onSubmit} disabled={!btnAble}>
         등록하기
       </RegisterBtn>
     </Container>

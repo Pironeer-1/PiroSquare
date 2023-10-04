@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import 'react-quill/dist/quill.snow.css';
 import WriteTopSection from '../WriteTopSection/WriteTopSection';
@@ -17,6 +17,14 @@ const WriteProject = () => {
   const [startDate, setStartDate] = useState(today);
   const [endDate, setEndDate] = useState(null);
   const [personnel, setPersonnel] = useState(1);
+  const [btnAble, setBtnAble] = useState(false);
+  useEffect(() => {
+    if (title.length >= 2 && content.length >= 10) {
+      setBtnAble(true);
+    } else {
+      setBtnAble(false);
+    }
+  }, [title, content]);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -39,7 +47,10 @@ const WriteProject = () => {
     navigate(nextUrl);
   };
 
-  const onSubmit = () => {
+  const onSubmit = async event => {
+    event.preventDefault();
+    const confirmSubmit = window.confirm('게시글을 등록하시겠습니까?');
+    const url = `http://localhost:8000/recruit/create`;
     const body = {
       title: title,
       content: content,
@@ -49,7 +60,22 @@ const WriteProject = () => {
       personnel: personnel,
     };
     console.log(body);
-    handleLocation();
+
+    if (confirmSubmit) {
+      try {
+        const result = await fetchPOST(url, body);
+        console.log(result);
+
+        if (result.success) {
+          handleLocation();
+        } else {
+          handleLocation();
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        alert('게시글 등록 실패! 다시 시도해주세요.');
+      }
+    }
   };
 
   return (
@@ -73,7 +99,7 @@ const WriteProject = () => {
       <QuilContainer>
         <Quil content={content} setContent={setContent} />
       </QuilContainer>
-      <Register onSubmit={onSubmit} />
+      <Register onSubmit={onSubmit} btnAble={btnAble} />
     </Container>
   );
 };

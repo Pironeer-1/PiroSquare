@@ -54,7 +54,7 @@ const Router = () => {
           {isLoggedIn ? (
             <Route path="/*" element={<RouteWithNavFooter />} />
           ) : (
-            <Route path="/*" element={<Login />} />
+            <Route path="/" element={<Login />} />
           )}
         </Routes>
       </BrowserRouter>

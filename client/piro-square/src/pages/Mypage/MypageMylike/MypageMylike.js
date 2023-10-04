@@ -6,10 +6,14 @@ import MylikeCard from './MylikeCard';
 const MypageMyLike = () => {
   const [mylike, setMylike] = useState([]);
   useEffect(() => {
-    fetch('/data/mylike.json')
+    fetch(`http://localhost:8000/mypage`, {
+      method: 'GET',
+      credentials: 'include',
+    })
       .then(response => response.json())
       .then(result => {
-        setMylike(result);
+        setMylike(result?.likePosts);
+        console.log(result);
       });
   }, []);
   const [currentPage, setCurrentPage] = useState(1);
@@ -43,15 +47,15 @@ const MypageMyLike = () => {
         {currentItems.map(Mylike => {
           return (
             <MylikeCard
-              key={Mylike.id}
-              id={Mylike.id}
+              key={Mylike.post_id}
+              id={Mylike.post_id}
               title={Mylike.title}
               username={Mylike.username}
               created_at={Mylike.created_at}
               is_user_like={Mylike.is_user_like}
-              like_amount={Mylike.like_amount}
-              thumbnail={Mylike.thumbnail}
-              board_name={Mylike.board_name}
+              like_amount={Mylike.likes_count}
+              thumbnail={Mylike.post_image}
+              board_name={Mylike.board_type_id}
             />
           );
         })}

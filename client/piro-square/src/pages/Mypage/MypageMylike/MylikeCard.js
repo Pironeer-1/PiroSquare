@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import LikeBtn from '../../../components/Button/LikeBtn/LikeBtn';
+import { useNavigate } from 'react-router-dom';
 
 const MylikeCard = ({
   id,
@@ -12,23 +13,44 @@ const MylikeCard = ({
   thumbnail,
   board_name,
 }) => {
+  const navigate = useNavigate();
+  const thumbnailSrc = thumbnail ? thumbnail : '/images/Nav/piro_logo.png';
+  const boardNameString =
+    board_name === 1 ? '자유게시판' : board_name === 2 ? '질문게시판' : '';
+  const dateString = created_at;
+  const datePart = dateString?.split('T')[0];
+  const onClickDetailButton = () => {
+    let detailUrl;
+
+    if (board_name === 1) {
+      detailUrl = `/free-detail/${id}`;
+    } else if (board_name === 2) {
+      detailUrl = `/question-detail/${id}`;
+    }
+    navigate(detailUrl);
+  };
+
   return (
-    <MylikeBox>
+    <MylikeBox onClick={onClickDetailButton}>
       <MylikeIcon>
-        <MylikeImg src={thumbnail} />
+        <MylikeImg src={thumbnailSrc} />
       </MylikeIcon>
       <Container>
         <CardTitle>
-          <CardSpan>[{board_name}]</CardSpan>
+          <CardSpan>[{boardNameString}]</CardSpan>
           {title}
         </CardTitle>
         <CardBottom>
           <CardAuthor>{username}</CardAuthor>
-          <CardDate>{created_at}</CardDate>
+          <CardDate>{datePart}</CardDate>
         </CardBottom>
       </Container>
       <RightSection>
-        <LikeBtn initialLike={is_user_like} likeAmount={like_amount} />
+        <LikeBtn
+          initialLike={is_user_like}
+          likeAmount={like_amount}
+          post_id={id}
+        />
       </RightSection>
     </MylikeBox>
   );

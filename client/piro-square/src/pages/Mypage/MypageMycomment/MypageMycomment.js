@@ -6,10 +6,13 @@ import MycommentCard from './MycommentCard';
 const MypageMycomment = () => {
   const [mycomment, setMycomment] = useState([]);
   useEffect(() => {
-    fetch('/data/myComment.json')
+    fetch(`http://localhost:8000/mypage`, {
+      method: 'GET',
+      credentials: 'include',
+    })
       .then(response => response.json())
       .then(result => {
-        setMycomment(result);
+        setMycomment(result?.commentPosts);
       });
   }, []);
 
@@ -45,16 +48,16 @@ const MypageMycomment = () => {
         {currentItems.map(Mylike => {
           return (
             <MycommentCard
-              key={Mylike.id}
-              id={Mylike.id}
+              key={Mylike.post_id}
+              id={Mylike.post_id}
               title={Mylike.title}
               username={Mylike.username}
               created_at={Mylike.created_at}
               is_user_like={Mylike.is_user_like}
-              like_amount={Mylike.like_amount}
-              thumbnail={Mylike.thumbnail}
-              board_name={Mylike.board_name}
-              comment_count={Mylike.comment_count}
+              like_amount={Mylike.like_count}
+              thumbnail={Mylike.post_image}
+              board_name={Mylike.board_type_id}
+              comment_count={Mylike.comments_count}
             />
           );
         })}

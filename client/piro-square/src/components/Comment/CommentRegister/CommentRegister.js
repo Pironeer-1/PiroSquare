@@ -1,30 +1,27 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { fetchPOST } from '../../../utils/utils';
+import { useParams } from 'react-router-dom';
 
 const CommentRegister = ({ onCommentSubmit }) => {
+  let { id } = useParams();
   const [comment, setComment] = useState('');
 
   const handleCommentChange = event => {
     setComment(event.target.value);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async event => {
+    event.preventDefault();
     onCommentSubmit(comment);
+    const url = `http://localhost:8000/comment/create/${id}`;
+    const body = {
+      content: comment,
+    };
+    const result = await fetchPOST(url, body);
+    console.log(result);
     setComment('');
   };
-
-  // const handleSubmit = async event => {
-  //   event.preventDefault();
-  //   const url = 'http://localhost:3333/post/create';
-  //   const body = {
-  //     content: comment,
-  //   };
-  //   const result = await fetchPOST(url, body);
-  //   console.log(result);
-  //   setComment('');
-  //   navigate('/');
-  // };
 
   return (
     <WriteComment>

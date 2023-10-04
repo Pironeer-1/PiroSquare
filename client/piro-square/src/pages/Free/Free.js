@@ -27,18 +27,24 @@ const Free = () => {
 
   useEffect(() => {
     if (!isRightPosition) {
-      fetch('/data/freeData.json')
+      fetch(`http://localhost:8000/post`, {
+        method: 'GET',
+        credentials: 'include',
+      })
         .then(response => response.json())
         .then(result => {
-          setFrees([...result.posts]); // 새로운 배열로 상태 업데이트
+          setFrees([...result?.posts]);
           console.log(result.posts);
         });
     } else {
       // 인기순 데이터를 가져오는 로직
-      fetch('/data/likeFreeData.json')
+      fetch(`http://localhost:8000/post?popular`, {
+        method: 'POST',
+        credentials: 'include',
+      })
         .then(response => response.json())
         .then(result => {
-          setFrees([...result.posts]); // 새로운 배열로 상태 업데이트
+          setFrees([...result.posts]);
           console.log(result.posts);
         });
     }

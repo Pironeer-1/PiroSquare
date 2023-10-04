@@ -13,6 +13,7 @@ const FreeCard = ({
   thumbnail,
   comment_count,
 }) => {
+  console.log('pi', post_id);
   const navigate = useNavigate();
   const onClickDetailButton = () => {
     navigate(`/free-detail/${post_id}`);

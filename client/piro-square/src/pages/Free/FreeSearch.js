@@ -30,23 +30,15 @@ const FreeSearch = () => {
   const [frees, setFrees] = useState([]);
 
   useEffect(() => {
-    fetch(`http://192.168.0.22:8000/post/search?keyword=${value}`)
+    fetch(`http://localhost:8000/post/search?keyword=${value}`, {
+      method: 'GET',
+      credentials: 'include',
+    })
       .then(response => response.json())
       .then(result => {
         setFrees(result.posts);
       });
   }, []);
-
-  // useEffect(() => {
-  //   fetch(`http://10.58.52.80:8000/free/search?keyword=${value}`, {
-  //     method: 'GET',
-  //   })
-  //     .then(response => response.json())
-  //     .then(result => {
-  //       setFrees(result);
-  //       setLoading(false);
-  //     });
-  // }, []);
 
   const availabilityClassName = isRightPosition ? 'greenWord' : 'grayWord';
 
@@ -69,8 +61,10 @@ const FreeSearch = () => {
         <WriteBtn onClick={handleWriteBtnClick}>글쓰기</WriteBtn>
       </TopSection>
       <BottomSection>
-        {frees.map(Free => {
-          return (
+        {frees.length === 0 ? (
+          <NoResultsText>키워드에 해당하는 검색결과가 없습니다</NoResultsText>
+        ) : (
+          frees.map(Free => (
             <FreeCard
               key={Free.post_id}
               id={Free.post_id}
@@ -78,13 +72,11 @@ const FreeSearch = () => {
               username={Free.user_name}
               created_at={Free.created_at}
               answers_amount={Free.answers_amount}
-              is_user_like={Free.is_user_like}
-              like_amount={Free.like_amount}
               thumbnail={Free.thumbnail}
               comment_count={Free.comments_count}
             />
-          );
-        })}
+          ))
+        )}
       </BottomSection>
     </Container>
   );
@@ -163,3 +155,7 @@ const BottomSection = styled.div`
   flex-direction: column;
   margin-top: 1rem;
 `;
+
+const LoadingText = styled.div``;
+
+const NoResultsText = styled.div``;

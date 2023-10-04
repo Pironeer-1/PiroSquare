@@ -10,11 +10,13 @@ const CommentSection = ({ comments }) => {
           <CommentCard
             key={Reply.comment_id}
             id={Reply.comment_id}
-            username={Reply.user_name}
+            post_id={Reply.post_id}
+            user_id={Reply.user_id}
+            username={Reply.nickname}
             created_at={Reply.created_at}
             content={Reply.content}
             like_amount={Reply.likes_count}
-            profile_img={Reply.profile_img}
+            profile_img={Reply.image}
             is_user_like={Reply.is_user_like}
           />
         );

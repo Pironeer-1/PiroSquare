@@ -5,62 +5,53 @@ import Paginator from '../../../components/Paginator/Paginator';
 import Comment from '../../../components/Comment/Comment';
 import LikeBtn from '../../../components/Button/LikeBtn/LikeBtn';
 import { useParams } from 'react-router-dom';
+import sanitizeHtml from 'sanitize-html';
 
 const FreeDetail = () => {
   const [dataLoaded, setDataLoaded] = useState(false);
+  const [renderedContent, setRenderedContent] = useState('');
   const [detail, setDetail] = useState([]);
+  const [comments, setComments] = useState([]);
   const navigate = useNavigate();
   const onClickListButton = () => {
     navigate(`/free`);
   };
   let { id } = useParams();
 
-  // useEffect(() => {
-  //   fetch(`http://192.168.0.22:8000/post/detail/${id}`)
-  //     .then(response => response.json())
-  //     .then(result => {
-  //       setDetail(result.post);
-  //       console.log(result.post);
-  //     });
-  // }, []);
-
   useEffect(() => {
-    fetch('data/freeDetail.json')
+    fetch(`http://localhost:8000/post/detail/${id}`, {
+      method: 'GET',
+      credentials: 'include',
+    })
       .then(response => response.json())
       .then(result => {
-        setDetail(result);
-        console.log(result);
+        setDetail(result?.post);
+        setComments(result?.comments);
       });
   }, []);
 
-  const [comments, setComments] = useState([]);
-  // useEffect(() => {
-  //   fetch(`http://192.168.0.22:8000/post/detail/${id}`)
-  //     .then(response => response.json())
-  //     .then(result => {
-  //       setComments(result?.comments);
-  //       console.log(result?.comments);
-  //     });
-  // }, []);
+  const thumbnailSrc = detail.image
+    ? detail.image
+    : '/images/Nav/piro_logo.png';
+
+  const dateString = detail.created_at;
+  const datePart = dateString?.split('T')[0];
 
   useEffect(() => {
-    fetch('data/comments.json')
-      .then(response => response.json())
-      .then(result => {
-        setDetail(result);
-        console.log(result);
-      });
-  }, []);
+    if (detail.content) {
+      const tagContent = detail.content;
+      const cleanCode = sanitizeHtml(tagContent);
+      setRenderedContent(
+        <div dangerouslySetInnerHTML={{ __html: cleanCode }} />,
+      );
+    }
+  }, [detail.content]);
 
   useEffect(() => {
     if (detail.like_amount !== undefined && detail.is_user_like !== undefined) {
       setDataLoaded(true);
     }
   }, [detail.like_amount, detail.is_user_like]);
-
-  // if (!dataLoaded) {
-  //   return <div>Loading...</div>;
-  // }
 
   return (
     <>
@@ -73,18 +64,19 @@ const FreeDetail = () => {
           <Title>{detail?.title}</Title>
           <LikeBtn
             initialLike={detail?.is_user_like}
-            likeAmount={detail?.like_amount}
+            likeAmount={detail?.likes_count}
+            post_id={detail?.post_id}
           />
         </TopSection>
         <ContentBox>
           <ContentInfo>
             <UserSection>
-              <UserImg src={detail?.profile} />
-              <UserName>{detail?.user_name}</UserName>
+              <UserImg src={thumbnailSrc} />
+              <UserName>{detail?.nickname}</UserName>
             </UserSection>
-            <Created>{detail?.created_at}</Created>
+            <Created>{datePart}</Created>
           </ContentInfo>
-          <ContentSection>{detail?.content}</ContentSection>
+          <ContentSection>{renderedContent}</ContentSection>
         </ContentBox>
         <Comment comments={comments} />
       </Container>

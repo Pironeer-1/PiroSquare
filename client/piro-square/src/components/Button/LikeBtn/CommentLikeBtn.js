@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import styled from 'styled-components';
+import { AuthContext } from '../../../context/AuthContext';
 
-const CommentLikeBtn = ({ initialLike, likeAmount }) => {
-  const [isLike, setIsLike] = useState(initialLike);
+const CommentLikeBtn = ({ initialLike, likeAmount, post_id, id }) => {
+  const [isLike, setIsLike] = useState(initialLike === 1);
   const [currentLikeAmount, setCurrentLikeAmount] = useState(likeAmount);
+  const { userData } = useContext(AuthContext);
+  const realUserId = userData.data.user_id;
 
   const handleLikeToggle = newLikeStatus => {
     if (newLikeStatus) {
@@ -14,9 +17,46 @@ const CommentLikeBtn = ({ initialLike, likeAmount }) => {
     setIsLike(newLikeStatus);
   };
 
-  const handleLike = () => {
+  const fehandleLike = () => {
     const newLikeStatus = !isLike;
     handleLikeToggle(newLikeStatus);
+  };
+
+  const handleLike = async event => {
+    event.preventDefault();
+
+    fehandleLike();
+
+    const url = `http://localhost:8000/like/comment/${id}`;
+    const body = {
+      user_id: realUserId,
+      post_id: post_id,
+      comment_id: id,
+    };
+
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        console.log(result);
+      } else {
+        console.error(
+          'POST request failed:',
+          response.status,
+          response.statusText,
+        );
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
 
   const isLikeImg = isLike
@@ -37,8 +77,10 @@ export default CommentLikeBtn;
 
 const Container = styled.div`
   display: flex;
+  justify-content: center;
   cursor: pointer;
-  margin-left: 0.5rem;
+  margin-top: 1rem;
+  margin-bottom: auto;
 `;
 
 const LikeImg = styled.img`
