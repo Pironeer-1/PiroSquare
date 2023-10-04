@@ -1,0 +1,35 @@
+<h1>사용자 관리 페이지</h1>
+<table>
+    <tr>
+        <th>user_id</th>
+        <th>name</th>
+        <th>ID</th>
+        <th>year</th>
+        <th>email</th>
+        <th>nickname</th>
+        <th>is_active</th>
+    </tr>
+    <% users.forEach(function(user) { %>
+        <tr>
+            <td><%= user.user_id %></td>
+            <td><%= user.name %></td>
+            <td><%= user.ID %></td>
+            <td><%= user.batch %></td>
+            <td><%= user.email %></td>
+            <td><%= user.nickname %></td>
+            <% if (user.is_active) { %>
+                <td>
+                    <form action="/auth/deactivate/<%= user.ID %>" method="POST">
+                        <button type="submit">비활성화</button>
+                    </form>
+                </td>
+            <% } else { %>
+                <td>
+                    <form action="/auth/activate/<%= user.ID %>" method="POST">
+                        <button type="submit">활성화</button>
+                    </form>
+                </td>
+            <% } %>
+        </tr>
+    <% }); %>
+</table>
