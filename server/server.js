@@ -49,7 +49,7 @@ app.use(cookieParser());
 //Controllers
 const passportController = require("./controllers/passportController.js")(app);
 const homeController = require("./controllers/homeController.js");
-const loginController = require("./controllers/loginController.js");
+// const loginController = require("./controllers/loginController.js");
 //const postController = require('./controllers/postController.js');
 
 //Router
