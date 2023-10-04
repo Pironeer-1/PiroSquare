@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { AuthContext } from '../../context/auth-context';
+import { AuthContext } from '../../context/AuthContext';
 
 const LOGIN_MENT = [
   {
@@ -15,25 +15,18 @@ const LOGIN_MENT = [
 
 const Login = () => {
   const Naver = () => {
-    const popup = window.open(
-      'http://localhost:8000/naver',
-      '_blank',
-      'width=400,height=400',
-    );
-    const handleLoginComplete = () => {
-      popup.close();
-
-      window.postMessage('loginComplete', window.origin);
-    };
+    window.location.href = 'http://localhost:8000/naver';
     window.addEventListener('message', event => {
+      console.log(event);
       if (
         event.origin === `http://localhost:8000/` &&
         event.data === 'loginComplete'
       ) {
-        handleLoginComplete();
+        window.location.reload();
       }
     });
   };
+
   const [currentMentIndex, setCurrentMentIndex] = useState(0);
 
   useEffect(() => {

@@ -68,22 +68,6 @@ const MypageUpdate = () => {
     navigate('/my-page/card');
   };
 
-  // const onSubmit = async event => {
-  //   event.preventDefault();
-  //   const url = 'http://localhost:8000/post/create';
-  //   const body = {
-  // email: email,
-  // nickname: nickname,
-  // introduction: introduction,
-  // imgUrl: imgUrl,
-  //   };
-  //   const result = await fetchPOST(url, body);
-  //   console.log(result);
-  //   setTitle('');
-  //   setContent('');
-  //   navigate('/');
-  // };
-
   return (
     <Container>
       <MypageNav />
