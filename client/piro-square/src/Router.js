@@ -1,13 +1,12 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { BrowserRouter, Routes, Route, Redirect } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import RouteWithNavFooter from './RouteWithNavFooter';
 import Login from './pages/Login/Login';
-import { AuthContext } from './context/auth-context';
+import { AuthContext } from './context/AuthContext';
 import axios from 'axios';
 
 const Router = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  console.log('isLoggedIn', isLoggedIn);
   const [userData, setUserData] = useState(null);
 
   const fetchUserData = async () => {
@@ -16,10 +15,15 @@ const Router = () => {
         withCredentials: true,
       });
       const userData = response.data;
-      setUserData(userData);
-      setIsLoggedIn(!!userData);
+
+      if (response.data.message !== 'ok') {
+        setIsLoggedIn(false);
+      } else {
+        setUserData(userData);
+        setIsLoggedIn(true);
+      }
     } catch (error) {
-      console.error(error);
+      console.error('Error during fetchUserData:', error);
     }
   };
 
@@ -50,7 +54,7 @@ const Router = () => {
           {isLoggedIn ? (
             <Route path="/*" element={<RouteWithNavFooter />} />
           ) : (
-            <Route path="/" element={<Login />} />
+            <Route path="/*" element={<Login />} />
           )}
         </Routes>
       </BrowserRouter>

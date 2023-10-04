@@ -52,9 +52,7 @@ const WriteFree = () => {
   // };
 
   const onSubmit = async event => {
-    event.preventDefault();
-
-    const url = `http://192.168.0.22:8000/post/create`;
+    const url = `http://localhost:8000/post/create`;
     const body = {
       title: title,
       content: content,
