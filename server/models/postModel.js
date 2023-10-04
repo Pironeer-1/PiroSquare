@@ -2,34 +2,60 @@ const db = require('../config/db.js');
 
 module.exports = {
     // board_type_id 로 서로 다른 게시글 데이터를 가져옴
-    getAll: async(board_type_id)=>{
+    getAll: async(user_id, board_type_id)=>{
         const query = `
         SELECT 
-            Post.*, 
-            User.*
-        FROM 
-            Post 
-        INNER JOIN 
-            User ON Post.user_id = User.user_id 
-        WHERE 
-            Post.board_type_id = ?;
+            A.*,
+            C.*,
+            (CASE
+                WHEN post_like_id IS NULL THEN false
+                ELSE true 
+            END) AS is_user_like
+        FROM post A 
+            LEFT OUTER JOIN 
+                (SELECT * 
+                FROM postlike 
+                WHERE user_id=?) B 
+                ON A.post_id=B.post_id
+            INNER JOIN
+                User C
+                ON A.user_id = C.user_id
+        WHERE A.board_type_id=?;
         `;
-        const posts = await db.query(query, [board_type_id]);
+        const posts = await db.query(query, [user_id, board_type_id]);
         return posts[0];
     },
-    detail: async (postId) => {
-        const query =
-        `SELECT 
-            Post.*, 
-            User.*
-        FROM 
-            Post 
-        INNER JOIN 
-            User ON Post.user_id = User.user_id 
-        WHERE 
-            post_id= ?;
+    detail: async (user_id, postId) => {
+        const query =`
+        SELECT 
+            A.*,
+            C.*,
+            (CASE
+                WHEN post_like_id IS NULL THEN false
+                ELSE true 
+            END) AS is_user_like
+        FROM post A 
+            LEFT OUTER JOIN 
+                (SELECT * 
+                FROM postlike 
+                WHERE user_id=?) B 
+                ON A.post_id=B.post_id
+            INNER JOIN
+                User C
+                ON A.user_id = C.user_id
+        WHERE A.post_id=?;
         `;
-        const post = await db.query(query, [postId]);
+        const post = await db.query(query, [user_id, postId]);
+        return post[0][0];
+    },
+    // 간단하게 post 정보만 필요한 경우
+    getPost: async (postId) => {
+        const query =`
+        SELECT *
+        FROM post 
+        WHERE post_id=?;
+        `;
+        const post = await db.query(query, [user_id, postId]);
         return post[0][0];
     },
 
