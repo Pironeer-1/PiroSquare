@@ -57,6 +57,7 @@ const StudyDetail = () => {
           />
         </TopSection>
         <SubInfo
+          post_id={detail.post_id}
           user_id={detail.user_id}
           activate={detail.activate}
           start_date={detail.start_date}
