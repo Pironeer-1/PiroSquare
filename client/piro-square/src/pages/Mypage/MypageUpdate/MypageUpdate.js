@@ -70,15 +70,23 @@ const MypageUpdate = () => {
     event.preventDefault();
     const url = `http://localhost:8000/mypage/updateUser/${user_id}`;
 
-    const body = {
-      user_id: user_id,
-      email: email,
-      nickname: nickname,
-      introduce: introduction,
-      image: imgUrl,
-    };
+    const formData = new FormData();
+    formData.append('user_id', user_id);
+    formData.append('email', email);
+    formData.append('nickname', nickname);
+    formData.append('introduce', introduction);
 
-    const result = await fetchPOST(url, body);
+    if (imgUrl) {
+      const blob = await fetch(imgUrl).then(res => res.blob());
+      formData.append('image', blob, 'profile.jpg'); // 'profile.jpg'는 파일 이름입니다.
+    }
+
+    const result = await fetch(url, {
+      method: 'POST',
+      credentials: 'include',
+      body: formData,
+    });
+    console.log(result);
 
     navigate('/my-page/card');
   };
