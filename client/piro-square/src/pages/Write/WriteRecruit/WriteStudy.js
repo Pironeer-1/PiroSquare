@@ -62,6 +62,7 @@ const WriteStudy = () => {
       personnel: personnel,
     };
 
+    console.log(body);
     if (confirmSubmit) {
       try {
         const result = await fetchPOST(url, body);

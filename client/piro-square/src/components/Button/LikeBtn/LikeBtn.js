@@ -10,7 +10,7 @@ const LikeBtn = ({ initialLike, likeAmount, post_id }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setLoading(false); // 데이터 로드 후 로딩 상태 변경
+    setLoading(false);
   }, []);
 
   const handleLikeToggle = newLikeStatus => {
