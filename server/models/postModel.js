@@ -24,7 +24,15 @@ module.exports = {
         WHERE A.board_type_id=?;
         `;
         const posts = await db.query(query, [user_id, board_type_id]);
-        return posts[0];
+        
+        const targetPost = post[0];
+
+        for (const post of targetPost){
+            post.title = targetPost.title.replace(/&lt;/g, "<").replace(/&gt;/g, ">");
+            post.content = targetPost.content.replace(/&lt;/g, "<").replace(/&gt;/g, ">");
+        }
+
+        return targetPost;
     },
     detail: async (user_id, postId) => {
         const query =`
@@ -51,6 +59,7 @@ module.exports = {
         // xss 처리한 content 원래대로
         const targetPost = post[0][0];        
         targetPost.content = targetPost.content.replace(/&lt;/g, "<").replace(/&gt;/g, ">");
+        targetPost.title = targetPost.title.replace(/&lt;/g, "<").replace(/&gt;/g, ">");
 
         return targetPost;
     },
@@ -62,7 +71,12 @@ module.exports = {
         WHERE post_id=?;
         `;
         const post = await db.query(query, [user_id, postId]);
-        return post[0][0];
+
+        const targetPost = post[0][0];        
+        targetPost.content = targetPost.content.replace(/&lt;/g, "<").replace(/&gt;/g, ">");
+        targetPost.title = targetPost.title.replace(/&lt;/g, "<").replace(/&gt;/g, ">");
+
+        return targetPost;
     },
 
     // 기본 검색 기능(글자 검색만 가능)
