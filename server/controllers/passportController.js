@@ -65,7 +65,7 @@ module.exports = function (app) {
       console.log('req.user.year', req.user.year);
       res.cookie("sessionID", req.sessionID, { maxAge: 1000 * 60 * 60 * 24 });
       if (!req.user.is_active || !req.user.year) {
-        return res.redirect("http://localhost:3000/my-page/update");
+        return res.redirect("http://localhost:3000/first-login");
       } 
       // res.send();
       res.redirect("http://localhost:3000/");
