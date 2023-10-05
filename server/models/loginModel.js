@@ -33,7 +33,14 @@ module.exports = {
     },
     newUserProfile: async (user, updateUser, image) => {
         const query = 'UPDATE User SET nickname=?, year=?, introduce=?, email=?, image=? WHERE user_id=?;';
-        await db.query(query, [updateUser.nickname, updateUser.year, updateUser.introduce, updateUser.email, image, user.user_id]);
+        const User = [
+            updateUser.nickname || user.nickname,
+            updateUser.year || user.year,
+            updateUser.introduce || user.introduce, 
+            updateUser.email || user.email,
+            updateUser.image || user.image, 
+        ];
+        await db.query(query, User);
     },
     activateUser: async (user_id) => {
         const query = 'UPDATE User SET is_active = TRUE WHERE ID=?;';
