@@ -6,6 +6,8 @@
   "start_date": "2023.10.01",
   "recruit_date": "2023.11.04",
   "username": "광밍경",
+  "user_id": 1,
+  "post_id": 4,
   "activate": true,
   "personnel": 15,
   "is_user_like": true,

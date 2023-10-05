@@ -16,30 +16,39 @@ const QuestionDetail = () => {
 
   let { id } = useParams();
   const [questionDetail, setQuestionDetail] = useState([]);
-  useEffect(() => {
-    fetch(`http://localhost:8000/question/detail/${id}`)
-      .then(response => response.json())
-      .then(result => {
-        setQuestionDetail(result.question);
-      });
-  }, []);
-
-  const [answerDetail, setAnswerDetail] = useState([]);
   // useEffect(() => {
-  //   fetch('/data/answers.json')
+  //   fetch(`http://localhost:8000/question/detail/${id}`)
   //     .then(response => response.json())
   //     .then(result => {
-  //       setAnswerDetail(result);
+  //       setQuestionDetail(result.question);
   //     });
   // }, []);
 
   useEffect(() => {
-    fetch(`http://localhost:8000/question/detail/${id}`)
+    fetch('/data/questionDetail.json')
       .then(response => response.json())
       .then(result => {
-        setAnswerDetail(result.comments);
+        setQuestionDetail(result);
       });
   }, []);
+
+  const [answerDetail, setAnswerDetail] = useState([]);
+  useEffect(() => {
+    fetch('/data/answers.json')
+      .then(response => response.json())
+      .then(result => {
+        setAnswerDetail(result);
+        console.log('qD', result);
+      });
+  }, []);
+
+  // useEffect(() => {
+  //   fetch(`http://localhost:8000/question/detail/${id}`)
+  //     .then(response => response.json())
+  //     .then(result => {
+  //       setAnswerDetail(result.comments);
+  //     });
+  // }, []);
 
   const navigate = useNavigate();
   const onClickListButton = () => {
@@ -54,6 +63,7 @@ const QuestionDetail = () => {
       </ListBtn>
       <Title>{questionDetail.title}</Title>
       <SubInfoSection
+        user_id={questionDetail.user_id}
         is_solved={questionDetail.is_solved}
         answers_amount={questionDetail.answers_amount}
         created_at={questionDetail.created_at}

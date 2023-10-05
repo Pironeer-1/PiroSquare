@@ -6,13 +6,17 @@ import { useNavigate } from 'react-router-dom';
 const FreeCard = ({
   post_id,
   title,
-  user_name,
+  nickname,
   created_at,
   is_user_like,
   like_amount,
   thumbnail,
   comment_count,
 }) => {
+  const dateString = created_at;
+  const datePart = dateString?.split('T')[0];
+  const thumbnailSrc = thumbnail ? thumbnail : '/images/Nav/piro_logo.png';
+
   const navigate = useNavigate();
   const onClickDetailButton = () => {
     navigate(`/free-detail/${post_id}`);
@@ -20,13 +24,13 @@ const FreeCard = ({
   return (
     <FreeBox>
       <FreeIcon onClick={onClickDetailButton}>
-        <FreeImg src={thumbnail} />
+        <FreeImg src={thumbnailSrc} />
       </FreeIcon>
       <Container onClick={onClickDetailButton}>
         <CardTitle>{title}</CardTitle>
         <CardBottom>
-          <CardAuthor>{user_name}</CardAuthor>
-          <CardDate>{created_at}</CardDate>
+          <CardAuthor>{nickname}</CardAuthor>
+          <CardDate>{datePart}</CardDate>
           <CardComment>
             <CommentImg src="/images/Mypage/chat_g.png" />
             {comment_count}

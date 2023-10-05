@@ -54,9 +54,11 @@ const ProjectDetail = () => {
           <LikeBtn
             initialLike={detail.is_user_like}
             likeAmount={detail.like_amount}
+            post_id={detail.post_id}
           />
         </TopSection>
         <SubInfo
+          user_id={detail.user_id}
           activate={detail.activate}
           start_date={detail.start_date}
           recruit_date={detail.recruit_date}
