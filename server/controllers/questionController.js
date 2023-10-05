@@ -46,7 +46,7 @@ module.exports = {
         const userId=await userModel.getUserId(user.ID);
         const newPost = req.body;
         const imagePath = req.file ? `/post/image/${req.file.filename}` : '';
-        const resultId = await questionModel.createNewPost(newPost, userId, imagePath);
+        const resultId = await postModel.createNewPost(newPost, userId, imagePath, 3);
         
         res.json({insertId: resultId});
     },
@@ -96,7 +96,7 @@ module.exports = {
             await postModel.deletePost(postId);
             const newPost = req.body;
             const imagePath = req.file ? `/post/image/${req.file.filename}` : '';
-            await questionModel.updatePost(postId, newPost, imagePath);
+            await postModel.updatePost(postId, newPost, imagePath);
 
             res.json({result: "success"});
         }

@@ -77,7 +77,7 @@ module.exports = {
     },
     //대댓글 작성
     createReply: async (postId, userId, newReplyData, parentCommentId) => {
-        const xssComment = xss(newCommentData);
+        const xssComment = xss(newReplyData);
         const query = "INSERT INTO `Comment` (content, likes_count, user_id, post_id, parent_comment_id) VALUES (?, 0, ?, ?, ?);";
         await db.query(query, [xssComment, userId, postId, parentCommentId]);
     },
