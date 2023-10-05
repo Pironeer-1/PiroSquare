@@ -17,7 +17,7 @@ module.exports = {
   newUserProfile: async (req, res) => {
     const user = await req.user;
     const loginUser = req.body;
-    const imagePath = req.file ? `/user/${req.file.filename}` : "";
+    const imagePath = req.file ? `http://localhost:8000/user/${req.file.filename}` : "";
     await loginModel.newUserProfile(user, loginUser, imagePath);
     const handleLoginComplete = () => {
       popup.close();
