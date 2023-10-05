@@ -1,5 +1,6 @@
 const homeModel = require('../models/homeModel.js');
 const postModel = require('../models/postModel.js');
+const userModel = require('../models/userModel.js');
 
 module.exports = {
     //공지 게시판 모든 글 불러오기

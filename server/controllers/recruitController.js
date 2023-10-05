@@ -10,7 +10,7 @@ module.exports = {
         const userId=await userModel.getUserId(user.ID);
 
         const posts = await postModel.getAll(userId, 4);
-        
+        console.log(posts);
         res.json({posts: posts});
     },
     detail: async (req, res) =>{
@@ -49,7 +49,7 @@ module.exports = {
         const userId=await userModel.getUserId(user.ID);
 
         const newPostData = req.body;
-        const imagePath = req.file ? `/post/image/${req.file.filename}` : '';
+        const imagePath = req.file ? `http://localhost:8000/post/image/${req.file.filename}` : '';
         const insertId = await recruitModel.createNewRecruit(newPostData, userId, imagePath, 4);
         
         res.json({insertId: insertId});
@@ -97,7 +97,7 @@ module.exports = {
             res.json({result: "fail"});
         }else{
             const newPostData = req.body;
-            const imagePath = req.file ? `/post/image/${req.file.filename}` : '';
+            const imagePath = req.file ? `http://localhost:8000/post/image/${req.file.filename}` : '';
             await postModel.updatePost(postId, newPostData, imagePath);
             
             res.json({result: "success"});

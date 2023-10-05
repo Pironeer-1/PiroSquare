@@ -28,15 +28,15 @@ module.exports = {
         let NewPost;
         if(newPostData.category=='study'){
             NewPost = await db.query(query, [newPostData.title, 
-                newPostData.content, 4, userId, imagePath, 1]);
+                newPostData.content, 4, userId, imagePath, 1, newPostData.member, newPostData.start_date, newPostData.end_date]);
         }
         else if(newPostData.category=='project'){
             NewPost = await db.query(query, [newPostData.title, 
-                newPostData.content, 4, userId, imagePath, 2]);
+                newPostData.content, 4, userId, imagePath, 2, newPostData.member, newPostData.start_date, newPostData.end_date]);
         }
         else if(newPostData.category=='recruit'){
             NewPost = await db.query(query, [newPostData.title, 
-                newPostData.content, 4, userId, imagePath, 3]);
+                newPostData.content, 4, userId, imagePath, 3, newPostData.member, newPostData.start_date, newPostData.end_date]);
         }
         return NewPost[0].insertId;
     },    

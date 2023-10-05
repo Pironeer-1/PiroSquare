@@ -70,16 +70,23 @@ module.exports = {
 
         return targetComment;
     },
-    createComment: async (postId, userId, newCommentData) => {
+    createComment: async (postId, userId, newCommentData, CommentImage) => {
         const xssComment = xss(newCommentData);
-        const query = "INSERT INTO `Comment` (content, likes_count, user_id, post_id) VALUES (?, 0, ?, ?);";
-        await db.query(query, [xssComment, userId, postId]);
+        const query = "INSERT INTO `Comment` (content, likes_count, user_id, post_id, comment_image) VALUES (?, 0, ?, ?, ?);";
+        await db.query(query, [xssComment, userId, postId, CommentImage]);
     },
     //대댓글 작성
+<<<<<<< HEAD
+    createReply: async (postId, userId, newReplyData, parentCommentId, CommentImage) => {
+        const xssComment = xss(newCommentData);
+        const query = "INSERT INTO `Comment` (content, likes_count, user_id, post_id, parent_comment_id, comment_image) VALUES (?, 0, ?, ?, ?, ?);";
+        await db.query(query, [xssComment, userId, postId, parentCommentId, CommentImage]);
+=======
     createReply: async (postId, userId, newReplyData, parentCommentId) => {
         const xssComment = xss(newReplyData);
         const query = "INSERT INTO `Comment` (content, likes_count, user_id, post_id, parent_comment_id) VALUES (?, 0, ?, ?, ?);";
         await db.query(query, [xssComment, userId, postId, parentCommentId]);
+>>>>>>> develop
     },
     //댓글 삭제
     deleteComment: async (commentId)=>{

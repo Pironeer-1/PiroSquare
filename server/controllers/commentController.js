@@ -9,7 +9,8 @@ module.exports = {
         const postId=req.params.post_id;
         const newCommentData=req.body;
         const userId=await userModel.getUserId(user.ID);
-        await commentModel.createComment(postId, userId, newCommentData.content);
+        const imagePath = req.file ? `http://localhost:8000/comment/image/${req.file.filename}` : '';
+        await commentModel.createComment(postId, userId, newCommentData.content, imagePath);
         
         res.json({result: "success"});
     },
@@ -22,8 +23,8 @@ module.exports = {
         const newReplyData = req.body;
         const parentComment = await commentModel.simpleComment(parentCommentId);
         const postId = parentComment.post_id;
-        
-        await commentModel.createReply(postId, userId, newReplyData.content, parentCommentId);
+        const imagePath = req.file ? `http://localhost:8000/comment/image/${req.file.filename}` : '';
+        await commentModel.createReply(postId, userId, newReplyData.content, parentCommentId, imagePath);
         
         res.json({result: "success"});
     },
