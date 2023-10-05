@@ -25,19 +25,20 @@ module.exports = {
     },
 
     createNewRecruit: async(newPostData, userId, imagePath) => {
+        const xssTitle = xss(newPostData.title);
         const xssContent = xss(newPostData.content);
         const query='INSERT INTO Post (title, content, board_type_id, user_id, post_image, category, member, start_date, end_date, likes_count, comments_count) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 0, 0);';
         let NewPost;
         if(newPostData.category=='study'){
-            NewPost = await db.query(query, [newPostData.title, 
+            NewPost = await db.query(query, [xssTitle, 
                 xssContent, 4, userId, imagePath, 1, newPostData.member, newPostData.start_date, newPostData.end_date]);
         }
         else if(newPostData.category=='project'){
-            NewPost = await db.query(query, [newPostData.title, 
+            NewPost = await db.query(query, [xssTitle,  
                 xssContent, 4, userId, imagePath, 2, newPostData.member, newPostData.start_date, newPostData.end_date]);
         }
         else if(newPostData.category=='recruit'){
-            NewPost = await db.query(query, [newPostData.title, 
+            NewPost = await db.query(query, [xssTitle, 
                 xssContent, 4, userId, imagePath, 3, newPostData.member, newPostData.start_date, newPostData.end_date]);
         }
         return NewPost[0].insertId;
@@ -45,17 +46,18 @@ module.exports = {
 
     // 게시글 업데이트
     updatePost: async(postId, newPostData, PostImage) => {
+        const xssTitle = xss(newPostData.title);
         const xssContent = xss(newPostData.content);
         const query = 'UPDATE Post SET title=?, content=?, post_image=?, category, member, start_date, end_date, WHERE post_id=?;';
         
         if(newPostData.category=='study'){
-            await db.query(query, [newPostData.title, xssContent, PostImage, 1, newPostData.member, newPostData.start_date, newPostData.end_date, postId]);
+            await db.query(query, [xssTitle, xssContent, PostImage, 1, newPostData.member, newPostData.start_date, newPostData.end_date, postId]);
         }
         else if(newPostData.category=='project'){
-            await db.query(query, [newPostData.title, xssContent, PostImage, 2, newPostData.member, newPostData.start_date, newPostData.end_date, postId]);
+            await db.query(query, [xssTitle, xssContent, PostImage, 2, newPostData.member, newPostData.start_date, newPostData.end_date, postId]);
         }
         else if(newPostData.category=='recruit'){
-            await db.query(query, [newPostData.title, xssContent, PostImage, 3, newPostData.member, newPostData.start_date, newPostData.end_date, postId]);
+            await db.query(query, [xssTitle, xssContent, PostImage, 3, newPostData.member, newPostData.start_date, newPostData.end_date, postId]);
         }
     }
 }

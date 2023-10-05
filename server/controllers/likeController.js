@@ -35,7 +35,7 @@ module.exports = {
         const user = await req.user;
         const userId=await userModel.getUserId(user.ID);
         const commentId=req.params.comment_id;
-
+        console.log(commentId);
         const isliked = await commentLikeModel.checkLike(userId, commentId);
         if(isliked){ // true면 좋아요 되어있다는 뜻
             await commentLikeModel.unlike(userId, commentId);
@@ -43,7 +43,7 @@ module.exports = {
             await commentModel.likeCount(commentId, 'unlike');
         }else{  // false면 좋아요 안되어있다는 뜻
             await commentLikeModel.like(userId, commentId);
-
+            
             await commentModel.likeCount(commentId, 'like');
         }
         res.json({result: 'success'});

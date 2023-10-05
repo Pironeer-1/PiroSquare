@@ -91,9 +91,10 @@ module.exports = {
     },
     // 게시글 생성
     createNewPost: async(newPostData, userId, PostImage, board_type_id) => {
+        const xssTitle = xss(newPostData.title);
         const xssContent = xss(newPostData.content);
         const query = 'INSERT INTO Post (title, content, user_id, post_image, board_type_id, likes_count, comments_count) VALUES (?, ?, ?, ?, ?, ?, ?);';
-        const NewPost = await db.query(query, [newPostData.title, xssContent, userId, PostImage, board_type_id, 0, 0]);
+        const NewPost = await db.query(query, [xssTitle, xssContent, userId, PostImage, board_type_id, 0, 0]);
         
         return NewPost[0].insertId;
     },
@@ -104,9 +105,10 @@ module.exports = {
     },
     // 게시글 업데이트
     updatePost: async(postId, newPostData, PostImage) => {
+        const xssTitle = xss(newPostData.title);
         const xssContent = xss(newPostData.content);
         const query = 'UPDATE Post SET title=?, content=?, post_image=? WHERE post_id=?;';
-        await db.query(query, [newPostData.title, xssContent, PostImage, postId]);
+        await db.query(query, [xssTitle, xssContent, PostImage, postId]);
     },
     // 좋아요 개수 업데이트
     likeCountUpdate: async(postId, action) => {
