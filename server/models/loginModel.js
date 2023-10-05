@@ -21,8 +21,8 @@ module.exports = {
         const User = [
         user.ID,
         user.name || 'username',
-        user.year || 19,
-        user.nickname || 'piro',
+        user.year || null,
+        user.nickname || null,
         user.image || null, // 이미지가 제공되지 않을 경우 NULL 처리
         user.introduce || null, // 소개가 제공되지 않을 경우 NULL 처리
         user.email || null,

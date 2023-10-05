@@ -8,7 +8,11 @@ module.exports = {
             res.status(400).send({ data: null, message: 'not authorized' });
         } else {
             const user = await req.user;
-            res.json({ data: user, message: 'ok' });
+            if (!user){
+                res.status(400).send({ data: null, message: 'not user' });
+            }  else {
+                res.json({ data: user, message: 'ok' });
+            }
         }
     },
 }
