@@ -98,7 +98,7 @@ module.exports = {
         }else{
             const newPostData = req.body;
             const imagePath = req.file ? `http://localhost:8000/post/image/${req.file.filename}` : '';
-            await postModel.updatePost(postId, newPostData, imagePath);
+            await recruitModel.updatePost(postId, newPostData, imagePath);
             
             res.json({result: "success"});
         }
