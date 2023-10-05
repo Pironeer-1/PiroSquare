@@ -3,9 +3,11 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 
 const StudyCard = ({
+  post_id,
   id,
   title,
   username,
+  user_id,
   created_at,
   activate,
   personnel,
@@ -15,10 +17,12 @@ const StudyCard = ({
     ? '/images/Main/book_g.png'
     : '/images/Main/book.png';
 
+  const dateString = created_at;
+  const datePart = dateString?.split('T')[0];
   const navigate = useNavigate();
 
   const onClickDetailButton = () => {
-    navigate(`/study-detail/${id}`);
+    navigate(`/study-detail/${post_id}`);
   };
 
   return (
@@ -34,7 +38,7 @@ const StudyCard = ({
             <PersonnelSpan>모집 인원</PersonnelSpan>
             {personnel}
           </CardPersonnel>
-          <CardDate>{created_at}</CardDate>
+          <CardDate>{datePart}</CardDate>
         </CardBottom>
       </Container>
       <StudyAvailable className={availabilityClassName}>

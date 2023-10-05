@@ -7,18 +7,16 @@ const Project = () => {
   const [isRightPosition, setIsRightPosition] = useState(false);
   const [recruitments, setRecruitments] = useState([]);
   useEffect(() => {
-    let fetchURL = '/data/recruitProject.json';
-
-    if (isRightPosition) {
-      fetchURL = '/data/recruiting.json';
-    }
-
-    fetch(fetchURL)
+    fetch(`http://localhost:8000/recruit`, {
+      method: 'GET',
+      credentials: 'include',
+    })
       .then(response => response.json())
       .then(result => {
-        setRecruitments(result);
+        setRecruitments(result.posts);
+        console.log(result);
       });
-  }, [isRightPosition]);
+  }, []);
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 4;
@@ -57,7 +55,7 @@ const Project = () => {
               key={recruitment.id}
               id={recruitment.id}
               title={recruitment.title}
-              username={recruitment.username}
+              username={recruitment.nickname}
               created_at={recruitment.created_at}
               activate={recruitment.activate}
               personnel={recruitment.personnel}

@@ -19,7 +19,7 @@ const FirstpageUpdate = () => {
         setEmail(result.user.email || '');
         setNickname(result.user.nickname || '');
         setIntroduction(result.user.introduce || '');
-        setImgUrl(result.user.image || '');
+        setImgUrl('/images/Nav/piro.png');
       });
   }, []);
 
@@ -80,6 +80,7 @@ const FirstpageUpdate = () => {
     formData.append('email', email);
     formData.append('nickname', nickname);
     formData.append('introduce', introduction);
+    formData.append('year', year);
 
     if (imgUrl) {
       const blob = await fetch(imgUrl).then(res => res.blob());
@@ -91,7 +92,6 @@ const FirstpageUpdate = () => {
       credentials: 'include',
       body: formData,
     });
-    console.log(result);
 
     navigate('/my-page/card');
   };

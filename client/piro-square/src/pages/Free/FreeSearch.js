@@ -39,7 +39,7 @@ const FreeSearch = () => {
         setFrees(result.posts);
       });
   }, []);
-
+  console.log(frees);
   const availabilityClassName = isRightPosition ? 'greenWord' : 'grayWord';
 
   return (
@@ -66,9 +66,10 @@ const FreeSearch = () => {
           frees.map(Free => (
             <FreeCard
               key={Free.post_id}
+              post_id={Free.post_id}
               id={Free.post_id}
               title={Free.title}
-              username={Free.user_name}
+              username={Free.nickname}
               created_at={Free.created_at}
               answers_amount={Free.answers_amount}
               thumbnail={Free.thumbnail}

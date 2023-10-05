@@ -4,7 +4,14 @@ import { useNavigate } from 'react-router-dom';
 
 const MypostCard = ({ id, title, created_at, thumbnail, board_name }) => {
   const boardNameString =
-    board_name === 1 ? '자유게시판' : board_name === 2 ? '질문게시판' : '';
+    board_name === 1
+      ? '자유게시판'
+      : board_name === 4
+      ? '질문게시판'
+      : board_name === 3
+      ? '채용/모집'
+      : '';
+
   const dateString = created_at;
   const datePart = dateString?.split('T')[0];
   const thumbnailSrc = thumbnail ? thumbnail : '/images/Nav/piro_logo.png';
