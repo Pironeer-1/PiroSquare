@@ -38,7 +38,8 @@ module.exports = {
             updateUser.year || user.year,
             updateUser.introduce || user.introduce, 
             updateUser.email || user.email,
-            updateUser.image || user.image, 
+            image || user.image, 
+            updateUser.user_id,
         ];
         await db.query(query, User);
     },
