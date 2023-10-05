@@ -77,15 +77,16 @@ module.exports = {
 
         return posts[0];
     },
-    filter: async (latest, popular, board_type_id) => {
-        let query = "SELECT * FROM Post WHERE board_type_id=?";
+    filter: async (search, filter, board_type_id) => {
+        search='%'+search+'%';
+        let query = "SELECT * FROM Post WHERE board_type_id=? and title LIKE ?";
         
-        if (latest === 'latest') { // 최신순
+        if (filter === 'latest') { // 최신순
             query += " ORDER BY created_at DESC;";
-        } else if (popular === 'popular') { // 좋아요순
+        } else if (filter === 'popular') { // 좋아요순
             query += " ORDER BY likes_count DESC, created_at DESC;";
         }
-        const posts = await db.query(query, [board_type_id]);
+        const posts = await db.query(query, [board_type_id, search]);
         return posts[0];
     },
     // 게시글 생성
