@@ -1,28 +1,28 @@
-const db = require('../config/db.js');
+const db = require("../config/db.js");
 const xss = require("xss");
 
 module.exports = {
-    // 필터
-    search: async (filterCategory, filterStatus) => {
-        let query = "SELECT * FROM Post WHERE board_type_id='4'";
-        
-        if (filterStatus === 'solved') {
-            query += " AND activate=0";
-        } else if (filterStatus === 'unsolved') {
-            query += " AND activate=1";
-        }
-    
-        if (filterCategory === 'study') {
-            query += " AND category='1'";
-        } else if (filterCategory === 'project') {
-            query += " AND category='2'";
-        } else if (filterCategory === 'recruit') {
-            query += " AND category='3'";
-        }
-    
-        const posts = await db.query(query);
-        return posts[0];
-    },
+  // 필터
+  search: async (filterCategory, filterStatus) => {
+    let query = "SELECT * FROM Post WHERE board_type_id='4'";
+
+    if (filterStatus === "solved") {
+      query += " AND activate=0";
+    } else if (filterStatus === "unsolved") {
+      query += " AND activate=1";
+    }
+
+    if (filterCategory === "study") {
+      query += " AND category='1'";
+    } else if (filterCategory === "project") {
+      query += " AND category='2'";
+    } else if (filterCategory === "recruit") {
+      query += " AND category='3'";
+    }
+
+    const posts = await db.query(query);
+    return posts[0];
+  },
 
     createNewRecruit: async(newPostData, userId, imagePath) => {
         const xssTitle = xss(newPostData.title);

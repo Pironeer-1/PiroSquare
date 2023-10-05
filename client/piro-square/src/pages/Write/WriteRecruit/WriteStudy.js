@@ -56,6 +56,7 @@ const WriteStudy = () => {
     const body = {
       title: title,
       content: content,
+      category: 'study',
       selectedBoard: selectedBoard,
       startDate: startDate,
       endDate: endDate,

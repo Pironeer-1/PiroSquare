@@ -55,7 +55,7 @@ const WriteQuestion = () => {
     event.preventDefault();
     const confirmSubmit = window.confirm('질문글을 등록하시겠습니까?');
 
-    const url = `http://localhost:8000/post/create`;
+    const url = `http://localhost:8000/question/create`;
 
     const editorInstance = editorRef.current.getInstance();
     const markdownContent = editorInstance.getMarkdown();

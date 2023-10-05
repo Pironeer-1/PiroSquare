@@ -37,25 +37,15 @@ const Question = () => {
   const [questions, setQuestions] = useState([]);
 
   useEffect(() => {
-    let url = '';
-
-    if (isRightPosition1) {
-      url = `http://localhost:8000/question`; // Fetch solved questions data
-    } else if (isRightPosition2) {
-      url = `http://localhost:8000/question`; // Fetch unsolved questions data
-    } else {
-      url = `http://localhost:8000/question`; // Fetch all questions data
-    }
-
-    fetch(url, {
-      method: 'POST',
+    fetch(`http://localhost:8000/mypage`, {
+      method: 'GET',
       credentials: 'include',
     })
       .then(response => response.json())
       .then(result => {
-        setQuestions(result);
+        setQuestions(result?.userPosts);
       });
-  }, [isRightPosition1, isRightPosition2]);
+  }, []);
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 4;
