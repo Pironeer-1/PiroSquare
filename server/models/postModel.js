@@ -46,7 +46,12 @@ module.exports = {
         WHERE A.post_id=?;
         `;
         const post = await db.query(query, [user_id, postId]);
-        return post[0][0];
+
+        // xss 처리한 content 원래대로
+        const targetPost = post[0][0];        
+        targetPost.content = targetPost.content.replace(/&lt;/g, "<").replace(/&gt;/g, ">");
+
+        return targetPost;
     },
     // 간단하게 post 정보만 필요한 경우
     getPost: async (postId) => {
@@ -86,7 +91,7 @@ module.exports = {
     createNewPost: async(newPostData, userId, PostImage, board_type_id) => {
         const query = 'INSERT INTO Post (title, content, user_id, post_image, board_type_id) VALUES (?, ?, ?, ?, ?);';
         const NewPost = await db.query(query, [newPostData.title, newPostData.content, userId, PostImage, board_type_id]);
-        console.log(NewPost[0])
+        
         return NewPost[0].insertId;
     },
     // 게시글 삭제

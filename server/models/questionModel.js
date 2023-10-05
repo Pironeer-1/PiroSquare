@@ -38,29 +38,16 @@ module.exports = {
     },
     // 새로운 질문게시글 생성
     createNewPost: async (newPostData, userId, imagePath) => {
-        let query='';
-        let NewPost='';
-        if(newPostData.useCodeBlock=='yes' && newPostData.hidden_ta!=null){
-            // const defendXSS = xss(newPostData.hidden_ta);
-            query = 'INSERT INTO Post (title, content, board_type_id, user_id, post_image, code_language, code) VALUES (?, ?, ?, ?, ?, ? ,?);';
-            NewPost = await db.query(query, [newPostData.title, newPostData.content, 3, userId, imagePath, newPostData.codeLanguage, newPostData.hidden_ta]);
-        }else{
-            query = 'INSERT INTO Post (title, content, board_type_id, user_id, post_image) VALUES (?, ?, ?, ?, ?);';
-            NewPost = await db.query(query, [newPostData.title, newPostData.content, 3, userId, imagePath ]);
-        }
+        const xssContent = xss(newPostData.content);
+        const query = 'INSERT INTO `Post` (title, content, likes_count, comments_count, activate, board_type_id, user_id) VALUES (?, ?, 0, 0, 1, 3, ?);';
+        const NewPost = await db.query(query, [newPostData.title, xssContent, userId]);
 
         return NewPost[0].insertId;
     },
     // 질문게시글 업데이트
     updatePost: async (postId, newPostData, imagePath) => {
-        let query='';
-        let NewPost='';
-        if(newPostData.useCodeBlock=='yes' && newPostData.hidden_ta!=null){
-            query = 'UPDATE Post SET title=?, content=?, post_image=? code_language=?, code=? WHERE post_id=?;';
-            NewPost = await db.query(query, [newPostData.title, newPostData.content, imagePath, newPostData.codeLanguage, newPostData.hidden_ta, postId]);
-        }else{
-            query = 'UPDATE Post SET title=?, content=?, post_image=? WHERE post_id=?;';
-            NewPost = await db.query(query, [newPostData.title, newPostData.content, imagePath, postId]);
-        }
+        const xssContent = xss(newPostData.content);
+        const query = 'UPDATE Post SET title=?, content=? WHERE post_id=?;';
+        await db.query(query, [newPostData.title, xssContent, postId]);
     },
 }
