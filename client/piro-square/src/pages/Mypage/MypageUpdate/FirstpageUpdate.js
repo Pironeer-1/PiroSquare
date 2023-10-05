@@ -83,7 +83,6 @@ const FirstpageUpdate = () => {
       introduce: introduction,
       image: imgUrl,
     };
-    console.log(body);
     const result = await fetchPOST(url, body);
 
     navigate('/my-page/card');
