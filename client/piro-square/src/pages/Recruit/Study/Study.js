@@ -7,18 +7,16 @@ const Study = () => {
   const [isRightPosition, setIsRightPosition] = useState(false);
   const [recruitments, setRecruitments] = useState([]);
   useEffect(() => {
-    let fetchURL = '/data/recruitStudy.json';
-
-    if (isRightPosition) {
-      fetchURL = '/data/recruiting.json';
-    }
-
-    fetch(fetchURL)
+    fetch(`http://localhost:8000/recruit`, {
+      method: 'GET',
+      credentials: 'include',
+    })
       .then(response => response.json())
       .then(result => {
-        setRecruitments(result);
+        setRecruitments(result.posts);
+        console.log(result);
       });
-  }, [isRightPosition]);
+  }, []);
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 4;
@@ -54,13 +52,15 @@ const Study = () => {
         {currentItems.map(recruitment => {
           return (
             <StudyCard
-              key={recruitment.id}
-              id={recruitment.id}
+              key={recruitment.post_id}
+              id={recruitment.post_id}
               title={recruitment.title}
-              username={recruitment.username}
+              username={recruitment.nickname}
               created_at={recruitment.created_at}
               activate={recruitment.activate}
               personnel={recruitment.personnel}
+              post_id={recruitment.post_id}
+              user_id={recruitment.user_id}
             />
           );
         })}

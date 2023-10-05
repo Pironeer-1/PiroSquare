@@ -15,6 +15,7 @@ const MypageMypost = () => {
         setMypost(result?.userPosts);
       });
   }, []);
+
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 4;
   const indexOfLastItem = currentPage * itemsPerPage;

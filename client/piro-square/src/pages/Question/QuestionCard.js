@@ -11,6 +11,7 @@ const QuestionCard = ({
   is_solved,
   is_user_like,
   like_amount,
+  post_id,
 }) => {
   const navigate = useNavigate();
   const onClickDetailButton = () => {
@@ -19,6 +20,9 @@ const QuestionCard = ({
   const availibilityImg = is_solved
     ? '/images/Question/unsolved.png'
     : '/images/Question/solved.png';
+
+  const dateString = created_at;
+  const datePart = dateString?.split('T')[0];
 
   return (
     <QuestionBox>
@@ -29,11 +33,15 @@ const QuestionCard = ({
         <CardTitle>{title}</CardTitle>
         <CardBottom>
           <CardAuthor>{username}</CardAuthor>
-          <CardDate>{created_at}</CardDate>
+          <CardDate>{datePart}</CardDate>
         </CardBottom>
       </Container>
       <RightSection>
-        <LikeBtn initialLike={is_user_like} likeAmount={like_amount} />
+        <LikeBtn
+          initialLike={is_user_like}
+          likeAmount={like_amount}
+          post_id={post_id}
+        />
       </RightSection>
     </QuestionBox>
   );
