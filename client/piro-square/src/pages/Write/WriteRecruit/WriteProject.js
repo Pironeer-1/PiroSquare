@@ -55,6 +55,7 @@ const WriteProject = () => {
       title: title,
       content: content,
       selectedBoard: selectedBoard,
+      category: 'project',
       startDate: startDate,
       endDate: endDate,
       personnel: personnel,

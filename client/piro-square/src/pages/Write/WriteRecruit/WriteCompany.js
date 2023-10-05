@@ -56,6 +56,7 @@ const WriteCompany = () => {
       content: content,
       selectedBoard: selectedBoard,
       startDate: startDate,
+      category: 'recruit',
       endDate: endDate,
     };
 
