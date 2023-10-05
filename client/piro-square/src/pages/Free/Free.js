@@ -87,7 +87,7 @@ const Free = () => {
                 key={Free.post_id}
                 post_id={Free.post_id}
                 title={Free.title}
-                user_name={Free.user_name}
+                nickname={Free.nickname}
                 created_at={Free.created_at}
                 answers_amount={Free.answers_amount}
                 is_user_like={Free.is_user_like}

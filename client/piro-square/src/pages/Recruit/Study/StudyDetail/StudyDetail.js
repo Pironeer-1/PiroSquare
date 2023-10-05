@@ -51,11 +51,13 @@ const StudyDetail = () => {
         <TopSection>
           <Title>{detail.title}</Title>
           <LikeBtn
+            post_id={detail.post_id}
             initialLike={detail.is_user_like}
             likeAmount={detail.like_amount}
           />
         </TopSection>
         <SubInfo
+          user_id={detail.user_id}
           activate={detail.activate}
           start_date={detail.start_date}
           recruit_date={detail.recruit_date}
