@@ -24,9 +24,9 @@ module.exports = {
     },
 
     createNewRecruit: async(newPostData, userId, imagePath) => {
-        query = 'INSERT INTO Post (title, content, board_type_id, user_id, post_image, category ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);';
+        const query='INSERT INTO Post (title, content, board_type_id, user_id, post_image, category, likes_count, comments_count) VALUES (?, ?, ?, ?, ?, ?, 0, 0);';
         let NewPost;
-        if(newPostData.category=='study'){    
+        if(newPostData.category=='study'){
             NewPost = await db.query(query, [newPostData.title, 
                 newPostData.content, 4, userId, imagePath, 1, newPostData.member, newPostData.start_date, newPostData.end_date]);
         }

@@ -1,8 +1,9 @@
-import React, { useState, useContext } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import styled from 'styled-components';
 import { AuthContext } from '../../../../context/AuthContext';
 
 const SubInfo = ({
+  post_id,
   user_id,
   activate,
   start_date,
@@ -20,6 +21,15 @@ const SubInfo = ({
       setAvailable(!available);
     }
   };
+
+  // const handleAvailability = async event => {
+  //   event.preventDefault();
+  //   toggleAvailability();
+  //   const body = {
+  //     post_id: post_id,
+  //     activate: available,
+  //   };
+  // };
 
   const availibilityImg = available
     ? '/images/Main/Book_g.png'

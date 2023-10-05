@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import MypageNav from '../MypageNav';
 import { useNavigate } from 'react-router-dom';
 import { fetchPOST } from '../../../utils/utils';
 
-const MypageUpdate = () => {
+const FirstpageUpdate = () => {
   const [information, setInformation] = useState([]);
   const navigate = useNavigate();
   const [btnAble, setBtnAble] = useState(false);
@@ -30,10 +29,16 @@ const MypageUpdate = () => {
     information?.introduce || '',
   );
   const [imgUrl, setImgUrl] = useState(information?.image || '');
+  const [year, setYear] = useState('');
+
   const inputRef = useRef(null);
 
   const handleEmailChange = e => {
     setEmail(e.target.value);
+  };
+
+  const handleYearChange = e => {
+    setYear(e.target.value);
   };
 
   const handleImgChange = e => {
@@ -52,10 +57,9 @@ const MypageUpdate = () => {
     setNickname(e.target.value);
   };
 
-  const user_id = information.user_id;
-
   useEffect(() => {
     if (
+      year.length >= 1 &&
       email.length >= 10 &&
       nickname.length >= 2 &&
       introduction.length >= 1
@@ -64,8 +68,9 @@ const MypageUpdate = () => {
     } else {
       setBtnAble(false);
     }
-  }, [email, nickname, introduction]);
+  }, [year, email, nickname, introduction]);
 
+  const user_id = information.user_id;
   const onSubmit = async event => {
     event.preventDefault();
     const url = `http://localhost:8000/mypage/updateUser/${user_id}`;
@@ -73,19 +78,20 @@ const MypageUpdate = () => {
     const body = {
       user_id: user_id,
       email: email,
+      year: year,
       nickname: nickname,
       introduce: introduction,
       image: imgUrl,
     };
-
+    console.log(body);
     const result = await fetchPOST(url, body);
 
     navigate('/my-page/card');
   };
 
   return (
-    <Container method="post" encType="multipart/form-data">
-      <MypageNav />
+    <Container>
+      <Title>정보 입력</Title>
       <MainInformation>
         <InformationBox>
           <InfoTitle>이름</InfoTitle>
@@ -93,8 +99,18 @@ const MypageUpdate = () => {
         </InformationBox>
         <InformationBox>
           <InfoTitle>기수</InfoTitle>
-          <InfoContent>{information?.year}</InfoContent>
+          <YearSelectDropdown value={year} onChange={handleYearChange}>
+            <option value="">선택</option>
+            {Array.from({ length: 20 }, (_, index) => (
+              <option key={index} value={index + 1}>
+                {index + 1}
+              </option>
+            ))}
+          </YearSelectDropdown>
         </InformationBox>
+        <ContentLabel>
+          * 기수는 변경이 불가하니 신중하게 선택해주세요!
+        </ContentLabel>
       </MainInformation>
       <DownInformation>
         <Email>
@@ -107,11 +123,11 @@ const MypageUpdate = () => {
               onChange={handleEmailChange}
             />
           </EmailBox>
-          <EmailLabel>이메일 주소 '@' 포함</EmailLabel>
+          <EmailLabel>* 이메일 주소 '@' 포함</EmailLabel>
         </Email>
         <SubInformation>
           <ImgSection>
-            <ProfileImgSection>
+            <ProfileImgSection method="post" encType="multipart/form-data">
               <ProfileImg src={imgUrl ? imgUrl : information?.image} />
               <ProfileInput
                 type="file"
@@ -130,9 +146,8 @@ const MypageUpdate = () => {
             >
               이미지 변경
             </ImgBtn>
-            <ImgLabel>이미지 비율 11:14 권장</ImgLabel>
+            <ImgLabel>이미지 비율 11:14 권장 (선택)</ImgLabel>
           </ImgSection>
-
           <SubInfoSection>
             <NickName>
               <NickNameBox>
@@ -144,7 +159,7 @@ const MypageUpdate = () => {
                   onChange={handleNickNameChange}
                 />
               </NickNameBox>
-              <NickNameLabel>10자 이하</NickNameLabel>
+              <NickNameLabel>* 10자 이하</NickNameLabel>
             </NickName>
             <Introduce>
               <IntroduceTitle>소개</IntroduceTitle>
@@ -154,33 +169,41 @@ const MypageUpdate = () => {
                 value={introduction}
                 onChange={handleIntroductionChange}
               />
-              <IntroduceLabel>40자 이하</IntroduceLabel>
+              <IntroduceLabel>* 40자 이하</IntroduceLabel>
             </Introduce>
           </SubInfoSection>
         </SubInformation>
         <UpdateBtn onClick={onSubmit} disabled={!btnAble}>
-          수정하기
+          등록하기
         </UpdateBtn>
       </DownInformation>
     </Container>
   );
 };
 
-export default MypageUpdate;
+export default FirstpageUpdate;
 
-const Container = styled.form`
+const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
 `;
 
+const Title = styled.h1`
+  margin: 2rem auto;
+  text-align: center;
+  padding-bottom: 1rem;
+  font-size: 32px;
+  width: 30rem;
+  border-bottom: 2px solid #0bec12;
+`;
+
 const MainInformation = styled.div`
   display: flex;
-  justify-content: center;
-  margin: 1rem auto;
-  width: 55rem;
-  border-bottom: 2px solid #0bec12;
-  padding-bottom: 1rem;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
+  width: 30rem;
 `;
 
 const InformationBox = styled.div`
@@ -189,7 +212,7 @@ const InformationBox = styled.div`
   align-items: center;
   width: 16rem;
   font-size: 17px;
-  margin-left: 30px;
+  margin-top: 1rem;
 `;
 
 const InfoTitle = styled.div`
@@ -208,6 +231,17 @@ const InfoContent = styled.div`
   width: 8rem;
   height: 3rem;
   background-color: ${props => props.theme.colors.grayDark};
+`;
+
+const YearSelectDropdown = styled.select`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 8rem;
+  height: 3rem;
+  color: black;
+  font-size: 14px;
+  background-color: ${props => props.theme.colors.grayLight};
 `;
 
 const DownInformation = styled.div`
@@ -233,7 +267,7 @@ const ImgLabel = styled.label`
   margin-left: 5rem;
 `;
 
-const ProfileImgSection = styled.div`
+const ProfileImgSection = styled.form`
   margin-top: 2rem;
   margin-left: 5rem;
   width: 11rem;
@@ -323,6 +357,11 @@ const IntroduceLabel = styled.label`
   margin-left: auto;
 `;
 
+const ContentLabel = styled.label`
+  color: ${props => props.theme.colors.grayLight};
+  margin-top: 2px;
+`;
+
 const ImgBtn = styled.button`
   display: flex;
   justify-content: center;
@@ -365,7 +404,7 @@ const Email = styled.div`
   display: flex;
   flex-direction: column;
   width: 39rem;
-  margin: 0 auto;
+  margin: 1rem auto;
 `;
 
 const EmailBox = styled.div`

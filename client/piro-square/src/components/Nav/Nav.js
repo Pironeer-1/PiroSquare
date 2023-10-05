@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import styled from 'styled-components';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
 
 const NAV_LIST = [
@@ -13,6 +13,7 @@ const Nav = () => {
   const { userData } = useContext(AuthContext);
   const location = useLocation();
   const [activeMenu, setActiveMenu] = useState('');
+  const navigate = useNavigate();
 
   React.useEffect(() => {
     const matchingMenu = NAV_LIST.find(item =>
@@ -35,11 +36,12 @@ const Nav = () => {
     if (confirmLogout) {
       try {
         const response = await fetch(`http://localhost:8000/auth/logout`, {
-          method: 'GET',
+          method: 'POST',
           credentials: 'include',
         });
 
         if (response.ok) {
+          navigate('/');
           window.location.reload();
         } else {
           console.error('Logout failed:', response.status, response.statusText);
@@ -49,6 +51,11 @@ const Nav = () => {
       }
     }
   };
+
+  if (location.pathname === '/first-login') {
+    return null;
+  }
+
   return (
     <Container>
       <RightSection>

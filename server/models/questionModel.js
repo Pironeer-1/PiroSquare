@@ -36,18 +36,4 @@ module.exports = {
             return null;
         return questions[0];
     },
-    // 새로운 질문게시글 생성
-    createNewPost: async (newPostData, userId, imagePath) => {
-        const xssContent = xss(newPostData.content);
-        const query = 'INSERT INTO `Post` (title, content, likes_count, comments_count, activate, board_type_id, user_id) VALUES (?, ?, 0, 0, 1, 3, ?);';
-        const NewPost = await db.query(query, [newPostData.title, xssContent, userId]);
-
-        return NewPost[0].insertId;
-    },
-    // 질문게시글 업데이트
-    updatePost: async (postId, newPostData, imagePath) => {
-        const xssContent = xss(newPostData.content);
-        const query = 'UPDATE Post SET title=?, content=? WHERE post_id=?;';
-        await db.query(query, [newPostData.title, xssContent, postId]);
-    },
 }

@@ -2,6 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import RouteWithNavFooter from './RouteWithNavFooter';
 import Login from './pages/Login/Login';
+import FirstpageUpdate from './pages/Mypage/MypageUpdate/FirstpageUpdate';
 import { AuthContext } from './context/AuthContext';
 import axios from 'axios';
 
@@ -55,6 +56,7 @@ const Router = () => {
           ) : (
             <Route path="/" element={<Login />} />
           )}
+          <Route path="/first-login" element={<FirstpageUpdate />} />
         </Routes>
       </BrowserRouter>
     </AuthContext.Provider>

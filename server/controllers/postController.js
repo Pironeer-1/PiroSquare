@@ -20,10 +20,10 @@ module.exports = {
     },
     //필터링
     filteringPost: async (req, res) =>{
-        const latest=req.body.latest;
-        const popular=req.body.popular;
-        console.log(latest,popular);
-        const filteredPosts = await postModel.filter(latest, popular, 1);
+        const search=req.query.keyword;
+        const filter = req.body.filter;
+        
+        const filteredPosts = await postModel.filter(search, filter, 1);
         res.render('post/post.ejs', {posts: filteredPosts});
     },
     // 자유 게시판 디테일

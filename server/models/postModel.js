@@ -1,4 +1,5 @@
 const db = require('../config/db.js');
+const xss = require("xss");
 
 module.exports = {
     // board_type_id 로 서로 다른 게시글 데이터를 가져옴
@@ -76,21 +77,23 @@ module.exports = {
 
         return posts[0];
     },
-    filter: async (latest, popular, board_type_id) => {
-        let query = "SELECT * FROM Post WHERE board_type_id=?";
+    filter: async (search, filter, board_type_id) => {
+        search='%'+search+'%';
+        let query = "SELECT * FROM Post WHERE board_type_id=? and title LIKE ?";
         
-        if (latest === 'latest') { // 최신순
+        if (filter === 'latest') { // 최신순
             query += " ORDER BY created_at DESC;";
-        } else if (popular === 'popular') { // 좋아요순
+        } else if (filter === 'popular') { // 좋아요순
             query += " ORDER BY likes_count DESC, created_at DESC;";
         }
-        const posts = await db.query(query, [board_type_id]);
+        const posts = await db.query(query, [board_type_id, search]);
         return posts[0];
     },
     // 게시글 생성
     createNewPost: async(newPostData, userId, PostImage, board_type_id) => {
-        const query = 'INSERT INTO Post (title, content, user_id, post_image, board_type_id) VALUES (?, ?, ?, ?, ?);';
-        const NewPost = await db.query(query, [newPostData.title, newPostData.content, userId, PostImage, board_type_id]);
+        const xssContent = xss(newPostData.content);
+        const query = 'INSERT INTO Post (title, content, user_id, post_image, board_type_id, likes_count, comments_count) VALUES (?, ?, ?, ?, ?, ?, ?);';
+        const NewPost = await db.query(query, [newPostData.title, xssContent, userId, PostImage, board_type_id, 0, 0]);
         
         return NewPost[0].insertId;
     },
@@ -101,8 +104,9 @@ module.exports = {
     },
     // 게시글 업데이트
     updatePost: async(postId, newPostData, PostImage) => {
+        const xssContent = xss(newPostData.content);
         const query = 'UPDATE Post SET title=?, content=?, post_image=? WHERE post_id=?;';
-        await db.query(query, [newPostData.title, newPostData.content, PostImage, postId]);
+        await db.query(query, [newPostData.title, xssContent, PostImage, postId]);
     },
     // 좋아요 개수 업데이트
     likeCountUpdate: async(postId, action) => {
