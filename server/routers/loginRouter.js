@@ -30,7 +30,7 @@ const router = express.Router();
 
 const loginController = require('../controllers/loginController.js');
 
-router.get('/logout', loginController.logoutProcess);
+router.post('/logout', loginController.logoutProcess);
 router.get('/newUser', loginController.newUser);
 router.post('/newUserProfile', upload.single('image'), loginController.newUserProfile);
 
