@@ -35,7 +35,7 @@ const Nav = () => {
     if (confirmLogout) {
       try {
         const response = await fetch(`http://localhost:8000/auth/logout`, {
-          method: 'POST',
+          method: 'GET',
           credentials: 'include',
         });
 
