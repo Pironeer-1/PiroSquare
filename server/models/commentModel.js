@@ -1,4 +1,5 @@
 const db = require('../config/db.js');
+const xss = require("xss");
 
 module.exports = {
     //모든 댓글 가져오기
@@ -25,7 +26,7 @@ module.exports = {
     const comments = await db.query(query, [userId, postId]);
         return comments[0];
     },
-    // comment에 대한 post_id 불러오기
+    // comment 가져오기
     getComment: async (userId, commentId) => {
         const query = `
         SELECT 
@@ -47,7 +48,12 @@ module.exports = {
         WHERE A.comment_id=?;
         `;
         const comment = await db.query(query, [userId, commentId]);
-        return comment[0][0];
+
+        // xss 처리한 content 원래대로
+        const targetComment = comment[0][0];        
+        targetComment.content = targetComment.content.replace(/&lt;/g, "<").replace(/&gt;/g, ">");
+
+        return targetComment;
     },
     // comment 데이터만 필요한 경우
     simpleComment: async (commentId) => {
@@ -57,16 +63,23 @@ module.exports = {
         WHERE comment_id=?;
         `;
         const comment = await db.query(query, [commentId]);
-        return comment[0][0];
+        
+        // xss 처리한 content 원래대로
+        const targetComment = comment[0][0];        
+        targetComment.content = targetComment.content.replace(/&lt;/g, "<").replace(/&gt;/g, ">");
+
+        return targetComment;
     },
     createComment: async (postId, userId, newCommentData) => {
-        const query = "INSERT INTO Comment (content, post_id, user_id) VALUES (?,?,?);";
-        await db.query(query, [newCommentData, postId, userId]);
+        const xssComment = xss(newCommentData);
+        const query = "INSERT INTO `Comment` (content, likes_count, user_id, post_id) VALUES (?, 0, ?, ?);";
+        await db.query(query, [xssComment, userId, postId]);
     },
     //대댓글 작성
     createReply: async (postId, userId, newReplyData, parentCommentId) => {
-        const query = "INSERT INTO Comment (content, post_id, parent_comment_id, user_id) VALUES (?, ?, ?, ?);";
-        await db.query(query, [newReplyData, postId, parentCommentId, userId]);
+        const xssComment = xss(newCommentData);
+        const query = "INSERT INTO `Comment` (content, likes_count, user_id, post_id, parent_comment_id) VALUES (?, 0, ?, ?, ?);";
+        await db.query(query, [xssComment, userId, postId, parentCommentId]);
     },
     //댓글 삭제
     deleteComment: async (commentId)=>{
@@ -74,6 +87,7 @@ module.exports = {
         await db.query(query,[commentId]);
     },
     // 대댓글 삭제
+    // 대댓글은 아예 지워져버리게 설정, 만약 댓글처럼 삭제되었다고 표시만 하고 싶다면 댓글 삭제할 때 parent_comment_id를 -1로 설정하면 안됨
     deleteReply: async (commentId) => {
         const query = "DELETE FROM Comment WHERE comment_id = ?;";
         await db.query(query, [commentId]);
