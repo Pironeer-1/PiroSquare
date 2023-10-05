@@ -5,42 +5,52 @@ import Paginator from '../../../../components/Paginator/Paginator';
 import Comment from '../../../../components/Comment/Comment';
 import LikeBtn from '../../../../components/Button/LikeBtn/LikeBtn';
 import SubInfo from './SubInfo';
+import { useParams } from 'react-router-dom';
+import sanitizeHtml from 'sanitize-html';
 
 const StudyDetail = () => {
-  const [dataLoaded, setDataLoaded] = useState(false);
-  const [detail, setDetail] = useState([]);
-
-  useEffect(() => {
-    fetch('/data/recruitPost.json')
-      .then(response => response.json())
-      .then(result => {
-        setDetail(result);
-      });
-  }, []);
-
   const [comments, setComments] = useState([]);
+  const [detail, setDetail] = useState([]);
+  const [renderedContent, setRenderedContent] = useState('');
+
+  let { id } = useParams();
 
   useEffect(() => {
-    fetch('/data/comments.json')
+    fetch(`http://localhost:8000/recruit/detail/${id}`, {
+      method: 'GET',
+      credentials: 'include',
+    })
       .then(response => response.json())
       .then(result => {
-        setComments(result);
+        setDetail(result.post);
+        setComments(result?.comments);
+        console.log(result);
       });
   }, []);
+
+  const dateString = detail.created_at;
+  const datePart = dateString?.split('T')[0];
+
   const navigate = useNavigate();
   const onClickListButton = () => {
     navigate(`/recruit-study`);
   };
 
   useEffect(() => {
+    if (detail.content) {
+      const tagContent = detail.content;
+      const cleanCode = sanitizeHtml(tagContent);
+      setRenderedContent(
+        <div dangerouslySetInnerHTML={{ __html: cleanCode }} />,
+      );
+    }
+  }, [detail.content]);
+
+  useEffect(() => {
     if (detail.like_amount !== undefined && detail.is_user_like !== undefined) {
-      setDataLoaded(true);
     }
   }, [detail.like_amount, detail.is_user_like]);
 
-  if (!dataLoaded) {
-    return <div>Loading...</div>;
-  }
   return (
     <>
       <Container>
@@ -67,9 +77,9 @@ const StudyDetail = () => {
         <ContentBox>
           <ContentInfo>
             <UserName>{detail.username}</UserName>
-            <Created>{detail.created_at}</Created>
+            <Created>{datePart}</Created>
           </ContentInfo>
-          <ContentSection>{detail.content}</ContentSection>
+          <ContentSection>{renderedContent}</ContentSection>
         </ContentBox>
         <Comment comments={comments} />
       </Container>

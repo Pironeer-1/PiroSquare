@@ -37,13 +37,14 @@ const Question = () => {
   const [questions, setQuestions] = useState([]);
 
   useEffect(() => {
-    fetch(`http://localhost:8000/mypage`, {
+    fetch(`http://localhost:8000/question`, {
       method: 'GET',
       credentials: 'include',
     })
       .then(response => response.json())
       .then(result => {
-        setQuestions(result?.userPosts);
+        setQuestions(result.question_posts);
+        console.log(result.question_posts);
       });
   }, []);
 
@@ -94,11 +95,12 @@ const Question = () => {
                 key={question.post_id}
                 id={question.post_id}
                 title={question.title}
-                username={question.user_name}
+                username={question.nickname}
                 created_at={question.created_at}
                 is_user_like={question.is_user_like}
                 is_solved={question.activate}
                 like_amount={question.likes_count}
+                post_id={question.post_id}
               />
             );
           })}

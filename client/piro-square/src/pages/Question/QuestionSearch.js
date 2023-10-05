@@ -25,10 +25,11 @@ const QuestionSearch = () => {
   };
   const [questions, setQuestions] = useState([]);
   useEffect(() => {
-    fetch('/data/questionData.json')
+    fetch(`http://localhost:8000/question/search?keyword=${value}`)
       .then(response => response.json())
       .then(result => {
-        setQuestions(result);
+        setQuestions(result.question_posts);
+        console.log(result);
       });
   }, []);
 
@@ -68,15 +69,15 @@ const QuestionSearch = () => {
         {filteredQuestions.map(question => {
           return (
             <QuestionCard
-              key={question.id}
-              id={question.id}
+              key={question.post_id}
+              id={question.post_id}
               title={question.title}
-              username={question.username}
+              username={question.nickname}
               created_at={question.created_at}
-              answers_amount={question.answers_amount}
               is_user_like={question.is_user_like}
-              is_solved={question.is_solved}
-              like_amount={question.like_amount}
+              is_solved={question.activate}
+              like_amount={question.likes_count}
+              post_id={question.post_id}
             />
           );
         })}
