@@ -4,7 +4,7 @@ const commentModel = require('../models/commentModel.js');
 const userModel = require('../models/userModel.js');
 
 module.exports = {
-    // 자유 게시판 메인
+    // 자유 게시판 메인 
     getAll: async(req, res) =>{
         const user = await req.user;
         const userId=await userModel.getUserId(user.ID);
@@ -18,7 +18,6 @@ module.exports = {
         const searchPosts = await postModel.search(search, 1);
         res.json({posts: searchPosts});
     },
-
     //필터링
     filteringPost: async (req, res) =>{
         const latest=req.body.latest;
@@ -27,7 +26,6 @@ module.exports = {
         const filteredPosts = await postModel.filter(latest, popular, 1);
         res.render('post/post.ejs', {posts: filteredPosts});
     },
-
     // 자유 게시판 디테일
     detailPost: async (req, res) =>{
         const user = await req.user;
@@ -52,8 +50,7 @@ module.exports = {
         const userId=await userModel.getUserId(user.ID);
 
         const newPostData = req.body;
-
-        const imagePath = req.file ? `/post/image/${req.file.filename}` : '';
+        const imagePath = req.file ? `http://localhost:8000/post/image/${req.file.filename}` : '';
         const insertId = await postModel.createNewPost(newPostData, userId, imagePath, 1);
         
         res.json({insertId: insertId});
@@ -105,7 +102,7 @@ module.exports = {
         }else{
             const newPostData = req.body;
             
-            const imagePath = req.file ? `/post/image/${req.file.filename}` : '';
+            const imagePath = req.file ? `http://localhost:8000/post/image/${req.file.filename}` : '';
 
             await postModel.updatePost(postId, newPostData, imagePath);
             
