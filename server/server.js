@@ -87,7 +87,7 @@ app.use("/api", apiRouter);
 // 받는 로직을 따로 분리해서 유저 검증 미들웨어 위에 지정해야함
 
 // 아래의 모든 URL에 대해 유저 검증 미들웨어를 실행
-app.use(userAuthenticationMiddleware);
+//app.use(userAuthenticationMiddleware);
 
 app.use("/post", postRouter);
 app.use("/question", questionRouter);
@@ -98,6 +98,7 @@ app.use("/comment", commentRouter);
 app.use("/like", likeRouter);
 app.use("/user", express.static("uploads/profile"));
 app.use("/post/image", express.static("uploads/post"));
+app.use("/comment/image", express.static("uploads/comment"));
 
 // 오류 처리 미들웨어
 app.use((err, req, res, next) => {

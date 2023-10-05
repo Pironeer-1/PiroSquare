@@ -15,7 +15,7 @@
 </form>
 
 <p>------댓글창입니다------</p>
-<form action="/comment/create/<%= post.post_id %>" method="post">
+<form action="/comment/create/<%= post.post_id %>" method="post" enctype="multipart/form-data">
     <textarea name="content" placeholder="content is.."></textarea>
     <button>submit</button>
 </form>
@@ -29,6 +29,7 @@
                 <p>댓글쓴사람: <%= comment.name %>
                     사진: <img width="30" height="30" src="<%= comment.image %>" alt="profileImage">
                 <p> 내용: <%= comment.content %></p>
+                <img width="300" height="200" src="<%= comment.comment_image %>" alt="commentImage">
                 </p> 
             <% } %>
             <form action="/like/comment/<%= comment.comment_id %>" method="post">
