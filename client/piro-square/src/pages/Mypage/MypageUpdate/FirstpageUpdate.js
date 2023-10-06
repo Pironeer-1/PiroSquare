@@ -8,18 +8,35 @@ const FirstpageUpdate = () => {
   const navigate = useNavigate();
   const [btnAble, setBtnAble] = useState(false);
 
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
   useEffect(() => {
+    setLoading(true);
+    setError(null);
+
     fetch(`http://localhost:8000/mypage`, {
       method: 'GET',
       credentials: 'include',
     })
-      .then(response => response.json())
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('서버에서 잘못된 응답을 받았습니다.');
+        }
+        return response.json();
+      })
       .then(result => {
         setInformation(result.user);
         setEmail(result.user.email || '');
         setNickname(result.user.nickname || '');
         setIntroduction(result.user.introduce || '');
         setImgUrl('/images/Nav/piro.png');
+      })
+      .catch(error => {
+        setError(error.message);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }, []);
 

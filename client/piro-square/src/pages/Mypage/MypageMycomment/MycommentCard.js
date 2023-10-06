@@ -14,7 +14,13 @@ const MycommentCard = ({
   const navigate = useNavigate();
   const thumbnailSrc = thumbnail ? thumbnail : '/images/Nav/piro_logo.png';
   const boardNameString =
-    board_name === 1 ? '자유게시판' : board_name === 4 ? '채용/모집' : '';
+    board_name === 1
+      ? '자유게시판'
+      : board_name === 3
+      ? '질문게시판'
+      : board_name === 4
+      ? '채용/모집'
+      : '';
 
   const dateString = created_at;
   const datePart = dateString?.split('T')[0];

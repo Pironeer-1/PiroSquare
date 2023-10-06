@@ -5,7 +5,12 @@ import html2canvas from 'html2canvas';
 
 const Mypage = () => {
   const [information, setInformation] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
   useEffect(() => {
+    setLoading(true);
+    setError(null);
     fetch(`http://localhost:8000/mypage`, {
       method: 'GET',
       credentials: 'include',

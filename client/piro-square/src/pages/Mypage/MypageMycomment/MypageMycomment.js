@@ -5,15 +5,31 @@ import MycommentCard from './MycommentCard';
 
 const MypageMycomment = () => {
   const [mycomment, setMycomment] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+
   useEffect(() => {
+    setIsLoading(true);
+    setError(null);
+
     fetch(`http://localhost:8000/mypage`, {
       method: 'GET',
       credentials: 'include',
     })
-      .then(response => response.json())
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('서버에서 잘못된 응답을 받았습니다.');
+        }
+        return response.json();
+      })
       .then(result => {
         setMycomment(result?.commentPosts);
-        console.log(result);
+      })
+      .catch(error => {
+        setError(error.message);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   }, []);
 

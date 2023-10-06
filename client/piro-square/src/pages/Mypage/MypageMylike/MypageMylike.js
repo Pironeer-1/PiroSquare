@@ -5,7 +5,13 @@ import MylikeCard from './MylikeCard';
 
 const MypageMyLike = () => {
   const [mylike, setMylike] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+
   useEffect(() => {
+    setIsLoading(true);
+    setError(null);
+
     fetch(`http://localhost:8000/mypage`, {
       method: 'GET',
       credentials: 'include',

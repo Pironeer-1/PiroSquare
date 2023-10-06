@@ -1,13 +1,13 @@
 [
   {
     "id": 1,
-    "title": "Google 인턴 채용 공고 (피로그래밍 특별전형)",
+    "title": "Daily VS FE 모집합니다.",
     "content": "신촌이 최고야. 뉴욕보단 신촌이지. 모두모두 신촌으로 모여. 게다가 신촌에서 리액트 스터디까지 한다고? 안할 이유가 없다 최고다 진짜ㅠㅠ",
     "created_at": "2023.09.26",
     "updated_at": "2023.09.29",
     "comments_count": 2,
     "activate": true,
-    "username": "광밍경",
+    "nickname": "광밍경",
     "personnel": 10
   },
   {
@@ -18,7 +18,7 @@
     "updated_at": "2023.09.29",
     "comments_count": 3,
     "activate": true,
-    "username": "화니정",
+    "nickname": "화니정",
     "personnel": 3
   },
   {
@@ -29,7 +29,7 @@
     "updated_at": "2023.09.29",
     "comments_count": 8,
     "activate": false,
-    "username": "양회장",
+    "nickname": "양회장",
     "personnel": 10
   },
   {
@@ -40,7 +40,7 @@
     "updated_at": "2023.09.29",
     "comments_count": 8,
     "activate": false,
-    "username": "교육팀장",
+    "nickname": "교육팀장",
     "personnel": 7
   },
   {
@@ -51,7 +51,7 @@
     "updated_at": "2023.08.29",
     "comments_count": 8,
     "activate": false,
-    "username": "낙성대총장",
+    "nickname": "낙성대총장",
     "personnel": 8
   },
   {
@@ -61,8 +61,8 @@
     "created_at": "2023.06.17",
     "updated_at": "2023.09.29",
     "comments_count": 8,
-    "activate": false,
-    "username": "영진운영진",
+    "activate": true,
+    "nickname": "영진운영진",
     "personnel": 100
   },
   {
@@ -73,7 +73,7 @@
     "updated_at": "2023.09.29",
     "comments_count": 8,
     "activate": false,
-    "username": "정부회장",
+    "nickname": "정부회장",
     "personnel": 3
   },
   {
@@ -84,7 +84,7 @@
     "updated_at": "2023.05.29",
     "comments_count": 8,
     "activate": false,
-    "username": "교육팀장",
+    "nickname": "교육팀장",
     "personnel": 12
   },
   {
@@ -95,7 +95,7 @@
     "updated_at": "2023.03.31",
     "comments_count": 8,
     "activate": false,
-    "username": "기운팀장",
+    "nickname": "기운팀장",
     "personnel": 5
   },
   {
@@ -106,7 +106,7 @@
     "updated_at": "2023.02.27",
     "comments_count": 8,
     "activate": true,
-    "username": "홍보팀장",
+    "nickname": "홍보팀장",
     "personnel": 7
   },
   {
@@ -117,7 +117,7 @@
     "updated_at": "2023.01.29",
     "comments_count": 8,
     "activate": false,
-    "username": "홍보팀장",
+    "nickname": "홍보팀장",
     "personnel": 20
   },
   {
@@ -128,7 +128,7 @@
     "updated_at": "2023.01.29",
     "comments_count": 8,
     "activate": false,
-    "username": "홍보팀장",
+    "nickname": "홍보팀장",
     "personnel": 20
   },
   {
@@ -139,7 +139,7 @@
     "updated_at": "2023.01.29",
     "comments_count": 8,
     "activate": false,
-    "username": "홍보팀장",
+    "nickname": "홍보팀장",
     "personnel": 20
   },
   {
@@ -150,7 +150,7 @@
     "updated_at": "2023.01.29",
     "comments_count": 8,
     "activate": false,
-    "username": "홍보팀장",
+    "nickname": "홍보팀장",
     "personnel": 20
   },
   {
@@ -161,7 +161,7 @@
     "updated_at": "2023.01.29",
     "comments_count": 8,
     "activate": false,
-    "username": "홍보팀장",
+    "nickname": "홍보팀장",
     "personnel": 20
   },
   {
@@ -172,7 +172,7 @@
     "updated_at": "2023.01.29",
     "comments_count": 8,
     "activate": false,
-    "username": "홍보팀장",
+    "nickname": "홍보팀장",
     "personnel": 20
   }
 ]

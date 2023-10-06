@@ -13,7 +13,7 @@ const Company = () => {
     setIsLoading(true);
     setError(null);
 
-    fetch(`http://localhost:8000/recruit`, {
+    fetch(`data/recruitCompany.json`, {
       method: 'GET',
       credentials: 'include',
     })
@@ -24,7 +24,7 @@ const Company = () => {
         return response.json();
       })
       .then(result => {
-        setRecruitments(result.posts);
+        setRecruitments(result);
       })
       .catch(error => {
         setError(error.message);
@@ -38,7 +38,9 @@ const Company = () => {
   const itemsPerPage = 4;
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = recruitments.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = recruitments
+    .filter(recruitment => !isRightPosition || recruitment.activate === true)
+    .slice(indexOfFirstItem, indexOfLastItem);
 
   const handlePageChange = pageNumber => {
     setCurrentPage(pageNumber);
