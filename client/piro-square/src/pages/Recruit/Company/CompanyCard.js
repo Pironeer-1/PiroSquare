@@ -14,6 +14,9 @@ const CompanyCard = ({ id, title, username, created_at, activate }) => {
     navigate(`/company-detail/${id}`);
   };
 
+  const dateString = created_at;
+  const datePart = dateString?.split('T')[0];
+
   return (
     <CardBox onClick={onClickDetailButton}>
       <CompanyIcon>
@@ -23,7 +26,7 @@ const CompanyCard = ({ id, title, username, created_at, activate }) => {
         <CardTitle>{title}</CardTitle>
         <CardBottom>
           <CardAuthor>{username}</CardAuthor>
-          <CardDate>{created_at}</CardDate>
+          <CardDate>{datePart}</CardDate>
         </CardBottom>
       </Container>
       <CompanyAvailable className={availabilityClassName}>

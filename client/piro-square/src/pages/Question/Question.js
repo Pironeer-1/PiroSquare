@@ -44,7 +44,6 @@ const Question = () => {
       .then(response => response.json())
       .then(result => {
         setQuestions(result.question_posts);
-        console.log(result.question_posts);
       });
   }, []);
 

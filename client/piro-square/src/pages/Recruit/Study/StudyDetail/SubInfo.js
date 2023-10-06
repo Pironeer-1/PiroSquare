@@ -7,13 +7,15 @@ const SubInfo = ({
   user_id,
   activate,
   start_date,
-  recruit_date,
+  end_date,
   personnel,
+  isActivate,
 }) => {
+  const initialActivate = activate === 0 ? false : true;
   const { userData } = useContext(AuthContext);
   const user = userData.data.user_id;
 
-  const [available, setAvailable] = useState(activate);
+  const [available, setAvailable] = useState(initialActivate);
 
   const toggleAvailability = () => {
     const confirmSubmit = window.confirm('모집 마감하시겠습니까?');
@@ -61,7 +63,7 @@ const SubInfo = ({
           </SolvedWord>
         </SolvedSection>
         <DateSection>
-          {start_date} ~ {recruit_date}
+          {start_date}~{end_date}
         </DateSection>
         <PersonnelSection>
           <PersonnelWord>모집인원</PersonnelWord>
@@ -116,7 +118,7 @@ const DateSection = styled.div`
   color: ${props => props.theme.colors.grayLight};
   display: flex;
   flex-direction: row;
-  width: 13rem;
+  width: 15rem;
   font-size: 20px;
   justify-content: center;
   align-items: center;

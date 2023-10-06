@@ -13,6 +13,7 @@ const MypageMycomment = () => {
       .then(response => response.json())
       .then(result => {
         setMycomment(result?.commentPosts);
+        console.log(result);
       });
   }, []);
 

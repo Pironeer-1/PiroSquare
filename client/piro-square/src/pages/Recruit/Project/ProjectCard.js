@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 
 const ProjectCard = ({
+  key,
   id,
   title,
   username,
@@ -16,6 +17,9 @@ const ProjectCard = ({
     : '/images/Main/Laptop.png';
 
   const navigate = useNavigate();
+
+  const dateString = created_at;
+  const datePart = dateString?.split('T')[0];
 
   const onClickDetailButton = () => {
     navigate(`/project-detail/${id}`);
@@ -34,7 +38,7 @@ const ProjectCard = ({
             <PersonnelSpan>모집 인원</PersonnelSpan>
             {personnel}
           </CardPersonnel>
-          <CardDate>{created_at}</CardDate>
+          <CardDate>{datePart}</CardDate>
         </CardBottom>
       </Container>
       <ProjectAvailable className={availabilityClassName}>

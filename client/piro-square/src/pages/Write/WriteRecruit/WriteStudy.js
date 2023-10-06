@@ -49,6 +49,24 @@ const WriteStudy = () => {
     }
   }, [title, content]);
 
+  const inputStartDate = new Date(startDate);
+
+  const formattedStartDate =
+    inputStartDate.getFullYear() +
+    '-' +
+    ('0' + (inputStartDate.getMonth() + 1)).slice(-2) +
+    '-' +
+    ('0' + inputStartDate.getDate()).slice(-2);
+
+  const inputFinishDate = new Date(endDate);
+
+  const formattedFinishDate =
+    inputFinishDate.getFullYear() +
+    '-' +
+    ('0' + (inputFinishDate.getMonth() + 1)).slice(-2) +
+    '-' +
+    ('0' + inputFinishDate.getDate()).slice(-2);
+
   const onSubmit = async event => {
     event.preventDefault();
     const confirmSubmit = window.confirm('게시글을 등록하시겠습니까?');
@@ -56,14 +74,14 @@ const WriteStudy = () => {
     const body = {
       title: title,
       content: content,
+      board_type_id: 4,
       category: 'study',
       selectedBoard: selectedBoard,
-      startDate: startDate,
-      endDate: endDate,
-      personnel: personnel,
+      start_date: formattedStartDate,
+      end_date: formattedFinishDate,
+      member: personnel,
     };
 
-    console.log(body);
     if (confirmSubmit) {
       try {
         const result = await fetchPOST(url, body);
@@ -79,6 +97,7 @@ const WriteStudy = () => {
       }
     }
   };
+
   return (
     <Container>
       <Title>스터디 모집</Title>

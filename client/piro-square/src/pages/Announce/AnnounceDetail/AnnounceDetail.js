@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import Paginator from '../../../components/Paginator/Paginator';
+import sanitizeHtml from 'sanitize-html';
 
 const AnnounceDetail = () => {
   const [detail, setDetail] = useState([]);
   const navigate = useNavigate();
+  const [renderedContent, setRenderedContent] = useState('');
 
   useEffect(() => {
     fetch('/data/AnnounceDetail.json')
@@ -14,6 +16,16 @@ const AnnounceDetail = () => {
         setDetail(result);
       });
   }, []);
+
+  useEffect(() => {
+    if (detail.content) {
+      const tagContent = detail.content;
+      const cleanCode = sanitizeHtml(tagContent);
+      setRenderedContent(
+        <div dangerouslySetInnerHTML={{ __html: cleanCode }} />,
+      );
+    }
+  }, [detail.content]);
 
   const onClickListButton = () => {
     navigate(`/announce`);
@@ -35,7 +47,7 @@ const AnnounceDetail = () => {
             </UserSection>
             <Created>{detail.created_at}</Created>
           </ContentInfo>
-          <ContentSection>{detail.content}</ContentSection>
+          <ContentSection>{renderedContent}</ContentSection>
         </ContentBox>
       </Container>
       <Paginator />
