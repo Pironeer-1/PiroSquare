@@ -17,17 +17,19 @@ const AnswerSection = ({ answerDetail }) => {
         {answerDetail.map(Answer => {
           return (
             <AnswerCard
-              key={Answer.id}
-              id={Answer.id}
-              profile={Answer.userProfile}
-              username={Answer.username}
+              key={Answer.comment_id}
+              id={Answer.comment_id}
+              profile={Answer.image}
+              username={Answer.nickname}
               created_at={Answer.created_at}
               is_user_like={Answer.is_user_like}
-              like_amount={Answer.like_amount}
+              like_amount={Answer.likes_amount}
               code={Answer.code}
               codeLanguage={Answer.code_language}
               content={Answer.content}
               comments={Answer.comments}
+              post_id={Answer.post_id}
+              comment_id={Answer.comment_id}
             />
           );
         })}

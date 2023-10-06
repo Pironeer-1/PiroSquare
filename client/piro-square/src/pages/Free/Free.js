@@ -9,6 +9,8 @@ import Pagination from '../../components/Pagination/Pagination';
 const Free = () => {
   const [isRightPosition, setIsRightPosition] = useState(false);
   const [searchKeyword, setSearchKeyword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
   const handleFilterBtnClick = () => {
     setIsRightPosition(!isRightPosition);
   };
@@ -25,26 +27,34 @@ const Free = () => {
 
   const [frees, setFrees] = useState([]);
 
-  useEffect(() => {
-    if (!isRightPosition) {
-      fetch(`http://localhost:8000/post`, {
+  const fetchData = async () => {
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const url = `http://localhost:8000/post${
+        isRightPosition ? '?popular' : ''
+      }`;
+      const response = await fetch(url, {
         method: 'GET',
         credentials: 'include',
-      })
-        .then(response => response.json())
-        .then(result => {
-          setFrees([...result?.posts]);
-        });
-    } else {
-      fetch(`http://localhost:8000/post?popular`, {
-        method: 'POST',
-        credentials: 'include',
-      })
-        .then(response => response.json())
-        .then(result => {
-          setFrees([...result?.posts]);
-        });
+      });
+
+      if (!response.ok) {
+        throw new Error('서버에서 잘못된 응답을 받았습니다.');
+      }
+
+      const result = await response.json();
+      setFrees([...result?.posts]);
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setIsLoading(false);
     }
+  };
+
+  useEffect(() => {
+    fetchData();
   }, [isRightPosition]);
 
   const [currentPage, setCurrentPage] = useState(1);

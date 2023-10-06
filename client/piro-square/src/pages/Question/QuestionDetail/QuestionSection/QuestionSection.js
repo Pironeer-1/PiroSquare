@@ -10,6 +10,7 @@ const QuestionSection = ({
   code,
   like_amount,
   is_user_like,
+  post_id,
 }) => {
   const [dataLoaded, setDataLoaded] = useState(false);
   useEffect(() => {
@@ -28,7 +29,11 @@ const QuestionSection = ({
           <UserName>{user}</UserName>
         </UserSection>
         <LikeSection>
-          <LikeBtn initialLike={is_user_like} likeAmount={like_amount} />
+          <LikeBtn
+            initialLike={is_user_like}
+            likeAmount={like_amount}
+            post_id={post_id}
+          />
         </LikeSection>
       </TopSection>
       <BottomSection>
