@@ -10,6 +10,7 @@ module.exports = {
         const userId=await userModel.getUserId(user.ID);
 
         const posts = await postModel.getAll(userId, 1);
+        
         res.json({posts: posts});
     },
     // 자유게시판 검색 하기

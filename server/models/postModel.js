@@ -27,16 +27,21 @@ module.exports = {
         
         const targetPost = posts[0];
 
-        console.log(targetPost);
-
         for (const post of targetPost){
-            console.log(post);
+            
             post.title = post.title.replace(/&lt;/g, "<").replace(/&gt;/g, ">");
             post.content = post.content.replace(/&lt;/g, "<").replace(/&gt;/g, ">");
+            
+            post.created_at = formatDate(post.created_at);
+    
+            if (post.start_date && post.end_date) {
+                post.start_date = formatDate(post.start_date);
+                post.end_date = formatDate(post.end_date);
+            }
         }
-
         return targetPost;
     },
+
     detail: async (user_id, postId) => {
         const query =`
         SELECT 
@@ -169,4 +174,10 @@ module.exports = {
         return post[0][0];
     }
 
+}
+
+//날짜 부분만 추출하는 함수
+function formatDate(date) {
+    const isoString = date.toISOString();
+    return isoString.split('T')[0];
 }
