@@ -47,6 +47,24 @@ const WriteProject = () => {
     navigate(nextUrl);
   };
 
+  const inputStartDate = new Date(startDate);
+
+  const formattedStartDate =
+    inputStartDate.getFullYear() +
+    '-' +
+    ('0' + (inputStartDate.getMonth() + 1)).slice(-2) +
+    '-' +
+    ('0' + inputStartDate.getDate()).slice(-2);
+
+  const inputFinishDate = new Date(endDate);
+
+  const formattedFinishDate =
+    inputFinishDate.getFullYear() +
+    '-' +
+    ('0' + (inputFinishDate.getMonth() + 1)).slice(-2) +
+    '-' +
+    ('0' + inputFinishDate.getDate()).slice(-2);
+
   const onSubmit = async event => {
     event.preventDefault();
     const confirmSubmit = window.confirm('게시글을 등록하시겠습니까?');
@@ -54,11 +72,11 @@ const WriteProject = () => {
     const body = {
       title: title,
       content: content,
-      selectedBoard: selectedBoard,
+      board_type_id: 4,
       category: 'project',
-      startDate: startDate,
-      endDate: endDate,
-      personnel: personnel,
+      start_date: formattedStartDate,
+      end_date: formattedFinishDate,
+      member: personnel,
     };
 
     if (confirmSubmit) {

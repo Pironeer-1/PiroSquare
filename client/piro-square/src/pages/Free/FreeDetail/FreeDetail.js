@@ -12,6 +12,9 @@ const FreeDetail = () => {
   const [renderedContent, setRenderedContent] = useState('');
   const [detail, setDetail] = useState([]);
   const [comments, setComments] = useState([]);
+  const [next, setNext] = useState([]);
+  const [previous, setPrevious] = useState([]);
+
   const navigate = useNavigate();
   const onClickListButton = () => {
     navigate(`/free`);
@@ -27,6 +30,8 @@ const FreeDetail = () => {
       .then(result => {
         setDetail(result?.post);
         setComments(result?.comments);
+        setNext(result.next);
+        setPrevious(result.previous);
       });
   }, []);
 
@@ -80,7 +85,7 @@ const FreeDetail = () => {
         </ContentBox>
         <Comment comments={comments} />
       </Container>
-      <Paginator />
+      <Paginator previous={previous} next={next} />
     </>
   );
 };

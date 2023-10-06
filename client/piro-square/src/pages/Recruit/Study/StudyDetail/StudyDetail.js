@@ -11,6 +11,8 @@ import sanitizeHtml from 'sanitize-html';
 const StudyDetail = () => {
   const [comments, setComments] = useState([]);
   const [detail, setDetail] = useState([]);
+  const [next, setNext] = useState([]);
+  const [previous, setPrevious] = useState([]);
   const [renderedContent, setRenderedContent] = useState('');
 
   let { id } = useParams();
@@ -24,12 +26,19 @@ const StudyDetail = () => {
       .then(result => {
         setDetail(result.post);
         setComments(result?.comments);
-        console.log(result);
+        setNext(result.next);
+        setPrevious(result.previous);
       });
   }, []);
 
   const dateString = detail.created_at;
   const datePart = dateString?.split('T')[0];
+
+  const dateStartString = detail.start_date;
+  const dateStartPart = dateStartString?.split('T')[0];
+
+  const dateendString = detail.end_date;
+  const dateendPart = dateendString?.split('T')[0];
 
   const navigate = useNavigate();
   const onClickListButton = () => {
@@ -69,10 +78,11 @@ const StudyDetail = () => {
         <SubInfo
           post_id={detail.post_id}
           user_id={detail.user_id}
-          activate={detail.activate}
-          start_date={detail.start_date}
+          isActivate={detail.is_active}
+          start_date={dateStartPart}
+          end_date={dateendPart}
           recruit_date={detail.recruit_date}
-          personnel={detail.personnel}
+          personnel={detail.member}
         />
         <ContentBox>
           <ContentInfo>
@@ -83,7 +93,7 @@ const StudyDetail = () => {
         </ContentBox>
         <Comment comments={comments} />
       </Container>
-      <Paginator />
+      <Paginator previous={previous} next={next} />
     </>
   );
 };

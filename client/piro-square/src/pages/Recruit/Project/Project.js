@@ -14,7 +14,6 @@ const Project = () => {
       .then(response => response.json())
       .then(result => {
         setRecruitments(result.posts);
-        console.log(result);
       });
   }, []);
 
@@ -52,13 +51,13 @@ const Project = () => {
         {currentItems.map(recruitment => {
           return (
             <ProjectCard
-              key={recruitment.id}
-              id={recruitment.id}
+              key={recruitment.post_id}
+              id={recruitment.post_id}
               title={recruitment.title}
-              username={recruitment.nickname}
+              username={recruitment.nickname || recruitment.name}
               created_at={recruitment.created_at}
               activate={recruitment.activate}
-              personnel={recruitment.personnel}
+              personnel={recruitment.member || 1}
             />
           );
         })}

@@ -36,14 +36,13 @@ const Free = () => {
           setFrees([...result?.posts]);
         });
     } else {
-      // 인기순 데이터를 가져오는 로직
       fetch(`http://localhost:8000/post?popular`, {
         method: 'POST',
         credentials: 'include',
       })
         .then(response => response.json())
         .then(result => {
-          setFrees([...result.posts]);
+          setFrees([...result?.posts]);
         });
     }
   }, [isRightPosition]);
@@ -59,7 +58,6 @@ const Free = () => {
   };
 
   const totalPageCount = Math.ceil(frees.length / itemsPerPage);
-
   const availabilityClassName = isRightPosition ? 'greenWord' : 'grayWord';
 
   return (
@@ -87,7 +85,7 @@ const Free = () => {
                 key={Free.post_id}
                 post_id={Free.post_id}
                 title={Free.title}
-                nickname={Free.nickname}
+                nickname={Free.nickname || Free.name}
                 created_at={Free.created_at}
                 answers_amount={Free.answers_amount}
                 is_user_like={Free.is_user_like}

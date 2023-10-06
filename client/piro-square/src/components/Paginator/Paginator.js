@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { useNavigate, useLocation } from 'react-router-dom';
 
-const Paginator = () => {
+const Paginator = ({ previous, next }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const currentId = parseInt(location.pathname.split('/').pop(), 10);
@@ -37,21 +37,23 @@ const Paginator = () => {
 
   return (
     <Container>
-      <LeftSection>
-        <LeftImg src="/images/Button/left_polygon.png" />
-        <Previous onClick={handlePreviousClick}>
-          <Prev>이전글</Prev>
-          {/* <PrevTitle>보고싶은 친구들에게..</PrevTitle> */}
-        </Previous>
-      </LeftSection>
-      <ListBtn onClick={handleListButtonClick}>목록으로</ListBtn>
-      <RightSection>
-        <Next onClick={handleNextClick}>
-          <Nex>다음글</Nex>
-          {/* <NexTitle>등산 가실 분?</NexTitle> */}
-        </Next>
-        <RightImg src="/images/Button/right_polygon.png" />
-      </RightSection>
+      <GridBox>
+        <LeftSection onClick={handlePreviousClick}>
+          <LeftImg src="/images/Button/left_polygon.png" />
+          <Previous>
+            <Prev>이전글</Prev>
+            <PrevTitle>{previous?.title}</PrevTitle>
+          </Previous>
+        </LeftSection>
+        <ListBtn onClick={handleListButtonClick}>목록으로</ListBtn>
+        <RightSection onClick={handleNextClick}>
+          <Next>
+            <Nex>다음글</Nex>
+            <NexTitle>{next?.title}</NexTitle>
+          </Next>
+          <RightImg src="/images/Button/right_polygon.png" />
+        </RightSection>
+      </GridBox>
     </Container>
   );
 };
@@ -59,15 +61,22 @@ export default Paginator;
 
 const Container = styled.div`
   display: flex;
-  justify-content: space-between;
+  flex-direction: row;
   width: 50rem;
   margin: 2rem auto;
+`;
+
+const GridBox = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  width: 50rem;
 `;
 
 const ListBtn = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 0 auto;
   border: #0bec12 solid 2px;
   color: ${props => props.theme.colors.green};
   padding: 5px;
@@ -86,15 +95,24 @@ const ListBtn = styled.button`
 const LeftSection = styled.div`
   display: flex;
   align-items: center;
+  &:hover {
+    cursor: pointer;
+  }
 `;
+
 const RightSection = styled.div`
   display: flex;
   align-items: center;
+  margin-left: auto;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const LeftImg = styled.img`
   width: 35px;
 `;
+
 const RightImg = styled.img`
   width: 35px;
 `;
@@ -117,4 +135,5 @@ const Nex = styled.div`
   text-align: right;
   margin-bottom: 5px;
 `;
+
 const NexTitle = styled.div``;
