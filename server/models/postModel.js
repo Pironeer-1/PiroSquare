@@ -25,11 +25,14 @@ module.exports = {
         `;
         const posts = await db.query(query, [user_id, board_type_id]);
         
-        const targetPost = post[0];
+        const targetPost = posts[0];
+
+        console.log(targetPost);
 
         for (const post of targetPost){
-            post.title = targetPost.title.replace(/&lt;/g, "<").replace(/&gt;/g, ">");
-            post.content = targetPost.content.replace(/&lt;/g, "<").replace(/&gt;/g, ">");
+            console.log(post);
+            post.title = post.title.replace(/&lt;/g, "<").replace(/&gt;/g, ">");
+            post.content = post.content.replace(/&lt;/g, "<").replace(/&gt;/g, ">");
         }
 
         return targetPost;
