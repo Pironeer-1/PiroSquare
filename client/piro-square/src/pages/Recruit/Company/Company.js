@@ -6,14 +6,31 @@ import CompanyCard from './CompanyCard';
 const Company = () => {
   const [isRightPosition, setIsRightPosition] = useState(false);
   const [recruitments, setRecruitments] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+
   useEffect(() => {
+    setIsLoading(true);
+    setError(null);
+
     fetch(`http://localhost:8000/recruit`, {
       method: 'GET',
       credentials: 'include',
     })
-      .then(response => response.json())
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('서버에서 잘못된 응답을 받았습니다.');
+        }
+        return response.json();
+      })
       .then(result => {
         setRecruitments(result.posts);
+      })
+      .catch(error => {
+        setError(error.message);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   }, []);
 

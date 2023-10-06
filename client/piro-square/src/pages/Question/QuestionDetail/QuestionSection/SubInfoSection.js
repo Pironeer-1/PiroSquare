@@ -5,8 +5,11 @@ import { AuthContext } from '../../../../context/AuthContext';
 const SubInfoSection = ({ user_id, is_solved, answers_amount, created_at }) => {
   const { userData } = useContext(AuthContext);
   const user = userData.data.user_id;
+  const convertToBoolean = is_solved => {
+    return is_solved === 1 ? true : false;
+  };
 
-  const [solved, setSolved] = useState(is_solved);
+  const [solved, setSolved] = useState(convertToBoolean(is_solved));
 
   const toggleSolved = () => {
     const confirmSubmit = window.confirm('문제 해결이 되었나요?');
