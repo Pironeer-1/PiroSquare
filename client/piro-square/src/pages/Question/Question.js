@@ -11,6 +11,9 @@ const Question = () => {
   const [isRightPosition1, setIsRightPosition1] = useState(false);
   const [isRightPosition2, setIsRightPosition2] = useState(false);
   const [searchKeyword, setSearchKeyword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+
   const navigate = useNavigate();
   const handleWriteBtnClick = () => {
     navigate('/write/question');
@@ -35,15 +38,28 @@ const Question = () => {
   };
 
   const [questions, setQuestions] = useState([]);
-
   useEffect(() => {
+    setIsLoading(true);
+    setError(null);
+
     fetch(`http://localhost:8000/question`, {
       method: 'GET',
       credentials: 'include',
     })
-      .then(response => response.json())
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('서버에서 잘못된 응답을 받았습니다.');
+        }
+        return response.json();
+      })
       .then(result => {
-        setQuestions(result.question_posts);
+        setQuestions(result?.question_posts);
+      })
+      .catch(error => {
+        setError(error.message);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   }, []);
 

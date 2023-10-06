@@ -16,43 +16,45 @@ const QuestionDetail = () => {
 
   let { id } = useParams();
   const [questionDetail, setQuestionDetail] = useState([]);
-  // useEffect(() => {
-  //   fetch(`http://localhost:8000/question/detail/${id}`)
-  //     .then(response => response.json())
-  //     .then(result => {
-  //       setQuestionDetail(result.question);
-  //     });
-  // }, []);
-
-  useEffect(() => {
-    fetch('/data/questionDetail.json')
-      .then(response => response.json())
-      .then(result => {
-        setQuestionDetail(result);
-      });
-  }, []);
-
   const [answerDetail, setAnswerDetail] = useState([]);
+
   useEffect(() => {
-    fetch('/data/answers.json')
+    fetch(`http://localhost:8000/question/detail/${id}`, {
+      method: 'GET',
+      credentials: 'include',
+    })
       .then(response => response.json())
       .then(result => {
-        setAnswerDetail(result);
-        console.log('qD', result);
+        setQuestionDetail(result?.question);
+        setAnswerDetail(result?.comments);
+        console.log(result.question);
+        console.log(result.comments);
       });
   }, []);
 
-  // useEffect(() => {
-  //   fetch(`http://localhost:8000/question/detail/${id}`)
-  //     .then(response => response.json())
-  //     .then(result => {
-  //       setAnswerDetail(result.comments);
-  //     });
-  // }, []);
+  const dateString = questionDetail.created_at;
+  const datePart = dateString?.split('T')[0];
 
   const navigate = useNavigate();
   const onClickListButton = () => {
     navigate(`/question`);
+  };
+
+  const AnswerComponent = ({ result }) => {
+    const isEmptyComments = result.comments.length === 0;
+
+    return (
+      <div>
+        {isEmptyComments ? (
+          <BeFirst>
+            <strong>{questionDetail.nickname}</strong>님의 첫번째 답변자가
+            되어주세요!
+          </BeFirst>
+        ) : (
+          <AnswerSection answerDetail={answerDetail} />
+        )}
+      </div>
+    );
   };
 
   return (
@@ -64,18 +66,19 @@ const QuestionDetail = () => {
       <Title>{questionDetail.title}</Title>
       <SubInfoSection
         user_id={questionDetail.user_id}
-        is_solved={questionDetail.is_solved}
-        answers_amount={questionDetail.answers_amount}
-        created_at={questionDetail.created_at}
+        is_solved={questionDetail.activate}
+        answers_amount={questionDetail.comments_count}
+        created_at={datePart}
       />
       <QuestionSection
-        user={questionDetail.username}
-        profile={questionDetail.userProfile}
+        user={questionDetail.nickname}
+        post_id={questionDetail.post_id}
+        profile={questionDetail.image}
         content={questionDetail.content}
         codeLanguage={questionDetail.code_language}
         code={questionDetail.code}
         is_user_like={questionDetail.is_user_like}
-        like_amount={questionDetail.like_amount}
+        like_amount={questionDetail.likes_count}
       />
       <AnswerBtn onClick={toggleAnswer}>
         {isAnswerVisible ? (
@@ -86,7 +89,8 @@ const QuestionDetail = () => {
         <AnswerImg src="/images/Button/Answer.png" />
       </AnswerBtn>
       {isAnswerVisible && <AnswerRegister />}
-      <AnswerSection answerDetail={answerDetail} />
+      <AnswerComponent result={{ comments: answerDetail }} />{' '}
+      {/* AnswerComponent를 호출하고 answerDetail을 전달 */}
       <Paginator />
     </Container>
   );
@@ -144,4 +148,10 @@ const AnswerImg = styled.img`
   width: 25px;
   margin-left: 10px;
   margin-right: 10px;
+`;
+
+const BeFirst = styled.div`
+  display: flex;
+  justify-content: end;
+  margin: 2rem;
 `;

@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import LikeBtn from '../../../../components/Button/LikeBtn/LikeBtn';
+import CommentLikeBtn from '../../../../components/Button/LikeBtn/LikeBtn';
 import Comment from '../../../../components/Comment/Comment';
 
 const AnswerCard = ({
@@ -13,7 +13,11 @@ const AnswerCard = ({
   like_amount,
   is_user_like,
   comments,
+  post_id,
+  comment_id,
 }) => {
+  const dateString = created_at;
+  const datePart = dateString?.split('T')[0];
   return (
     <>
       <Container>
@@ -23,10 +27,15 @@ const AnswerCard = ({
               <UserImg src={profile} />
             </UserProfile>
             <UserName>{username}</UserName>
-            <UserCreate>{created_at}</UserCreate>
+            <UserCreate>{datePart}</UserCreate>
           </UserSection>
           <LikeSection>
-            <LikeBtn initialLike={is_user_like} likeAmount={like_amount} />
+            <CommentLikeBtn
+              initialLike={is_user_like}
+              likeAmount={like_amount}
+              post_id={post_id}
+              id={comment_id}
+            />
           </LikeSection>
         </TopSection>
         <BottomSection>

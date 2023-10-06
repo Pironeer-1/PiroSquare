@@ -74,14 +74,13 @@ const WriteStudy = () => {
     const body = {
       title: title,
       content: content,
-      board_type_id: 4,
-      category: 'study',
-      selectedBoard: selectedBoard,
+      filterCategory: 'study',
       start_date: formattedStartDate,
       end_date: formattedFinishDate,
       member: personnel,
+      filterStatus: 'unsolved',
     };
-
+    console.log(body);
     if (confirmSubmit) {
       try {
         const result = await fetchPOST(url, body);
