@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 
 // 포트 번호 설정
-require("dotenv").config();
+require("dotenv").config({path:"../"});
 app.set("port", process.env.SERVER_PORT || 8000);
 // app.set(1,2) 1을 2로 설정
 

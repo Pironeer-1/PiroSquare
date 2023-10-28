@@ -135,3 +135,7 @@ yarn-error.log*
 
 server/sessions/
 server/uploads/profile/
+server/src/uploads/profile/
+
+# db 파일 제외
+server/db/mysql/*
