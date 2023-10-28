@@ -1,8 +1,53 @@
 {
+  "name": "piro-square",
+  "version": "0.1.0",
+  "private": true,
   "dependencies": {
+    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
     "@toast-ui/react-editor": "^3.2.3",
+    "axios": "^1.5.1",
     "html2canvas": "^1.4.1",
-    "react-quill": "^2.0.0"
+    "react": "^18.2.0",
+    "react-datepicker": "^4.18.0",
+    "react-dom": "^18.2.0",
+    "react-quill": "^2.0.0",
+    "react-router-dom": "^6.16.0",
+    "react-scripts": "5.0.1",
+    "sanitize-html": "^2.11.0",
+    "styled-components": "^6.0.8",
+    "styled-reset": "^4.5.1",
+    "web-vitals": "^2.1.4"
   },
-  "proxy": "http://192.168.0.52:8000"
+  "scripts": {
+    "start": "GENERATE_SOURCEMAP=false react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@babel/plugin-transform-object-rest-spread": "^7.22.15",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "prettier": "^3.0.3"
+  }
 }
