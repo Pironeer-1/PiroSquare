@@ -23,10 +23,10 @@ services:
     container_name: pirosquare_mysql_db
     image: mysql
     environment:
-      MYSQL_ROOT_PASSWORD: 111111
-      MYSQL_DATABASE: pirosquare
-      MYSQL_USER: jg
-      MYSQL_PASSWORD: 111111
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
     ports:
       - "3307:3306"
     restart: always
